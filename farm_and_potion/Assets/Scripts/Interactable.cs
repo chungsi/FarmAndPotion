@@ -3,7 +3,15 @@
 public class Interactable : MonoBehaviour
 {
 
-    // master class for items & things that players can interact with
+    // master class for all things that players can interact with
+
+    public float radius = 20f;
+
+    // This draws a sphere for the interactable area around the object
+    void OnDrawGizmosSelected() {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, radius);
+    }
 
     public virtual void Interact()
     {

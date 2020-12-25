@@ -1,10 +1,14 @@
 ﻿using UnityEngine;
 
 // blueprint class for all items
-[CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Item")]
+[CreateAssetMenu(fileName = "New Item", menuName = "Item/Item")]
 public class Item : ScriptableObject {
 
     new public string name = "New Item";
-    public Sprite icon = null;
+    [TextArea]
+    public string description;
+    public Sprite artwork = null;
+
+    // stat values
 
 }
