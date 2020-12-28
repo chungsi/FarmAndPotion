@@ -3,7 +3,8 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-public class ItemUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
+public class ItemUI : MonoBehaviour
+//, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
 
     public Item item;
@@ -15,7 +16,7 @@ public class ItemUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
 
     private Vector3 startPosition;
     private Transform startParent;
-    private CanvasGroup canvasGroup;
+    private CanvasGroup iconCanvasGroup;
 
     void OnValidate() {
         if (item != null)
@@ -23,7 +24,7 @@ public class ItemUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
     }
 
     void Start() {
-        canvasGroup = GetComponent<CanvasGroup>();
+        iconCanvasGroup = artwork.GetComponent<CanvasGroup>();
     }
 
     public void SetItem(Item newItem) {
@@ -31,27 +32,27 @@ public class ItemUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
         artwork.sprite = item.artwork;
     }
 
-    public void OnBeginDrag(PointerEventData eventData) 
-    {
-        startPosition = this.transform.position;
-        canvasGroup.alpha = .6f;
+    // public void OnBeginDrag(PointerEventData eventData) 
+    // {
+    //     startPosition = this.transform.position;
+    //     canvasGroup.alpha = .6f;
 
-        DragBeginEvent.Invoke();
-    }
+    //     DragBeginEvent.Invoke();
+    // }
 
-    public void OnDrag(PointerEventData eventData) 
-    {
-        eventData.pointerDrag.transform.position = Input.mousePosition;
+    // public void OnDrag(PointerEventData eventData) 
+    // {
+    //     eventData.pointerDrag.transform.position = Input.mousePosition;
 
-        DraggingEvent.Invoke();
-    }
+    //     DraggingEvent.Invoke();
+    // }
 
-    public void OnEndDrag(PointerEventData eventData) 
-    {
-        // eventData.pointerDrag.transform.position = startPosition;
-        canvasGroup.alpha = 1f;
+    // public void OnEndDrag(PointerEventData eventData) 
+    // {
+    //     // eventData.pointerDrag.transform.position = startPosition;
+    //     canvasGroup.alpha = 1f;
 
-        DragEndEvent.Invoke();
-    }
+    //     DragEndEvent.Invoke();
+    // }
 
 }

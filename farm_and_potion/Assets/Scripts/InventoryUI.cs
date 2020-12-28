@@ -61,8 +61,14 @@ public class InventoryUI : MonoBehaviour
         Debug.Log(startDraggedSlot.item.name + " is being dragged from slot " + index);
     }
 
-    public void InventoryDragResponse() {
+    public void InventoryDragResponse() 
+    {
         draggedItem.transform.position = Input.mousePosition;
+    }
+
+    public void InventoryDragEndResponse()
+    {
+        draggedItem.enabled = false;
     }
 
     public void InventoryDropResponse() 
@@ -73,13 +79,18 @@ public class InventoryUI : MonoBehaviour
         if (startDraggedSlot != null && dropSlot.isEmpty()) 
         {
             Debug.Log(startDraggedSlot.item.name + " is being dropped into " + dropSlot.name);
-
             dropSlot.AddItem(startDraggedSlot.item);
             startDraggedSlot.ClearSlot();
+        } 
+        else if (startDraggedSlot != null && !dropSlot.isEmpty()) 
+        {
+            Item savedItem = dropSlot.item; // to save a temp before things get overridden
 
-            startDraggedSlot = null;
+            dropSlot.AddItem(startDraggedSlot.item);
+            startDraggedSlot.AddItem(savedItem);
         }
 
+        startDraggedSlot = null;
         draggedItem.enabled = false;
     }
 

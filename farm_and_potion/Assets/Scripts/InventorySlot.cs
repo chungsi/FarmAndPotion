@@ -19,9 +19,11 @@ public class InventorySlot : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     public UnityEvent DropEvent;
 
     private int indexWithinContainer;
+    private CanvasGroup iconCanvasGroup;
 
     void Start() {
         indexWithinContainer = transform.GetSiblingIndex();
+        iconCanvasGroup = icon.GetComponent<CanvasGroup>();
     }
 
     public void AddItem(Item newItem)
@@ -53,6 +55,8 @@ public class InventorySlot : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
         {
             Debug.Log(name + " has detected a drag on itself; index is " + indexWithinContainer);
             draggedSlotIndex.value = indexWithinContainer;
+            iconCanvasGroup.alpha = .6f;
+
             DragBeginEvent.Invoke();
         }
     }
@@ -67,6 +71,8 @@ public class InventorySlot : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     public void OnEndDrag(PointerEventData eventData) 
     {
         if (item != null) {
+            iconCanvasGroup.alpha = 1f;
+
             DragEndEvent.Invoke();
         }
     }
@@ -75,6 +81,8 @@ public class InventorySlot : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     {
         Debug.Log(name + " has detected a drop into itself; index is " + indexWithinContainer);
         dropSlotIndex.value = indexWithinContainer;
+        iconCanvasGroup.alpha = 1f;
+
         DropEvent.Invoke();
     }
 

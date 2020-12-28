@@ -1847,6 +1847,7 @@ GameObject:
   - component: {fileID: 1472458585}
   - component: {fileID: 1472458587}
   - component: {fileID: 1472458588}
+  - component: {fileID: 1472458589}
   - component: {fileID: 1472458586}
   m_Layer: 5
   m_Name: InventoryUI
@@ -2012,6 +2013,33 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1472458589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1472458581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdc09fa07da691f48906be639a4b59e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 8bdb67c32c7fa484084f11cd171e1810, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1472458585}
+        m_MethodName: InventoryDragEndResponse
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1490280424
 GameObject:
   m_ObjectHideFlags: 0
@@ -2118,7 +2146,7 @@ MonoBehaviour:
   space: 12
   items:
   - {fileID: 11400000, guid: 9e71ef68404d5bc42a5bb97811029bac, type: 2}
-  - {fileID: 11400000, guid: 9e71ef68404d5bc42a5bb97811029bac, type: 2}
+  - {fileID: 11400000, guid: 5d8a32856d0907b488c7e93c9353668c, type: 2}
   itemsParent: {fileID: 1818294756}
 --- !u!4 &1636840687
 Transform:
@@ -2179,13 +2207,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1692496725}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.4862745}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
