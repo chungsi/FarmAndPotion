@@ -2,61 +2,87 @@
 using UnityEngine.UI;
 // using UnityEngine.EventSystems;
 
-public class InventoryUI : MonoBehaviour {
-
+public class InventoryUI : MonoBehaviour 
+{
+    public Inventory inventory;
     public Transform itemsParent;
+    public ItemUI itemUIPrefab;
 
-    Inventory inventory;
-
-    InventorySlot[] slots;
+    public FloatVariable draggedSlotIndex;
+    public FloatVariable dropSlotIndex;
 
     public Image draggedItem;
+    // private CanvasGroup draggedItemCanvasGroup;
+
+    private InventorySlot startDraggedSlot;
     private InventorySlot draggedSlot;
+
+    InventorySlot[] slots;
 
     void Start()
     {
         Debug.Log("InventoryUI Start");
-        inventory = Inventory.instance;
-        inventory.onItemChangedCallback += UpdateUI;
+        if (inventory != null)
+            inventory.onItemChangedCallback += SetupUI;
+        
+        // if (draggedItem != null)
+        //     draggedItemCanvasGroup = draggedItem.GetComponent<CanvasGroup>();
 
         slots = itemsParent.GetComponentsInChildren<InventorySlot>();
-
-        UpdateUI();
     }
 
-    void UpdateUI()
+    void SetupUI()
     {
-        Debug.Log("Updating UI");
-        for (int i = 0; i < slots.Length; i++)
-        {
-            if (i < inventory.items.Count)
-            {
-                slots[i].AddItem(inventory.items[i]);
-                GameObject gameObject = Instantiate(
-                    inventory.itemPrefab, 
-                    itemsParent.GetChild(i).transform.position, 
-                    Quaternion.identity);
-                gameObject.transform.SetParent(itemsParent.GetChild(i));
-                /* TODO: investigate if it's an issue that the prefab is instantiating at a weird scale
-                         I've manually set it in the code, but it just so happens that it seems the prefab
-                         does this when dragged into a parent that's not the "Canvas"...
-                         using .SetParent(..., false) fixes it, but then the position is wonky... :'(
-                 */
-                gameObject.transform.localScale = new Vector3(1,1,1);
-                /* 
-                    Object pooling 
-                    finite set of items that could enable/disable at run time
-                    calling the GetComponent a lot is resource heavy, so should be careful to call
-                    only in Start/Awake if possible
-                 */
-                var temp = gameObject.GetComponent<ItemHandler>();
-                temp.SetItem(inventory.items[i]);
+        Debug.Log("InventoryUI is updating!");
 
-                // Item tempItem = (Item)gameObject.GetComponent("item");
-            } else {
-                slots[i].ClearSlot();
-            }
+        for (int i = 0; i < inventory.items.Count; i++)
+        {
+            // ItemUI ui = ItemUI.Instantiate(itemUIPrefab, slots[i].transform);
+            // ui.SetItem(inventory.items[i]);
+            slots[i].AddItem(inventory.items[i]);
         }
     }
+
+    #region EventResponses
+
+    public void DebugInventoryUI() 
+    {
+        Debug.Log("InventoryUI has detected an event from a listener!");
+    }
+
+    public void InventoryBeginDragResponse() 
+    {
+        int index = (int)draggedSlotIndex.value;
+        startDraggedSlot = slots[index];
+
+        draggedItem.enabled = true;
+        draggedItem.sprite = startDraggedSlot.item.artwork;
+
+        Debug.Log(startDraggedSlot.item.name + " is being dragged from slot " + index);
+    }
+
+    public void InventoryDragResponse() {
+        draggedItem.transform.position = Input.mousePosition;
+    }
+
+    public void InventoryDropResponse() 
+    {
+        InventorySlot dropSlot = slots[(int)dropSlotIndex.value];
+        Debug.Log("Drop slot is index " + dropSlotIndex.value);
+
+        if (startDraggedSlot != null && dropSlot.isEmpty()) 
+        {
+            Debug.Log(startDraggedSlot.item.name + " is being dropped into " + dropSlot.name);
+
+            dropSlot.AddItem(startDraggedSlot.item);
+            startDraggedSlot.ClearSlot();
+
+            startDraggedSlot = null;
+        }
+
+        draggedItem.enabled = false;
+    }
+
+    #endregion
     
 }

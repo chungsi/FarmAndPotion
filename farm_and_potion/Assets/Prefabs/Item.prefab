@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4253549281720551741}
   - component: {fileID: 4253549281720551742}
   - component: {fileID: 4253549281720551743}
-  - component: {fileID: 4253549281720551715}
   m_Layer: 5
   m_Name: Item
   m_TagString: Untagged
@@ -72,21 +71,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8afe9bd740dac747925ab10ad0ac7b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 20
-  item: {fileID: 0}
+  item: {fileID: 11400000, guid: 9e71ef68404d5bc42a5bb97811029bac, type: 2}
   artwork: {fileID: 9147805766235892422}
---- !u!114 &4253549281720551715
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4253549281720551713}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23626b721a31037429eb215f0d3e13c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4417229657589995248
 GameObject:
   m_ObjectHideFlags: 0
@@ -151,7 +137,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: ca64ffb185576fc45acbdbf4786d1a77, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

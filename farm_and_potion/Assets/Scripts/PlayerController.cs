@@ -1,15 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-public class PlayerController : MonoBehaviour, IPointerClickHandler
+public class PlayerController : MonoBehaviour
 {
-    // for the player game object
-    // for now, treating the player as the cursor, without the rpg elements
-
-    // for what items are clicked? in inventory/wild???
-    public Interactable focus;
 
     void Start()
     {
@@ -29,8 +23,4 @@ public class PlayerController : MonoBehaviour, IPointerClickHandler
         }
     }
     
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        Debug.Log(name + " clicked");
-    }
 }
