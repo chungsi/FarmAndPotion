@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 // using UnityEngine.EventSystems;
 
 public class InventoryUI : MonoBehaviour 
 {
     public Inventory inventory;
+    public TextMeshProUGUI displayText;
     public Transform itemsParent;
     public ItemUI itemUIPrefab;
 
