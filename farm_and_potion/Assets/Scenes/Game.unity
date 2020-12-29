@@ -257,6 +257,7 @@ GameObject:
   - component: {fileID: 403043871}
   - component: {fileID: 403043873}
   - component: {fileID: 403043872}
+  - component: {fileID: 403043875}
   - component: {fileID: 403043874}
   m_Layer: 5
   m_Name: CraftingPanel
@@ -272,17 +273,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 403043870}
-  m_LocalRotation: {x: -0, y: -0, z: 0.706991, w: 0.7072225}
+  m_LocalRotation: {x: -0, y: -0, z: 0.0035685464, w: 0.9999937}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1396833306}
   m_Father: {fileID: 2034945496}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 89.981}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.409}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 58.8, y: 366.6}
+  m_AnchoredPosition: {x: 2, y: 392}
   m_SizeDelta: {x: 190.95166, y: 354.46777}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &403043872
@@ -331,16 +332,58 @@ MonoBehaviour:
   m_GameObject: {fileID: 403043870}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64786026b3b105e40b83b726a1344b0e, type: 3}
+  m_Script: {fileID: 11500000, guid: fdc09fa07da691f48906be639a4b59e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: {fileID: 0}
-  displayText: {fileID: 0}
+  Event: {fileID: 11400000, guid: 08c95a82d6654324da9198c0f5653d54, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 403043875}
+        m_MethodName: DropResponse
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &403043875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 403043870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5d283e425b298e4283f88e966cec73b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   itemsParent: {fileID: 1396833306}
-  itemUIPrefab: {fileID: 0}
-  draggedSlotIndex: {fileID: 11400000, guid: 008e8496fc8b7164a8ee3b4b9fcb4d8c, type: 2}
   dropSlotIndex: {fileID: 11400000, guid: 746e90b2c66d0f0458e5e06c4d7232c3, type: 2}
-  draggedItem: {fileID: 0}
+  floatingItemMasterIndex: {fileID: 11400000, guid: 6c7ea5011d84c0c47b22f2d7cdff7d39,
+    type: 2}
+  craftingList: {fileID: 11400000, guid: 10448a77b9e5010469f95792f6182383, type: 2}
+  SuccessfulDropEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  SaveTheFloatingItemEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 29a2e92e7717c5f44b1f9753804eedc4, type: 2}
+        m_MethodName: Raise
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &422006722
 GameObject:
   m_ObjectHideFlags: 0
@@ -1850,6 +1893,8 @@ GameObject:
   - component: {fileID: 1472458588}
   - component: {fileID: 1472458589}
   - component: {fileID: 1472458586}
+  - component: {fileID: 1472458590}
+  - component: {fileID: 1472458591}
   m_Layer: 5
   m_Name: InventoryUI
   m_TagString: Untagged
@@ -1927,14 +1972,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64786026b3b105e40b83b726a1344b0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: {fileID: 1636840686}
-  displayText: {fileID: 0}
+  inventory: {fileID: 11400000, guid: 22c226befbf01764fbf142353a78700a, type: 2}
+  displayText: {fileID: 1731149944}
   itemsParent: {fileID: 1818294756}
+  draggedItem: {fileID: 1692496727}
   itemUIPrefab: {fileID: 4253549281720551743, guid: 0353a501549fa72438fe2b18947f14b7,
     type: 3}
   draggedSlotIndex: {fileID: 11400000, guid: 008e8496fc8b7164a8ee3b4b9fcb4d8c, type: 2}
   dropSlotIndex: {fileID: 11400000, guid: 746e90b2c66d0f0458e5e06c4d7232c3, type: 2}
-  draggedItem: {fileID: 1692496727}
+  floatingItemMasterIndex: {fileID: 11400000, guid: 6c7ea5011d84c0c47b22f2d7cdff7d39,
+    type: 2}
 --- !u!114 &1472458586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1952,7 +1999,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1472458585}
-        m_MethodName: InventoryDropResponse
+        m_MethodName: DropResponse
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1979,7 +2026,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1472458585}
-        m_MethodName: InventoryBeginDragResponse
+        m_MethodName: BeginDragResponse
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2006,7 +2053,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1472458585}
-        m_MethodName: InventoryDragResponse
+        m_MethodName: DragResponse
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2033,7 +2080,61 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1472458585}
-        m_MethodName: InventoryDragEndResponse
+        m_MethodName: DragEndResponse
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1472458590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1472458581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdc09fa07da691f48906be639a4b59e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 08c95a82d6654324da9198c0f5653d54, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1472458585}
+        m_MethodName: CraftingPanelDropResponse
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1472458591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1472458581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdc09fa07da691f48906be639a4b59e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 29a2e92e7717c5f44b1f9753804eedc4, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1472458585}
+        m_MethodName: InsertAFloatingItem
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2117,54 +2218,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1490280424}
   m_CullTransparentMesh: 0
---- !u!1 &1636840685
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1636840687}
-  - component: {fileID: 1636840686}
-  m_Layer: 0
-  m_Name: Player Inventory
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1636840686
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1636840685}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e026eb7f1fcf214b902af6287528115, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  space: 12
-  items:
-  - {fileID: 11400000, guid: 9e71ef68404d5bc42a5bb97811029bac, type: 2}
-  - {fileID: 11400000, guid: 5d8a32856d0907b488c7e93c9353668c, type: 2}
-  itemsParent: {fileID: 1818294756}
---- !u!4 &1636840687
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1636840685}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1692496725
 GameObject:
   m_ObjectHideFlags: 0
@@ -2797,7 +2850,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1933851615
 PrefabInstance:
@@ -2988,7 +3041,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2024066347
 GameObject:
@@ -3159,7 +3212,7 @@ RectTransform:
   - {fileID: 1257424648}
   - {fileID: 1692496726}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3381,7 +3434,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1001 &2980217417392110094
 PrefabInstance:

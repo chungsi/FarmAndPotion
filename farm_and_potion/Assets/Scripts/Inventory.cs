@@ -1,52 +1,96 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEditor;
 
-public class Inventory : MonoBehaviour {
+[CreateAssetMenu]
+public class Inventory : ScriptableObject {
 
-    // the delegate allows other scripts & classes to subscribe to when this is invoked
-    // can take inputs and return outputs
-    public delegate void OnItemChanged();
-    public OnItemChanged onItemChangedCallback;
-
-    public int space = 12;
-
+    public int space;
+    [Space]
     public List<Item> items;
-    public Transform itemsParent;
+    public List<Item> startItems;
+    [Space]
+    public bool useStartItemsOnInitialize;
 
-    void Start() 
+    private List<Item> masterList = new List<Item>();
+
+    void OnValidate()
     {
-        if (onItemChangedCallback != null)
-            onItemChangedCallback.Invoke();
+        masterList.Clear();
+
+        // populate the Master list of all available Items
+        PopulateMasterList();
+
+    }
+
+    void OnEnable()
+    {
+        // reset list of items to be the startItems on new start
+        if (startItems.Count > 0 && useStartItemsOnInitialize)
+        {
+            Debug.Log("resetting inventory to use startItems");
+            items.Clear();
+            foreach (Item item in startItems)
+            {
+                items.Add(item);
+            }
+        }
     }
 
     public bool AddItem(Item item)
     {
-        // check if inventory is full; could change to a function
+        Debug.Log($"available space in the inventory: {space}; items count: {items.Count}");
         if (items.Count >= space)
         {
             Debug.Log("Not enough space in the inventory!!");
             return false;
         }
 
-        Debug.Log("Adding item to inventory");
         items.Add(item);
-
-        // if(onItemChangedCallback != null) {
-        //     onItemChangedCallback.Invoke();
-        //     Debug.Log("invoked the onItemCHangedCallback");
-        // }
 
         return true;
     }
 
-    public void RemoveItem(Item item)
+    public bool RemoveItem(Item item)
     {
-        items.Remove(item);
-
-        // if (onItemChangedCallback != null)
-        //     onItemChangedCallback.Invoke();
+        return items.Remove(item);
     } 
+
+    public int GetMaxSpace()
+    {
+        return space;
+    }
+
+    public int GetItemCount()
+    {
+        return items.Count;
+    }
+
+    public int GetIndexForItem(Item item)
+    {
+        return masterList.IndexOf(item);
+    }
+
+    public Item GetItemForIndex(int i)
+    {
+        return masterList[i];
+    }
+
+    public void ClearInventory()
+    {
+        items.Clear();
+    }
+
+    private void PopulateMasterList()
+    {
+        string[] assetNames = AssetDatabase.FindAssets("t:Item", new[] { "Assets/Items" });
+        foreach (string SOName in assetNames)
+        {
+            var SOpath = AssetDatabase.GUIDToAssetPath(SOName);
+            var item = AssetDatabase.LoadAssetAtPath<Item>(SOpath);
+            masterList.Add(item);
+        }
+    }
 
 }
