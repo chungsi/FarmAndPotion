@@ -74,7 +74,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 2980217418366672375}
   item: {fileID: 0}
-  draggedSlotIndex: {fileID: 11400000, guid: 008e8496fc8b7164a8ee3b4b9fcb4d8c, type: 2}
+  startSlotIndex: {fileID: 11400000, guid: 008e8496fc8b7164a8ee3b4b9fcb4d8c, type: 2}
   dropSlotIndex: {fileID: 11400000, guid: 746e90b2c66d0f0458e5e06c4d7232c3, type: 2}
   DragBeginEvent:
     m_PersistentCalls:
@@ -132,6 +132,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnItemRightClick:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &240259035
 MonoBehaviour:
   m_ObjectHideFlags: 0

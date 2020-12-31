@@ -5,18 +5,19 @@ using UnityEngine.EventSystems;
 
 
 // Might want to rename to ItemSlot later
-public class ItemSlot : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IDropHandler
+public class ItemSlot : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IDropHandler, IPointerDownHandler
 {
     public Image icon;
     public Item item;
     [Space]
-    public FloatVariable draggedSlotIndex;
+    public FloatVariable startSlotIndex;
     public FloatVariable dropSlotIndex;
     [Space]
     public UnityEvent DragBeginEvent;
     public UnityEvent DraggingEvent;
     public UnityEvent DragEndEvent;
     public UnityEvent DropEvent;
+    public UnityEvent OnItemRightClick;
 
     private int indexWithinContainer;
     private CanvasGroup iconCanvasGroup;
@@ -54,7 +55,7 @@ public class ItemSlot : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
         if (item != null) 
         {
             // Debug.Log(name + " has detected a drag on itself; index is " + indexWithinContainer);
-            draggedSlotIndex.value = indexWithinContainer;
+            startSlotIndex.value = indexWithinContainer;
             iconCanvasGroup.alpha = .6f;
 
             DragBeginEvent.Invoke();
@@ -70,9 +71,9 @@ public class ItemSlot : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
 
     public void OnEndDrag(PointerEventData eventData) 
     {
-        if (item != null) {
-            iconCanvasGroup.alpha = 1f;
+        iconCanvasGroup.alpha = 1f;
 
+        if (item != null) {
             DragEndEvent.Invoke();
         }
     }
@@ -84,6 +85,17 @@ public class ItemSlot : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
         iconCanvasGroup.alpha = 1f;
 
         DropEvent.Invoke();
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        // if right click
+        if (item != null && Input.GetMouseButtonDown(1))
+        {
+            startSlotIndex.value = indexWithinContainer;
+            Debug.Log($"Right click on a filled slot detected; index of crafting slot is {indexWithinContainer}");
+            OnItemRightClick.Invoke();
+        }
     }
 
 }

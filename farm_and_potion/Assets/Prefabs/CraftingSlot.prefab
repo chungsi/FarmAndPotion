@@ -54,7 +54,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 1285177130185433062}
   item: {fileID: 0}
-  draggedSlotIndex: {fileID: 11400000, guid: 008e8496fc8b7164a8ee3b4b9fcb4d8c, type: 2}
+  startSlotIndex: {fileID: 11400000, guid: 008e8496fc8b7164a8ee3b4b9fcb4d8c, type: 2}
   dropSlotIndex: {fileID: 11400000, guid: 746e90b2c66d0f0458e5e06c4d7232c3, type: 2}
   DragBeginEvent:
     m_PersistentCalls:
@@ -69,6 +69,20 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11400000, guid: 08c95a82d6654324da9198c0f5653d54, type: 2}
+        m_MethodName: Raise
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnItemRightClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: c8dc7ff668a91cf43b69771014c323c8, type: 2}
         m_MethodName: Raise
         m_Mode: 1
         m_Arguments:

@@ -5,6 +5,7 @@ public class CraftingUI : MonoBehaviour
 {
     public Transform itemsParent;
     [Space]
+    public FloatVariable startSlotIndex;
     public FloatVariable dropSlotIndex;
     public FloatVariable floatingItemMasterIndex;
     [Space]
@@ -45,6 +46,16 @@ public class CraftingUI : MonoBehaviour
 
             // SuccessfulDropEvent.Invoke();
         }
+    }
+
+    public void ResetSlotResponse() {
+        ItemSlot slot = slots[(int)startSlotIndex.value];
+        Item item = slot.item;
+        floatingItemMasterIndex.value = craftingList.GetIndexForItem(item);
+
+        slot.ClearSlot();
+        craftingList.RemoveItem(item);
+        SaveTheFloatingItemEvent.Invoke();
     }
 
     #endregion

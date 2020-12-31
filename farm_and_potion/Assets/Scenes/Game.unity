@@ -259,6 +259,7 @@ GameObject:
   - component: {fileID: 403043872}
   - component: {fileID: 403043875}
   - component: {fileID: 403043874}
+  - component: {fileID: 403043876}
   m_Layer: 5
   m_Name: CraftingPanel
   m_TagString: Untagged
@@ -363,18 +364,43 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemsParent: {fileID: 1396833306}
+  startSlotIndex: {fileID: 11400000, guid: 008e8496fc8b7164a8ee3b4b9fcb4d8c, type: 2}
   dropSlotIndex: {fileID: 11400000, guid: 746e90b2c66d0f0458e5e06c4d7232c3, type: 2}
   floatingItemMasterIndex: {fileID: 11400000, guid: 6c7ea5011d84c0c47b22f2d7cdff7d39,
     type: 2}
   craftingList: {fileID: 11400000, guid: 10448a77b9e5010469f95792f6182383, type: 2}
-  SuccessfulDropEvent:
-    m_PersistentCalls:
-      m_Calls: []
   SaveTheFloatingItemEvent:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11400000, guid: 29a2e92e7717c5f44b1f9753804eedc4, type: 2}
         m_MethodName: Raise
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &403043876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 403043870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdc09fa07da691f48906be639a4b59e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: c8dc7ff668a91cf43b69771014c323c8, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 403043875}
+        m_MethodName: ResetSlotResponse
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
