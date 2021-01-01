@@ -37,6 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\BookPage.cs" />
+     <Compile Include="Assets\Scripts\CraftingInventory.cs" />
      <Compile Include="Assets\Scripts\CraftingUI.cs" />
      <Compile Include="Assets\Scripts\DragHandler.cs" />
      <Compile Include="Assets\Scripts\DropHandler.cs" />

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edc1d2191a1632d4b8a100fda60357a7, type: 3}
   m_Name: Brew of Blessing
   m_EditorClassIdentifier: 
-  name: New Item
+  name: Brew of Blessing
   description: 
-  artwork: {fileID: 0}
+  artwork: {fileID: 21300000, guid: f4ae44b7adb894c4e997416c273ae14d, type: 3}

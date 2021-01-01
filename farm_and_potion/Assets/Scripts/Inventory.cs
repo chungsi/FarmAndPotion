@@ -12,10 +12,10 @@ public class Inventory : ScriptableObject {
     public List<Item> startItems;
     [Space]
     public bool useStartItemsOnInitialize;
-
+    [SerializeField]
     private List<Item> masterList = new List<Item>();
 
-    void OnValidate()
+    public virtual void OnValidate()
     {
         masterList.Clear();
 
@@ -24,10 +24,10 @@ public class Inventory : ScriptableObject {
 
     }
 
-    void OnEnable()
+    public virtual void OnEnable()
     {
         // reset list of items to be the startItems on new start
-        if (startItems.Count > 0 && useStartItemsOnInitialize)
+        if (useStartItemsOnInitialize && startItems.Count > 0)
         {
             Debug.Log("resetting inventory to use startItems");
             items.Clear();
@@ -55,7 +55,12 @@ public class Inventory : ScriptableObject {
     public bool RemoveItem(Item item)
     {
         return items.Remove(item);
-    } 
+    }
+    
+    public bool isEmpty()
+    {
+        return items.Count <= 0;
+    }
 
     public int GetMaxSpace()
     {

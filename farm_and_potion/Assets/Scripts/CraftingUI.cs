@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Events;
 
 public class CraftingUI : MonoBehaviour
@@ -9,7 +10,8 @@ public class CraftingUI : MonoBehaviour
     public FloatVariable dropSlotIndex;
     public FloatVariable floatingItemMasterIndex;
     [Space]
-    public Inventory craftingList;
+    public CraftingInventory craftingList;
+    public Button craftButton;
     [Space]    
     // public UnityEvent SuccessfulDropEvent;
     public UnityEvent SaveTheFloatingItemEvent;
@@ -22,8 +24,17 @@ public class CraftingUI : MonoBehaviour
         craftingList.ClearInventory();
     }
 
+    void ClearCraftingSlots() {
+        craftingList.ClearInventory();
+        foreach (ItemSlot slot in slots)
+            slot.ClearSlot();
+    }
+
     #region EventResponses
 
+    /* 
+        When an item is dropped onto a crafting slot
+     */
     public void DropResponse()
     {
         ItemSlot dropSlot = slots[(int)dropSlotIndex.value];
@@ -48,14 +59,40 @@ public class CraftingUI : MonoBehaviour
         }
     }
 
-    public void ResetSlotResponse() {
+    /*
+        clears the slot of the item that was in it
+     */    
+    public void ResetSlotResponse() 
+    {
         ItemSlot slot = slots[(int)startSlotIndex.value];
         Item item = slot.item;
         floatingItemMasterIndex.value = craftingList.GetIndexForItem(item);
 
         slot.ClearSlot();
         craftingList.RemoveItem(item);
+
         SaveTheFloatingItemEvent.Invoke();
+    }
+
+    /* When a crafting request comes in */
+    public void CraftRequestResponse()
+    {
+        Recipe possibleRecipe = craftingList.GetRecipeForItems(craftingList.items);
+
+        if (!craftingList.isEmpty() && 
+            possibleRecipe != null)
+        {
+            Debug.Log("recipe exists! creating " + possibleRecipe.name);
+
+            // invokes the event for each recipe result
+            foreach (Item item in possibleRecipe.results)
+            {
+                floatingItemMasterIndex.value = craftingList.GetIndexForItem(item);
+                SaveTheFloatingItemEvent.Invoke();
+            }
+
+            ClearCraftingSlots();
+        }
     }
 
     #endregion
