@@ -14,5 +14,22 @@ public class Recipe : ScriptableObject
 
     // output(s)
     public List<Item> results;
+
+    [SerializeField]
+    List<string> ingredientNames = new List<string>();
     
+    void OnEnable()
+    {
+        ingredientNames.Clear();
+        
+        foreach (Item item in ingredients)
+        {
+            ingredientNames.Add(item.name);
+        }
+    }
+
+    public List<string> GetInputNames()
+    {
+        return ingredientNames;
+    }
 }

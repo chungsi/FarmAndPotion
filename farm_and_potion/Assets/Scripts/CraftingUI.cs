@@ -2,44 +2,52 @@
 using UnityEngine.UI;
 using UnityEngine.Events;
 
-public class CraftingUI : MonoBehaviour
+public class CraftingUI : ItemContainerUI
 {
-    public Transform itemsParent;
-    [Space]
-    public FloatVariable startSlotIndex;
-    public FloatVariable dropSlotIndex;
-    public FloatVariable floatingItemMasterIndex;
-    public Item floatingItemVar;
-    [Space]
-    public CraftingInventory craftingList;
+    // public Transform itemsParent;
+    // [Space]
+    // public FloatVariable startSlotIndex;
+    // public FloatVariable dropSlotIndex;
+    // public FloatVariable floatingItemMasterIndex;
+    // public InventoryRuntimeSet inventorySet;
+    // [Space]
+    public CraftingInventory craftingList; // hrmmm takes its own inventory....
+    public InventoryRuntimeSet craftingSubset;
     [Space]    
-    // public UnityEvent SuccessfulDropEvent;
     public UnityEvent SaveTheFloatingItemEvent;
 
-    ItemSlot[] slots;
+    // ItemSlot[] slots;
 
-    void Start()
+    protected override void Start()
     {
-        slots = itemsParent.GetComponentsInChildren<ItemSlot>();
+        base.Start();
         craftingList.ClearInventory();
     }
 
-    void ClearCraftingSlots() {
+    protected override void AddItem(ItemObject itemObject)
+    {
+        craftingList.AddItem(itemObject.GetItem());
+        craftingSubset.Add(itemObject);
+    }
+
+    protected override void RemoveItem(ItemObject itemObject)
+    {
+        craftingList.RemoveItem(itemObject.GetItem());
+        craftingSubset.Remove(itemObject);
+    }
+
+    void ClearCraftingInventory() 
+    {
         craftingList.ClearInventory();
-        foreach (ItemSlot slot in slots)
-            slot.ClearSlot();
-    }
 
-    private Item GetFloatingItem()
-    {
-        Item newItem = Object.Instantiate(floatingItemVar);
-        // craftingList.GetItemForIndex((int)floatingItemMasterIndex.value)
-        return newItem;
-    }
+        for (int i = craftingSubset.items.Count - 1; i >= 0; i--)
+        {
+            ItemObject item = craftingSubset.items[i];
+            inventorySet.Remove(item);
+            craftingSubset.Remove(item);
 
-    private void SaveFloatingItem(Item newItem)
-    {
-        floatingItemVar.OverwriteItemWithItem(newItem);
+            Destroy(item.gameObject);
+        }
     }
 
     #region EventResponses
@@ -50,27 +58,31 @@ public class CraftingUI : MonoBehaviour
     public void DropResponse()
     {
         ItemSlot dropSlot = slots[(int)dropSlotIndex.value];
+        ItemObject floatingItem = GetFloatingItem();
 
-        // if (floatingItemMasterIndex.value >= 0) 
-        // {
-            Item dropItem = GetFloatingItem();
-            Debug.Log("getting floating item: " + dropItem.name);
 
-            if (!dropSlot.isEmpty())
-            {
-                // save the item originally in the dropSlot
-                // floatingItemMasterIndex.value = craftingList.GetIndexForItem(dropSlot.item);
-                SaveFloatingItem(dropSlot.item);
-                craftingList.RemoveItem(dropSlot.item);
-                
-                SaveTheFloatingItemEvent.Invoke();
-            }
+        // Just drop the item when dropSlot is empty
+        if (dropSlot.isEmpty()) 
+        {
+            AddItem(floatingItem);
+            AddItemToSlot(floatingItem, dropSlot);
+        } 
+        // Swap the two items if the dropSlot isn't empty
+        else if (!dropSlot.isEmpty())
+        {
+            // save the existing item first
+            // and get the start slot from the itemObject; maybe not use GetComponent?
 
-            dropSlot.AddItem(dropItem);
-            craftingList.AddItem(dropItem);
+            ItemObject existingItem = dropSlot.GetComponentInChildren<ItemObject>();
+            floatingItemMasterIndex.value = inventorySet.GetIndex(existingItem); // save item
 
-            // SuccessfulDropEvent.Invoke();
-        // }
+            RemoveItem(existingItem);
+            AddItem(floatingItem);
+
+            AddItemToSlot(floatingItem, dropSlot);
+
+            SaveTheFloatingItemEvent.Invoke();
+        }
     }
 
     /*
@@ -78,16 +90,9 @@ public class CraftingUI : MonoBehaviour
      */    
     public void ResetSlotResponse() 
     {
-        ItemSlot slot = slots[(int)startSlotIndex.value];
-        Item item = slot.item;
-
-        Debug.Log("Should be saving this item into floating var: " + item.name);
-
-        SaveFloatingItem(item);
-
-        slot.ClearSlot();
-        craftingList.RemoveItem(item);
-
+        ItemObject item = GetFloatingItem();
+        RemoveItem(item);
+        
         SaveTheFloatingItemEvent.Invoke();
     }
 
@@ -95,21 +100,24 @@ public class CraftingUI : MonoBehaviour
     public void CraftRequestResponse()
     {
         // TODO: will need to change how the results are output, to account for stats
-        Recipe possibleRecipe = craftingList.GetRecipeForItems(craftingList.items);
+        // Recipe possibleRecipe = craftingList.GetRecipeForItems(craftingList.items);
 
-        if (!craftingList.isEmpty() && 
-            possibleRecipe != null)
+        Recipe possibleRecipe = craftingList.GetRecipeForCurrent();
+
+        if (possibleRecipe != null)
         {
             Debug.Log("recipe exists! creating " + possibleRecipe.name);
-
-            // invokes the event for each recipe result
             foreach (Item item in possibleRecipe.results)
             {
-                SaveFloatingItem(item);
+                ItemObject itemObject = ItemObject.Instantiate(itemObjectPrefab, slots[0].transform);
+                Item uniqueItem = Object.Instantiate(item);
+                itemObject.SetItem(uniqueItem);
+
+                SaveFloatingItem(itemObject);
                 SaveTheFloatingItemEvent.Invoke();
             }
 
-            ClearCraftingSlots();
+            ClearCraftingInventory();
         }
     }
 

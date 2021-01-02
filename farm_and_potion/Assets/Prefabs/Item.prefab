@@ -73,6 +73,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: 9e71ef68404d5bc42a5bb97811029bac, type: 2}
   artwork: {fileID: 9147805766235892422}
+  inventoryRuntimeSet: {fileID: 11400000, guid: 0ac82322d9fe9534bb69124d21ec25b0,
+    type: 2}
+  floatingItemSetIndex: {fileID: 11400000, guid: 6c7ea5011d84c0c47b22f2d7cdff7d39,
+    type: 2}
+  DragBeginEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  DraggingEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  DragEndEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  OnItemRightClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: c8dc7ff668a91cf43b69771014c323c8, type: 2}
+        m_MethodName: Raise
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4417229657589995248
 GameObject:
   m_ObjectHideFlags: 0

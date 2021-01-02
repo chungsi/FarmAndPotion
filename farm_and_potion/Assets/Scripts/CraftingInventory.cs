@@ -7,25 +7,29 @@ using UnityEditor;
 [CreateAssetMenu]
 public class CraftingInventory : Inventory
 {
+    [SerializeField]
+    private List<string> craftingInputNames = new List<string>();
     private List<Recipe> recipes = new List<Recipe>();
 
     public override void OnValidate()
     {
         base.OnValidate();
 
-        // is there a better way to optimize this? see if a key exists first?
         recipes.Clear();
+        craftingInputNames.Clear();
+
         PopulateCraftingList();
     }
 
     public override void OnEnable()
     {
-        Debug.Log("crafting inventory initialize");
+        // Debug.Log("crafting inventory initialize");
     }
 
+    // is there a better way to optimize this? see if a key exists first?
     private void PopulateCraftingList() 
     {
-        Debug.Log("Populating master list of recipes...");
+        // Debug.Log("Populating master list of recipes...");
 
         string[] assetNames = AssetDatabase.FindAssets("t:Recipe", new[] { "Assets/Recipes" });
         foreach (string SOName in assetNames)
@@ -37,38 +41,106 @@ public class CraftingInventory : Inventory
         }
     }
 
-    public bool ContainsRecipeForItems(List<Item> inputs)
+    public override bool AddItem(Item item)
     {
-        Debug.Log("checking if recipe and inputs match");
-        Recipe possibleRecipe = GetRecipeForItems(inputs);
+        if (items.Count >= space)
+            return false;
+        
+        items.Add(item);
+        craftingInputNames.Add(item.name);
+        // Debug.Log("adding item to crafting list: " + item.name);
 
-        return possibleRecipe != null;
+        return true;
     }
 
-    public Recipe GetRecipeForItems(List<Item> inputs)
+    public override bool RemoveItem(Item item)
     {
+        if (!items.Contains(item))
+            return false;
+
+        craftingInputNames.Remove(item.name);
+        items.Remove(item);
+        return true;
+    }
+
+    public override void ClearInventory()
+    {
+        base.ClearInventory();
+        craftingInputNames.Clear();
+    }
+
+    // public bool ContainsRecipeForItems(List<Item> inputs)
+    // {
+    //     Debug.Log("checking if recipe and inputs match");
+    //     Recipe possibleRecipe = GetRecipeForItems(inputs);
+
+    //     return possibleRecipe != null;
+    // }
+
+    public Recipe GetRecipeForCurrent()
+    {
+        string str = "checking if recipe exists for : ";
+        foreach (string name in craftingInputNames)
+        {
+            str += name + " ";
+        }
+        Debug.Log(str);
+
         foreach (Recipe recipe in recipes)
         {
-            List<Item> recipeIngredients = recipe.ingredients;
-            List<Item> craftingInputs = inputs;
+            List<string> recipeIngredients = recipe.GetInputNames();
 
-            if (recipeIngredients.Count == craftingInputs.Count &&
-                recipeIngredients.All(inputs.Contains))
+            Debug.Log("list counts; recipe ingredients: " + recipeIngredients.Count + "; crafting: " + craftingInputNames.Count);
+
+            if (Enumerable.SequenceEqual(recipeIngredients.OrderBy(s => s).ToList(), 
+                craftingInputNames.OrderBy(t => t).ToList()))
                 return recipe;
+            
+            // if (recipeIngredients.Count == craftingInputNames.Count &&
+            //     recipeIngredients.All(craftingInputNames.Contains))
+            // {
+            //     return recipe;
+            // }
         }
 
         return null;
-
-        // IEnumerable<Recipe> recipeQuery = 
-        //     from recipe in recipes
-        //     where recipe.ingredients.Equals(inputs)
-        //     select recipe;
-        
-        // List<Recipe> list = recipeQuery.ToList<Recipe>();
-
-        // Debug.Log("printing.... " + recipeQuery.Count() + "; list count... " + list.Count);
-
-        // return recipeQuery.FirstOrDefault();
     }
+
+    public List<Item> GetRecipeOutputsForCurrent()
+    {
+        Recipe recipe = GetRecipeForCurrent();
+
+        if (recipe != null)
+            return recipe.results;
+
+        return null;
+    }
+
+
+    // public Recipe GetRecipeForItems(List<Item> inputs)
+    // {
+    //     foreach (Recipe recipe in recipes)
+    //     {
+    //         List<Item> recipeIngredients = recipe.ingredients;
+    //         List<Item> craftingInputs = inputs;
+
+    //         if (recipeIngredients.Count == craftingInputs.Count &&
+    //             recipeIngredients.All(inputs.Contains))
+    //             return recipe;
+    //     }
+
+    //     return null;
+
+    //     // IEnumerable<Recipe> recipeQuery = 
+    //     //     from recipe in recipes
+    //     //     where recipe.ingredients.Equals(inputs)
+    //     //     select recipe;
+        
+    //     // List<Recipe> list = recipeQuery.ToList<Recipe>();
+
+    //     // Debug.Log("printing.... " + recipeQuery.Count() + "; list count... " + list.Count);
+
+    //     // return recipeQuery.FirstOrDefault();
+    // }
 
 }

@@ -27,18 +27,18 @@ public class Inventory : ScriptableObject {
     public virtual void OnEnable()
     {
         // reset list of items to be the startItems on new start
-        if (useStartItemsOnInitialize && startItems.Count > 0)
-        {
-            Debug.Log("resetting inventory to use startItems");
+        // if (useStartItemsOnInitialize && startItems.Count > 0)
+        // {
+        //     Debug.Log("resetting inventory to use startItems");
             items.Clear();
-            foreach (Item item in startItems)
-            {
-                items.Add(item);
-            }
-        }
+        //     foreach (Item item in startItems)
+        //     {
+        //         items.Add(item);
+        //     }
+        // }
     }
 
-    public bool AddItem(Item item)
+    public virtual bool AddItem(Item item)
     {
         Debug.Log($"available space in the inventory: {space}; items count: {items.Count}");
         if (items.Count >= space)
@@ -52,7 +52,7 @@ public class Inventory : ScriptableObject {
         return true;
     }
 
-    public bool RemoveItem(Item item)
+    public virtual bool RemoveItem(Item item)
     {
         return items.Remove(item);
     }
@@ -82,7 +82,7 @@ public class Inventory : ScriptableObject {
         return masterList[i];
     }
 
-    public void ClearInventory()
+    public virtual void ClearInventory()
     {
         items.Clear();
     }

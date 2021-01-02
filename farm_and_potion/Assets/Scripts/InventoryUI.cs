@@ -4,33 +4,26 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 // using UnityEngine.EventSystems;
 
-public class InventoryUI : MonoBehaviour 
+public class InventoryUI : ItemContainerUI 
 {
-    public Inventory inventory;
     public TextMeshProUGUI displayText;
-    public Transform itemsParent;
-    public Image draggedItem;
-    public ItemUI itemUIPrefab;
-    [Space]
-    public FloatVariable draggedSlotIndex;
-    public FloatVariable dropSlotIndex;
-    public FloatVariable floatingItemMasterIndex;
-    public Item floatingItemVar;
 
-    // private CanvasGroup draggedItemCanvasGroup;
-    private ItemSlot startDraggedSlot;
-    private ItemSlot draggedSlot;
+    // public Inventory inventory;
+    // public Transform itemsParent;
+    // [Space]
+    // public FloatVariable draggedSlotIndex;
+    // public FloatVariable dropSlotIndex;
+    // public FloatVariable floatingItemMasterIndex;
+    // public InventoryRuntimeSet inventorySet;
 
-    ItemSlot[] slots;
+    // private ItemSlot startDraggedSlot;
+    // private ItemSlot draggedSlot;
 
-    void Start()
+    // ItemSlot[] slots;
+
+    protected override void Start()
     {
-        Debug.Log("InventoryUI Start");
-
-        // if (draggedItem != null)
-        //     draggedItemCanvasGroup = draggedItem.GetComponent<CanvasGroup>();
-        
-        slots = itemsParent.GetComponentsInChildren<ItemSlot>();
+        base.Start();
 
         SetupUI();
     }
@@ -39,115 +32,86 @@ public class InventoryUI : MonoBehaviour
     {
         Debug.Log("InventoryUI is updating!");
 
-        for (int i = 0; i < inventory.GetItemCount(); i++)
+        for (int i = 0; i < inventory.startItems.Count; i++)
         {
-            // ItemUI ui = ItemUI.Instantiate(itemUIPrefab, slots[i].transform);
-            // ui.SetItem(inventory.items[i]);
-            Item uniqueItem = Object.Instantiate(inventory.items[i]);
+            ItemObject ui = ItemObject.Instantiate(itemObjectPrefab, slots[i].transform);
+            Item uniqueItem = Object.Instantiate(inventory.startItems[i]);
+
+            inventory.AddItem(uniqueItem); // setup start
+            ui.SetItem(uniqueItem);
             slots[i].AddItem(uniqueItem);
         }
     }
 
-    private void EnableDragUIForItem(Item i)
-    {
-        draggedItem.enabled = true;
-        draggedItem.sprite = i.artwork;
-    }
+    // public void AddItem(ItemObject itemObject)
+    // {
+    //     inventory.AddItem(itemObject.GetItem());
+    //     inventorySet.Add(itemObject);
+    // }
 
-    private void ResetDragUI()
-    {
-        draggedItem.enabled = false;
-        // floatingItemMasterIndex.value = -1f;
-        startDraggedSlot = null;
-    }
+    // public void RemoveItem(ItemObject itemObject)
+    // {
+    //     inventory.RemoveItem(itemObject.GetItem());
+    //     inventorySet.Remove(itemObject);
+    // }
 
-    private void SaveItemToFloatingVar(Item saveItem)
-    {
-        // floatingItemMasterIndex.value = inventory.GetIndexForItem(saveItem); // when items aren't unique
+    // private ItemObject GetFloatingItem()
+    // {
+    //     return inventorySet.GetItem((int)floatingItemMasterIndex.value);
+    // }
 
-        floatingItemVar.OverwriteItemWithItem(saveItem); // when items are unique
-    }
-
-    private Item GetFloatingItem()
-    {
-        Item newItem = Object.Instantiate(floatingItemVar);
-        // inventory.GetItemForIndex((int)floatingItemMasterIndex.value)
-        return newItem;
-    }
+    // private void AddItemToSlot(ItemObject item, ItemSlot slot)
+    // {
+    //     item.transform.SetParent(slot.transform);
+    //     item.transform.localPosition = new Vector3(0,0,0);
+    // }
 
     #region EventResponses
-
-    public void BeginDragResponse() 
-    {
-        int index = (int)draggedSlotIndex.value;
-        startDraggedSlot = slots[index];
-        Item item = startDraggedSlot.item;
-
-        SaveItemToFloatingVar(item);
-
-        EnableDragUIForItem(item);
-
-        Debug.Log(item.name + " is being dragged from slot " + index);
-    }
-
-    public void DragResponse() 
-    {
-        draggedItem.transform.position = Input.mousePosition;
-    }
-
-    public void DragEndResponse()
-    {
-        // only disable the dragging image
-        draggedItem.enabled = false;
-    }
 
     public void DropResponse() 
     {
         ItemSlot dropSlot = slots[(int)dropSlotIndex.value];
-        // Debug.Log("Drop slot is index " + dropSlotIndex.value);
+        ItemObject floatingItem = GetFloatingItem();
 
         // Just drop the item when dropSlot is empty
-        if (startDraggedSlot != null && dropSlot.isEmpty()) 
+        if (dropSlot.isEmpty()) 
         {
-            // Debug.Log(startDraggedSlot.item.name + " is being dropped into " + dropSlot.name);
-            dropSlot.AddItem(startDraggedSlot.item);
-            startDraggedSlot.ClearSlot();
+            AddItemToSlot(floatingItem, dropSlot);
         } 
         // Swap the two items if the dropSlot isn't empty
-        else if (startDraggedSlot != null && !dropSlot.isEmpty()) 
+        else if (!dropSlot.isEmpty())
         {
-            Item savedItem = dropSlot.item;
+            // save the existing item first
+            // and get the start slot from the itemObject; maybe not use GetComponent?
+            ItemSlot startSlot = floatingItem.GetParentItemSlot();
+            ItemObject existingItem = dropSlot.GetComponentInChildren<ItemObject>();
 
-            dropSlot.AddItem(startDraggedSlot.item);
-            startDraggedSlot.AddItem(savedItem);
+            AddItemToSlot(floatingItem, dropSlot);
+            AddItemToSlot(existingItem, startSlot);
         }
-
-        ResetDragUI();
     }
 
     // this means the item has successfully been dropped into a crafting slot
     public void CraftingPanelDropResponse()
     {
-        inventory.RemoveItem(startDraggedSlot.item);
-        startDraggedSlot.ClearSlot();
+        ItemObject item = GetFloatingItem();
+        RemoveItem(item);
 
-        Debug.Log("InventoryUI cleaned itself up; size is now " + inventory.GetItemCount());
-        
-        ResetDragUI();
+        // Debug.Log("InventoryUI cleaned itself up; size is now " + inventory.GetItemCount());
     }
 
     // add the "floating item" to the inventory
-    public void InsertAFloatingItem() {
-        // Debug.Log($"{inventory.name}'s size is currently: { inventory.GetItemCount() }");
-
-        Item newItem = GetFloatingItem();
-        inventory.AddItem(newItem);
+    public void InsertAFloatingItem() 
+    {
+        Debug.Log("inventory is saving a floating item...");
+        ItemObject newItem = GetFloatingItem();
+        AddItem(newItem);
 
         foreach (ItemSlot slot in slots)
         {
             if (slot.isEmpty())
             {
-                slot.AddItem(newItem);
+                AddItemToSlot(newItem, slot);
                 break;
             }
         }

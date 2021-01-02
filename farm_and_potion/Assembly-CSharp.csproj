@@ -47,11 +47,14 @@
      <Compile Include="Assets\Scripts\Inventory.cs" />
      <Compile Include="Assets\Scripts\InventoryUI.cs" />
      <Compile Include="Assets\Scripts\Item.cs" />
+     <Compile Include="Assets\Scripts\ItemContainerUI.cs" />
+     <Compile Include="Assets\Scripts\ItemObject.cs" />
      <Compile Include="Assets\Scripts\ItemSlot.cs" />
-     <Compile Include="Assets\Scripts\ItemUI.cs" />
      <Compile Include="Assets\Scripts\MainMenu.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Recipe.cs" />
+     <Compile Include="Assets\Sets\InventoryRuntimeSet.cs" />
+     <Compile Include="Assets\Sets\RuntimeSet.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
