@@ -370,8 +370,8 @@ MonoBehaviour:
   dropSlotIndex: {fileID: 11400000, guid: 746e90b2c66d0f0458e5e06c4d7232c3, type: 2}
   floatingItemMasterIndex: {fileID: 11400000, guid: 6c7ea5011d84c0c47b22f2d7cdff7d39,
     type: 2}
+  floatingItemVar: {fileID: 11400000, guid: ef299ae58422a2e47a38c9d8a6004b7e, type: 2}
   craftingList: {fileID: 11400000, guid: 66df97e312abdde4f977fe1fcd0a1e1f, type: 2}
-  craftButton: {fileID: 0}
   SaveTheFloatingItemEvent:
     m_PersistentCalls:
       m_Calls:
@@ -2246,6 +2246,7 @@ MonoBehaviour:
   dropSlotIndex: {fileID: 11400000, guid: 746e90b2c66d0f0458e5e06c4d7232c3, type: 2}
   floatingItemMasterIndex: {fileID: 11400000, guid: 6c7ea5011d84c0c47b22f2d7cdff7d39,
     type: 2}
+  floatingItemVar: {fileID: 11400000, guid: ef299ae58422a2e47a38c9d8a6004b7e, type: 2}
 --- !u!114 &1472458586
 MonoBehaviour:
   m_ObjectHideFlags: 0

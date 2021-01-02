@@ -15,6 +15,7 @@ public class InventoryUI : MonoBehaviour
     public FloatVariable draggedSlotIndex;
     public FloatVariable dropSlotIndex;
     public FloatVariable floatingItemMasterIndex;
+    public Item floatingItemVar;
 
     // private CanvasGroup draggedItemCanvasGroup;
     private ItemSlot startDraggedSlot;
@@ -42,7 +43,8 @@ public class InventoryUI : MonoBehaviour
         {
             // ItemUI ui = ItemUI.Instantiate(itemUIPrefab, slots[i].transform);
             // ui.SetItem(inventory.items[i]);
-            slots[i].AddItem(inventory.items[i]);
+            Item uniqueItem = Object.Instantiate(inventory.items[i]);
+            slots[i].AddItem(uniqueItem);
         }
     }
 
@@ -59,6 +61,20 @@ public class InventoryUI : MonoBehaviour
         startDraggedSlot = null;
     }
 
+    private void SaveItemToFloatingVar(Item saveItem)
+    {
+        // floatingItemMasterIndex.value = inventory.GetIndexForItem(saveItem); // when items aren't unique
+
+        floatingItemVar.OverwriteItemWithItem(saveItem); // when items are unique
+    }
+
+    private Item GetFloatingItem()
+    {
+        Item newItem = Object.Instantiate(floatingItemVar);
+        // inventory.GetItemForIndex((int)floatingItemMasterIndex.value)
+        return newItem;
+    }
+
     #region EventResponses
 
     public void BeginDragResponse() 
@@ -67,7 +83,7 @@ public class InventoryUI : MonoBehaviour
         startDraggedSlot = slots[index];
         Item item = startDraggedSlot.item;
 
-        floatingItemMasterIndex.value = inventory.GetIndexForItem(item);
+        SaveItemToFloatingVar(item);
 
         EnableDragUIForItem(item);
 
@@ -88,12 +104,12 @@ public class InventoryUI : MonoBehaviour
     public void DropResponse() 
     {
         ItemSlot dropSlot = slots[(int)dropSlotIndex.value];
-        Debug.Log("Drop slot is index " + dropSlotIndex.value);
+        // Debug.Log("Drop slot is index " + dropSlotIndex.value);
 
         // Just drop the item when dropSlot is empty
         if (startDraggedSlot != null && dropSlot.isEmpty()) 
         {
-            Debug.Log(startDraggedSlot.item.name + " is being dropped into " + dropSlot.name);
+            // Debug.Log(startDraggedSlot.item.name + " is being dropped into " + dropSlot.name);
             dropSlot.AddItem(startDraggedSlot.item);
             startDraggedSlot.ClearSlot();
         } 
@@ -122,8 +138,9 @@ public class InventoryUI : MonoBehaviour
 
     // add the "floating item" to the inventory
     public void InsertAFloatingItem() {
-        Debug.Log($"{inventory.name}'s size is currently: { inventory.GetItemCount() }");
-        Item newItem = inventory.GetItemForIndex((int)floatingItemMasterIndex.value);
+        // Debug.Log($"{inventory.name}'s size is currently: { inventory.GetItemCount() }");
+
+        Item newItem = GetFloatingItem();
         inventory.AddItem(newItem);
 
         foreach (ItemSlot slot in slots)

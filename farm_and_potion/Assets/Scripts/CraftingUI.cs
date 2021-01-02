@@ -9,9 +9,9 @@ public class CraftingUI : MonoBehaviour
     public FloatVariable startSlotIndex;
     public FloatVariable dropSlotIndex;
     public FloatVariable floatingItemMasterIndex;
+    public Item floatingItemVar;
     [Space]
     public CraftingInventory craftingList;
-    public Button craftButton;
     [Space]    
     // public UnityEvent SuccessfulDropEvent;
     public UnityEvent SaveTheFloatingItemEvent;
@@ -30,6 +30,18 @@ public class CraftingUI : MonoBehaviour
             slot.ClearSlot();
     }
 
+    private Item GetFloatingItem()
+    {
+        Item newItem = Object.Instantiate(floatingItemVar);
+        // craftingList.GetItemForIndex((int)floatingItemMasterIndex.value)
+        return newItem;
+    }
+
+    private void SaveFloatingItem(Item newItem)
+    {
+        floatingItemVar.OverwriteItemWithItem(newItem);
+    }
+
     #region EventResponses
 
     /* 
@@ -39,14 +51,16 @@ public class CraftingUI : MonoBehaviour
     {
         ItemSlot dropSlot = slots[(int)dropSlotIndex.value];
 
-        if (floatingItemMasterIndex.value >= 0) 
-        {
-            Item dropItem = craftingList.GetItemForIndex((int)floatingItemMasterIndex.value);
+        // if (floatingItemMasterIndex.value >= 0) 
+        // {
+            Item dropItem = GetFloatingItem();
+            Debug.Log("getting floating item: " + dropItem.name);
 
-            // save the item originally in the dropSlot
             if (!dropSlot.isEmpty())
             {
-                floatingItemMasterIndex.value = craftingList.GetIndexForItem(dropSlot.item);
+                // save the item originally in the dropSlot
+                // floatingItemMasterIndex.value = craftingList.GetIndexForItem(dropSlot.item);
+                SaveFloatingItem(dropSlot.item);
                 craftingList.RemoveItem(dropSlot.item);
                 
                 SaveTheFloatingItemEvent.Invoke();
@@ -56,7 +70,7 @@ public class CraftingUI : MonoBehaviour
             craftingList.AddItem(dropItem);
 
             // SuccessfulDropEvent.Invoke();
-        }
+        // }
     }
 
     /*
@@ -66,7 +80,10 @@ public class CraftingUI : MonoBehaviour
     {
         ItemSlot slot = slots[(int)startSlotIndex.value];
         Item item = slot.item;
-        floatingItemMasterIndex.value = craftingList.GetIndexForItem(item);
+
+        Debug.Log("Should be saving this item into floating var: " + item.name);
+
+        SaveFloatingItem(item);
 
         slot.ClearSlot();
         craftingList.RemoveItem(item);
@@ -77,6 +94,7 @@ public class CraftingUI : MonoBehaviour
     /* When a crafting request comes in */
     public void CraftRequestResponse()
     {
+        // TODO: will need to change how the results are output, to account for stats
         Recipe possibleRecipe = craftingList.GetRecipeForItems(craftingList.items);
 
         if (!craftingList.isEmpty() && 
@@ -87,7 +105,7 @@ public class CraftingUI : MonoBehaviour
             // invokes the event for each recipe result
             foreach (Item item in possibleRecipe.results)
             {
-                floatingItemMasterIndex.value = craftingList.GetIndexForItem(item);
+                SaveFloatingItem(item);
                 SaveTheFloatingItemEvent.Invoke();
             }
 
