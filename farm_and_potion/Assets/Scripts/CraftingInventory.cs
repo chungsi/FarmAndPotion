@@ -8,17 +8,16 @@ using UnityEditor;
 public class CraftingInventory : Inventory
 {
     [SerializeField]
-    private List<string> craftingInputNames = new List<string>();
+    private List<Stat> allStats = new List<Stat>();
+    [SerializeField]
+    private List<Ailment> craftingItemAilments = new List<Ailment>();
     private List<Recipe> recipes = new List<Recipe>();
 
     public override void OnValidate()
     {
         base.OnValidate();
-
-        recipes.Clear();
-        craftingInputNames.Clear();
-
         PopulateCraftingList();
+        PopulateStatList();
     }
 
     public override void OnEnable()
@@ -30,6 +29,7 @@ public class CraftingInventory : Inventory
     private void PopulateCraftingList() 
     {
         // Debug.Log("Populating master list of recipes...");
+        recipes.Clear();
 
         string[] assetNames = AssetDatabase.FindAssets("t:Recipe", new[] { "Assets/Recipes" });
         foreach (string SOName in assetNames)
@@ -41,14 +41,28 @@ public class CraftingInventory : Inventory
         }
     }
 
+    private void PopulateStatList() 
+    {
+        // Debug.Log("Populating master list of recipes...");
+        allStats.Clear();
+
+        string[] assetNames = AssetDatabase.FindAssets("t:Stat", new[] { "Assets/Stats" });
+        foreach (string SOName in assetNames)
+        {
+            var SOpath = AssetDatabase.GUIDToAssetPath(SOName);
+            var stat = AssetDatabase.LoadAssetAtPath<Stat>(SOpath);
+
+            allStats.Add(stat);
+        }
+    }
+
     public override bool AddItem(Item item)
     {
         if (items.Count >= space)
             return false;
         
         items.Add(item);
-        craftingInputNames.Add(item.name);
-        // Debug.Log("adding item to crafting list: " + item.name);
+        craftingItemAilments = craftingItemAilments.Concat(item.GetAilments()).ToList();
 
         return true;
     }
@@ -58,7 +72,7 @@ public class CraftingInventory : Inventory
         if (!items.Contains(item))
             return false;
 
-        craftingInputNames.Remove(item.name);
+        craftingItemAilments = craftingItemAilments.Except(item.GetAilments()).ToList();
         items.Remove(item);
         return true;
     }
@@ -66,41 +80,21 @@ public class CraftingInventory : Inventory
     public override void ClearInventory()
     {
         base.ClearInventory();
-        craftingInputNames.Clear();
+        craftingItemAilments.Clear();
     }
-
-    // public bool ContainsRecipeForItems(List<Item> inputs)
-    // {
-    //     Debug.Log("checking if recipe and inputs match");
-    //     Recipe possibleRecipe = GetRecipeForItems(inputs);
-
-    //     return possibleRecipe != null;
-    // }
 
     public Recipe GetRecipeForCurrent()
     {
-        string str = "checking if recipe exists for : ";
-        foreach (string name in craftingInputNames)
-        {
-            str += name + " ";
-        }
-        Debug.Log(str);
-
         foreach (Recipe recipe in recipes)
         {
-            List<string> recipeIngredients = recipe.GetInputNames();
-
-            Debug.Log("list counts; recipe ingredients: " + recipeIngredients.Count + "; crafting: " + craftingInputNames.Count);
-
-            if (Enumerable.SequenceEqual(recipeIngredients.OrderBy(s => s).ToList(), 
-                craftingInputNames.OrderBy(t => t).ToList()))
-                return recipe;
+            List<Ailment> recipeAilments = recipe.GetAilments();
             
-            // if (recipeIngredients.Count == craftingInputNames.Count &&
-            //     recipeIngredients.All(craftingInputNames.Contains))
-            // {
-            //     return recipe;
-            // }
+            // checks for size equivalence first because .All method specs.... but change?
+            if (recipeAilments.Count == craftingItemAilments.Count &&
+                recipeAilments.All(craftingItemAilments.Contains))
+            {
+                return recipe;
+            }
         }
 
         return null;
@@ -111,9 +105,35 @@ public class CraftingInventory : Inventory
         Recipe recipe = GetRecipeForCurrent();
 
         if (recipe != null)
-            return recipe.results;
+            return recipe.GetResults();
 
         return null;
+    }
+
+    public Dictionary<Stat, int> CalculateStats()
+    {
+        Dictionary<Stat, int> newStats = new Dictionary<Stat, int>();
+
+        Debug.Log("calculating stats... ");
+
+        foreach (Stat stat in allStats)
+        {
+            int statValue = 0;
+
+            // looping through list of crafting items because could be an indefinite amount
+            foreach (Item item in items)
+            {
+                if (item.GetStats().ContainsKey(stat))
+                {
+                    statValue += item.GetStats()[stat];
+                    // could somehow add modifiers & bonuses stuff here?
+                }
+            }
+            
+            newStats.Add(stat, statValue);
+        }
+
+        return newStats;
     }
 
 

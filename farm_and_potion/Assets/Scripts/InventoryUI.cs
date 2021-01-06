@@ -66,7 +66,7 @@ public class InventoryUI : ItemContainerUI
     //     item.transform.localPosition = new Vector3(0,0,0);
     // }
 
-    #region EventResponses
+    #region Event Responses
 
     public void DropResponse() 
     {

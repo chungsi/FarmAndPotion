@@ -24,7 +24,7 @@ public class BookPage : MonoBehaviour
 
     public void updatePage() {
         nameText.text = item.name;
-        descripText.text = item.description;
+        // descripText.text = item.description;
 
         artwork.sprite = item.artwork;
     }

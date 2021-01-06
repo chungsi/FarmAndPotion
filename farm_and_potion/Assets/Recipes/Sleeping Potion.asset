@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23bf843271ba9e143818e6fb62dee064, type: 3}
+  m_Name: Sleeping Potion
+  m_EditorClassIdentifier: 
+  ailmentRequirements:
+  - {fileID: 11400000, guid: a7b36688f708ec849b9dfff0c3b9b659, type: 2}
+  - {fileID: 11400000, guid: 97ce9cc9a46a3d44e82576c2ae4767eb, type: 2}
+  results:
+  - {fileID: 11400000, guid: 8501d5aac4085a24caf718f45a3b045c, type: 2}

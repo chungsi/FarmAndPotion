@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
@@ -107,11 +108,14 @@ public class CraftingUI : ItemContainerUI
         if (possibleRecipe != null)
         {
             Debug.Log("recipe exists! creating " + possibleRecipe.name);
-            foreach (Item item in possibleRecipe.results)
+            foreach (Item item in possibleRecipe.GetResults())
             {
                 ItemObject itemObject = ItemObject.Instantiate(itemObjectPrefab, slots[0].transform);
                 Item uniqueItem = Object.Instantiate(item);
                 itemObject.SetItem(uniqueItem);
+
+                Dictionary<Stat, int> newStats = craftingList.CalculateStats();
+                itemObject.SetItemStats(newStats);
 
                 SaveFloatingItem(itemObject);
                 SaveTheFloatingItemEvent.Invoke();

@@ -1,35 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "New Recipe", menuName = "Recipe")]
 public class Recipe : ScriptableObject
 {
-    // inputs
-    // to consider: will more complex recipes just take more inputs at once?
-    public List<Item> ingredients;
-    // public List<Item> ingredients = new List<Item>();
-    // public Item input1;
-    // public Item input2;
-
-    // output(s)
-    public List<Item> results;
-
-    [SerializeField]
-    List<string> ingredientNames = new List<string>();
+    [SerializeField] List<Ailment> ailmentRequirements = new List<Ailment>();
+    [SerializeField] List<Item> results = new List<Item>();
     
-    void OnEnable()
+    public List<Ailment> GetAilments()
     {
-        ingredientNames.Clear();
-        
-        foreach (Item item in ingredients)
-        {
-            ingredientNames.Add(item.name);
-        }
+        return ailmentRequirements;
     }
 
-    public List<string> GetInputNames()
+    public List<Item> GetResults()
     {
-        return ingredientNames;
+        return results;
     }
 }

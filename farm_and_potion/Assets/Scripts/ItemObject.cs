@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 using UnityEngine.Events;
@@ -49,6 +50,16 @@ public class ItemObject : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDr
     public Item GetItem()
     {
         return item;
+    }
+
+    public Dictionary<Stat, int> GetItemStats()
+    {
+        return item.GetStats();
+    }
+
+    public void SetItemStats(Dictionary<Stat, int> newStats)
+    {
+        item.PopulateStats(newStats);
     }
 
     public Transform GetStartParentTransform()
