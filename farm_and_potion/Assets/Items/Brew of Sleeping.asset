@@ -14,11 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Brew of Sleeping
   artwork: {fileID: 21300000, guid: f4ae44b7adb894c4e997416c273ae14d, type: 3}
+  itemType: {fileID: 11400000, guid: 0693d0b162cd5f74090885af4f4008ef, type: 2}
   description: 
   solvesAilments:
   - {fileID: 11400000, guid: a7b36688f708ec849b9dfff0c3b9b659, type: 2}
   - {fileID: 11400000, guid: 97ce9cc9a46a3d44e82576c2ae4767eb, type: 2}
-  strength: 0
-  luck: 0
-  dex: 0
-  mag: 0
+  stats:
+  - stat: {fileID: 11400000, guid: c4568f1005b13924fb7259ef398c64d1, type: 2}
+    value: 0
+  - stat: {fileID: 11400000, guid: 9c089439c68db434683a50a572918064, type: 2}
+    value: 0
+  - stat: {fileID: 11400000, guid: 803bbec66b6826b4a9d0578dfbe99588, type: 2}
+    value: 0
+  - stat: {fileID: 11400000, guid: 7172949e6099cc947b4f41d418806ae9, type: 2}
+    value: 0

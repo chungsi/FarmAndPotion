@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Torched Perunika
   artwork: {fileID: 21300000, guid: 4c4467c6acc9353458a1935d2fdc0b4d, type: 3}
+  itemType: {fileID: 11400000, guid: 4677bc7ab1d02b24393f3b150856bd49, type: 2}
   description: 
   solvesAilments:
   - {fileID: 11400000, guid: 97ce9cc9a46a3d44e82576c2ae4767eb, type: 2}

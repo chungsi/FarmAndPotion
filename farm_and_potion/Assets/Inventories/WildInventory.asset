@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e026eb7f1fcf214b902af6287528115, type: 3}
+  m_Name: WildInventory
+  m_EditorClassIdentifier: 
+  space: 10
+  items: []
+  startItems: []
+  useStartItemsOnInitialize: 0
+  masterList:
+  - {fileID: 11400000, guid: 8501d5aac4085a24caf718f45a3b045c, type: 2}
+  - {fileID: 11400000, guid: 9e71ef68404d5bc42a5bb97811029bac, type: 2}
+  - {fileID: 11400000, guid: 5d8a32856d0907b488c7e93c9353668c, type: 2}

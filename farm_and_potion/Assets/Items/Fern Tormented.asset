@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Tormented Fern
   artwork: {fileID: 21300000, guid: ca64ffb185576fc45acbdbf4786d1a77, type: 3}
+  itemType: {fileID: 11400000, guid: 4677bc7ab1d02b24393f3b150856bd49, type: 2}
   description: this ingredient will assure 100% success.
   solvesAilments:
   - {fileID: 11400000, guid: a7b36688f708ec849b9dfff0c3b9b659, type: 2}

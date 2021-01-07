@@ -11,6 +11,9 @@ public class BookPage : MonoBehaviour
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI descripText;
     public Image artwork;
+    [Space]
+    public ItemObjectRuntimeSet inventorySet;
+    public FloatVariable itemSetIndex;
 
     void Start()
     {
@@ -24,9 +27,19 @@ public class BookPage : MonoBehaviour
 
     public void updatePage() {
         nameText.text = item.name;
-        // descripText.text = item.description;
-
+        descripText.text = item.GetDescription();
         artwork.sprite = item.artwork;
     }
+
+    #region Event Responses
+
+    public void ShowInfoOnClickedItem()
+    {
+        ItemObject newItem = inventorySet.GetItem((int)itemSetIndex.value);
+        this.item = newItem.GetItem();
+        updatePage();
+    }
+
+    #endregion
 
 }

@@ -3,6 +3,8 @@ using UnityEngine;
 
 public abstract class RuntimeSet<T> : ScriptableObject
 {
+    [TextArea] public string developerDescription;
+    [Space]
     public List<T> items = new List<T>();
 
     public void Add(T t)

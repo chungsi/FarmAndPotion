@@ -9,11 +9,11 @@ public abstract class ItemContainerUI : MonoBehaviour
     protected ItemSlot[] slots;
     [Space]
     public Inventory inventory;
-    public InventoryRuntimeSet inventorySet;
+    public ItemObjectRuntimeSet inventorySet;
+    public FloatVariable floatingItemMasterIndex;
     [Space]
     public FloatVariable startSlotIndex;
     public FloatVariable dropSlotIndex;
-    public FloatVariable floatingItemMasterIndex;
 
 
     protected virtual void Start()

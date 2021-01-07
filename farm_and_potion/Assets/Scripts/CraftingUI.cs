@@ -10,19 +10,27 @@ public class CraftingUI : ItemContainerUI
     // public FloatVariable startSlotIndex;
     // public FloatVariable dropSlotIndex;
     // public FloatVariable floatingItemMasterIndex;
-    // public InventoryRuntimeSet inventorySet;
-    // [Space]
+    // public ItemObjectRuntimeSet inventorySet;
+    [Space]
     public CraftingInventory craftingList; // hrmmm takes its own inventory....
-    public InventoryRuntimeSet craftingSubset;
+    public ItemObjectRuntimeSet craftingSubset;
+    public FloatVariable numCraftingResults;
     [Space]    
     public UnityEvent SaveTheFloatingItemEvent;
+    public UnityEvent OnCraftingSuccessfulEvent;
 
     // ItemSlot[] slots;
 
     protected override void Start()
     {
         base.Start();
-        craftingList.ClearInventory();
+        ClearCraftingInventory();
+    }
+
+    protected void OnDisable()
+    {
+        // clear crafting subset when done
+        ClearCraftingInventory();
     }
 
     protected override void AddItem(ItemObject itemObject)
@@ -44,10 +52,11 @@ public class CraftingUI : ItemContainerUI
         for (int i = craftingSubset.items.Count - 1; i >= 0; i--)
         {
             ItemObject item = craftingSubset.items[i];
-            inventorySet.Remove(item);
+            // inventorySet.Remove(item);
             craftingSubset.Remove(item);
 
-            Destroy(item.gameObject);
+            // Destroy(item.gameObject);
+            item.Destroy();
         }
     }
 
@@ -120,6 +129,9 @@ public class CraftingUI : ItemContainerUI
                 SaveFloatingItem(itemObject);
                 SaveTheFloatingItemEvent.Invoke();
             }
+
+            numCraftingResults.value = possibleRecipe.GetResults().Count;
+            OnCraftingSuccessfulEvent.Invoke();
 
             ClearCraftingInventory();
         }

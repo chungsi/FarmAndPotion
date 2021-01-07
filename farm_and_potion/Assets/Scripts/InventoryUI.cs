@@ -14,7 +14,7 @@ public class InventoryUI : ItemContainerUI
     // public FloatVariable draggedSlotIndex;
     // public FloatVariable dropSlotIndex;
     // public FloatVariable floatingItemMasterIndex;
-    // public InventoryRuntimeSet inventorySet;
+    // public ItemObjectRuntimeSet inventorySet;
 
     // private ItemSlot startDraggedSlot;
     // private ItemSlot draggedSlot;
@@ -34,13 +34,43 @@ public class InventoryUI : ItemContainerUI
 
         for (int i = 0; i < inventory.startItems.Count; i++)
         {
-            ItemObject ui = ItemObject.Instantiate(itemObjectPrefab, slots[i].transform);
-            Item uniqueItem = Object.Instantiate(inventory.startItems[i]);
+            InstantiateAndAddUniqueItem(inventory.startItems[i], slots[i].transform);
+            // ItemObject ui = ItemObject.Instantiate(itemObjectPrefab, slots[i].transform);
+            // Item uniqueItem = Object.Instantiate(inventory.startItems[i]);
 
-            inventory.AddItem(uniqueItem); // setup start
-            ui.SetItem(uniqueItem);
-            slots[i].AddItem(uniqueItem);
+            // inventory.AddItem(uniqueItem); // setup start
+            // ui.SetItem(uniqueItem);
+            // slots[i].AddItem(uniqueItem); // ?? still needed?
         }
+    }
+
+    ItemObject InstantiateAndAddUniqueItem(Item item, Transform parent)
+    {
+        ItemObject ui = ItemObject.Instantiate(itemObjectPrefab, parent);
+        Item uniqueItem = Object.Instantiate(item);
+
+        inventory.AddItem(uniqueItem); // setup start
+        ui.SetItem(uniqueItem);
+        return ui;
+    }
+
+    ItemSlot GetFirstEmptySlot()
+    {
+        foreach (ItemSlot slot in slots)
+        {
+            if (slot.isEmpty())
+            {
+                Debug.Log("empty slot index: " + slot.GetIndexWithinContainer());
+                return slot;
+            }
+        }
+        return null;
+    }
+
+    void AddToFirstEmptySlot(ItemObject newItem)
+    {
+        ItemSlot slot = GetFirstEmptySlot();
+        AddItemToSlot(newItem, slot);
     }
 
     // public void AddItem(ItemObject itemObject)
@@ -96,8 +126,6 @@ public class InventoryUI : ItemContainerUI
     {
         ItemObject item = GetFloatingItem();
         RemoveItem(item);
-
-        // Debug.Log("InventoryUI cleaned itself up; size is now " + inventory.GetItemCount());
     }
 
     // add the "floating item" to the inventory
@@ -105,16 +133,34 @@ public class InventoryUI : ItemContainerUI
     {
         Debug.Log("inventory is saving a floating item...");
         ItemObject newItem = GetFloatingItem();
-        AddItem(newItem);
 
-        foreach (ItemSlot slot in slots)
+        // only add to the inventory if the item doesn't already exist
+        if (!inventory.ContainsItem(newItem.GetItem()))
+            AddItem(newItem);
+
+        AddToFirstEmptySlot(newItem);
+    }
+
+    // add an item that requires instantiating a new object
+    public void AddWildItem()
+    {
+        ItemSlot slot = GetFirstEmptySlot();
+
+        // just in case check both inventory and available slots
+        if (!inventory.isFull() && slot != null)
         {
-            if (slot.isEmpty())
-            {
-                AddItemToSlot(newItem, slot);
-                break;
-            }
+            ItemObject floatingItem = GetFloatingItem();
+            ItemObject newItem = InstantiateAndAddUniqueItem(floatingItem.GetItem(), slot.transform);
+            AddItemToSlot(newItem, slot);
+
+            floatingItem.Destroy(); // removes the wildItem because replaced by "tamed"
         }
+    }
+
+    public void DisplayItemName()
+    {
+        ItemObject newItem = GetFloatingItem();
+        displayText.SetText(newItem.GetItem().name);
     }
 
     #endregion

@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57d6f36cc05b5ba46954d9ea6ff49fce, type: 3}
   m_Name: CraftingItemsSubset
   m_EditorClassIdentifier: 
-  items:
-  - {fileID: 0}
+  developerDescription: To keep track of what's inside the crafting panel, so the
+    items can be removed from the inventory set if needed.
+  items: []

@@ -21,7 +21,6 @@ public class Inventory : ScriptableObject {
 
         // populate the Master list of all available Items
         PopulateMasterList();
-
     }
 
     public virtual void OnEnable()
@@ -40,7 +39,7 @@ public class Inventory : ScriptableObject {
 
     public virtual bool AddItem(Item item)
     {
-        Debug.Log($"available space in the inventory: {space}; items count: {items.Count}");
+        Debug.Log($"available space in the inventory: {space}; items previous count: {items.Count}");
         if (items.Count >= space)
         {
             Debug.Log("Not enough space in the inventory!!");
@@ -62,6 +61,11 @@ public class Inventory : ScriptableObject {
         return items.Count <= 0;
     }
 
+    public bool isFull()
+    {
+        return items.Count >= space;
+    }
+
     public int GetMaxSpace()
     {
         return space;
@@ -70,6 +74,16 @@ public class Inventory : ScriptableObject {
     public int GetItemCount()
     {
         return items.Count;
+    }
+
+    public bool ContainsItem(Item item)
+    {
+        return items.Contains(item);
+    }
+
+    public List<Item> GetMasterList()
+    {
+        return masterList;
     }
 
     public int GetIndexForItem(Item item)
