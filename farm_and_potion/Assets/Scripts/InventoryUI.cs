@@ -35,12 +35,6 @@ public class InventoryUI : ItemContainerUI
         for (int i = 0; i < inventory.startItems.Count; i++)
         {
             InstantiateAndAddUniqueItem(inventory.startItems[i], slots[i].transform);
-            // ItemObject ui = ItemObject.Instantiate(itemObjectPrefab, slots[i].transform);
-            // Item uniqueItem = Object.Instantiate(inventory.startItems[i]);
-
-            // inventory.AddItem(uniqueItem); // setup start
-            // ui.SetItem(uniqueItem);
-            // slots[i].AddItem(uniqueItem); // ?? still needed?
         }
     }
 

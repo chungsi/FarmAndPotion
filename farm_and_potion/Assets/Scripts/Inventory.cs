@@ -8,8 +8,8 @@ public class Inventory : ScriptableObject {
 
     public int space;
     [Space]
-    public List<Item> items;
-    public List<Item> startItems;
+    public List<Item> items = new List<Item>();
+    public List<Item> startItems = new List<Item>();
     [Space]
     public bool useStartItemsOnInitialize;
     [SerializeField]

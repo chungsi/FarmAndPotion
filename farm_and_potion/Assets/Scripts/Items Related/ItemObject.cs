@@ -54,7 +54,7 @@ public class ItemObject : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDr
 
     public Dictionary<Stat, int> GetItemStats()
     {
-        return item.GetStats();
+        return item.GetStatsDictionary();
     }
 
     public void SetItemStats(Dictionary<Stat, int> newStats)

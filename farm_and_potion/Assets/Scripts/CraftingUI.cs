@@ -70,7 +70,6 @@ public class CraftingUI : ItemContainerUI
         ItemSlot dropSlot = slots[(int)dropSlotIndex.value];
         ItemObject floatingItem = GetFloatingItem();
 
-
         // Just drop the item when dropSlot is empty
         if (dropSlot.isEmpty()) 
         {

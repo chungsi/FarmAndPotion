@@ -13,8 +13,8 @@ public struct StatValue
 
 // blueprint class for all items
 [CreateAssetMenu(fileName = "New Item", menuName = "Item/Item")]
-public class Item : ScriptableObject {
-
+public class Item : ScriptableObject
+{
     new public string name = "New Item";
     public Sprite artwork = null;
     [SerializeField] ItemType itemType;
@@ -25,6 +25,8 @@ public class Item : ScriptableObject {
     [Space]
     [SerializeField] List<StatValue> stats = new List<StatValue>(); // to be inspector populated
     
+    // helper functions to get stats stuff
+    private StatHelper statHelper = new StatHelper();
     // populated by code, used for internal traversals
     private Dictionary<Stat, int> statsDictionary = new Dictionary<Stat, int>();
     private List<Stat> masterStatsList = new List<Stat>();
@@ -32,12 +34,12 @@ public class Item : ScriptableObject {
     void OnValidate()
     {
         PopulateMasterStatsList();
+        statHelper.PopulateEmptyStatValueList(stats, masterStatsList);
     }
 
     void OnEnable()
     {
-        PopulateStatsDictionary();
-        PopulateStatList();
+        statHelper.PopulateStatsDictionary(statsDictionary, stats);
     }
 
     public virtual Item GetCopy()
@@ -50,7 +52,7 @@ public class Item : ScriptableObject {
         return solvesAilments;
     }
 
-    public Dictionary<Stat, int> GetStats()
+    public Dictionary<Stat, int> GetStatsDictionary()
     {
         Dictionary<Stat, int> newlist = statsDictionary;
         return newlist;
@@ -66,8 +68,6 @@ public class Item : ScriptableObject {
         return itemType;
     }
 
-    #region Populate Lists
-
     public void PopulateStats(Dictionary<Stat, int> newStats)
     {
         statsDictionary = newStats;
@@ -82,44 +82,7 @@ public class Item : ScriptableObject {
     private void PopulateMasterStatsList()
     {
         masterStatsList.Clear(); // clear existing first
-
-        string[] assetNames = AssetDatabase.FindAssets("t:Stat", new[] { "Assets/Stats" });
-        foreach (string SOName in assetNames)
-        {
-            var SOpath = AssetDatabase.GUIDToAssetPath(SOName);
-            var stat = AssetDatabase.LoadAssetAtPath<Stat>(SOpath);
-            masterStatsList.Add(stat);
-        }
+        masterStatsList = statHelper.GetMasterStatsList();
     }
-
-    private void PopulateStatList()
-    {
-        foreach (Stat statReference in masterStatsList)
-        {
-            if (!statsDictionary.ContainsKey(statReference))
-            {
-                stats.Add(new StatValue() {
-                    stat = statReference,
-                    value = 0
-                });
-            }
-        }
-    }
-
-    private void PopulateStatsDictionary()
-    {
-        statsDictionary.Clear();
-        if (stats != null)
-        {
-            foreach (StatValue stat in stats)
-            {
-                statsDictionary.Add(stat.stat, stat.value);
-                // Debug.Log("testing statsDictionary insert: " + statsDictionary[stat.stat].ToString());
-            }
-            // Debug.Log("populating stats dictionary... size is now " + statsDictionary.Count);
-        }
-    }
-
-    #endregion
 
 }

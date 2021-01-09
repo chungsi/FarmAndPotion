@@ -123,9 +123,9 @@ public class CraftingInventory : Inventory
             // looping through list of crafting items because could be an indefinite amount
             foreach (Item item in items)
             {
-                if (item.GetStats().ContainsKey(stat))
+                if (item.GetStatsDictionary().ContainsKey(stat))
                 {
-                    statValue += item.GetStats()[stat];
+                    statValue += item.GetStatsDictionary()[stat];
                     // could somehow add modifiers & bonuses stuff here?
                 }
             }
