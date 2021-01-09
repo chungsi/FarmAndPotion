@@ -103,21 +103,9 @@ public class RequestUI : ItemContainerUI
             // get the first item for now.... will there ever be more than 1 item to give???
             Item solutionItem = inventory.items[0];
             
-            // get ailment points for each ailment met
-            List<Ailment> ailmentReqs = currentRequest.GetAilmentRequirements();
-            List<Ailment> ailmentReqsMet = solutionItem.GetAilments().Intersect(ailmentReqs).ToList();
-            int ailmentPoints = ailmentReqsMet.Count();
+            int ailmentPoints = CalculateAilmentPoints();
 
-            // get stat points for each point over the minimum
-            Dictionary<Stat, int> requestStats = currentRequest.GetStatRequirements();
-            int statPoints = 0;
-            foreach (KeyValuePair<Stat, int> solutionStat in solutionItem.GetStatsDictionary())
-            {
-                if (requestStats.ContainsKey(solutionStat.Key))
-                    statPoints += solutionStat.Value - requestStats[solutionStat.Key];
-                else
-                    statPoints += solutionStat.Value;
-            }
+            int statPoints = CalculateStatPoints();
 
             // output: satisfaction points, some kind of confirmation
             int finalSatisfactionPoints = ailmentPoints + statPoints;
@@ -159,9 +147,35 @@ public class RequestUI : ItemContainerUI
 
     #endregion
 
-    private void CalculateStatSatisfactionPoints()
+    private int CalculateAilmentPoints()
     {
+        Item solutionItem = inventory.items[0];
 
+        List<Ailment> ailmentReqs = currentRequest.GetAilmentRequirements();
+        List<Ailment> ailmentReqsMet = solutionItem.GetAilments().Intersect(ailmentReqs).ToList();
+
+        // get ailment points for each ailment met
+        return ailmentReqsMet.Count();
+    }
+
+    private int CalculateStatPoints()
+    {
+        int statPoints = 0;
+        Item solutionItem = inventory.items[0];
+        Dictionary<Stat, int> solutionStats = currentRequest.GetStatRequirements();
+
+        foreach (KeyValuePair<Stat, int> requestStat in currentRequest.GetStatRequirements())
+        {
+            // don't get points for request stats at 0
+            if (requestStat.Value != 0 && solutionStats.ContainsKey(requestStat.Key)) // just double check
+            {
+                // meeting min stat value is +1
+                // every additional stat ontop is +1
+                statPoints += (solutionStats[requestStat.Key] - requestStat.Value) + 1;
+            }
+        }
+
+        return statPoints;
     }
 
     private void GetAnotherAvailableRequest()
