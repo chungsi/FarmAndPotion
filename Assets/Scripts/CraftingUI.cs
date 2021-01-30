@@ -116,20 +116,20 @@ public class CraftingUI : ItemContainerUI
         if (possibleRecipe != null)
         {
             Debug.Log("recipe exists! creating " + possibleRecipe.name);
-            foreach (Item item in possibleRecipe.GetResults())
-            {
-                ItemObject itemObject = ItemObject.Instantiate(itemObjectPrefab, slots[0].transform);
-                Item uniqueItem = Object.Instantiate(item);
-                itemObject.SetItem(uniqueItem);
+            // foreach (Item item in possibleRecipe.GetResults())
+            // {
+            ItemObject itemObject = ItemObject.Instantiate(itemObjectPrefab, slots[0].transform);
+            Item uniqueItem = Object.Instantiate(possibleRecipe.GetResult());
+            itemObject.SetItem(uniqueItem);
 
-                Dictionary<ItemStat, int> newItemStats = craftingList.CalculateItemStats();
-                itemObject.SetItemStats(newItemStats);
+            Dictionary<ItemStat, int> newItemStats = craftingList.CalculateItemStats();
+            itemObject.SetItemStats(newItemStats);
 
-                SaveFloatingItem(itemObject);
-                SaveTheFloatingItemEvent.Invoke();
-            }
+            SaveFloatingItem(itemObject);
+            SaveTheFloatingItemEvent.Invoke();
+            // }
 
-            numCraftingResults.value = possibleRecipe.GetResults().Count;
+            // numCraftingResults.value = possibleRecipe.GetResults().Count;
             OnCraftingSuccessfulEvent.Invoke();
 
             ClearCraftingInventory();

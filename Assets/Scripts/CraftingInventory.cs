@@ -96,12 +96,12 @@ public class CraftingInventory : Inventory
     }
     
     // Gets a list of recipe outputs for the current items in the inventory.
-    public List<Item> GetRecipeOutputsForCurrent()
+    public Potion GetRecipeOutputForCurrent()
     {
         Recipe recipe = GetRecipeForCurrent();
 
         if (recipe != null)
-            return recipe.GetResults();
+            return recipe.GetResult();
 
         return null;
     }
