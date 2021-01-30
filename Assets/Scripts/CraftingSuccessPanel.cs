@@ -40,7 +40,7 @@ public class CraftingSuccessPanel : MonoBehaviour, IPointerDownHandler
         uiContainer.gameObject.SetActive(false);
     }
 
-    private void PopulateCraftedResults()
+    private void FillCraftedResults()
     {
         int numInventoryItems = inventorySet.items.Count;
         int difference = numInventoryItems - (int)numCraftingResults.value;

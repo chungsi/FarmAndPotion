@@ -8,16 +8,18 @@ using UnityEditor;
 public class CraftingInventory : Inventory
 {
     [SerializeField]
-    private List<Stat> allStats = new List<Stat>();
+    private List<ItemStat> allItemStats = new List<ItemStat>();
     [SerializeField]
-    private List<Ailment> craftingItemAilments = new List<Ailment>();
+    private List<IngredientGroup> inputIngGroups = new List<IngredientGroup>();
     private List<Recipe> recipes = new List<Recipe>();
+
+    private ItemStatHelper statHelper = new ItemStatHelper();
 
     public override void OnValidate()
     {
         base.OnValidate();
-        PopulateCraftingList();
-        PopulateStatList();
+        FillCraftingList();
+        GetMasterItemStatsList();
     }
 
     public override void OnEnable()
@@ -26,7 +28,7 @@ public class CraftingInventory : Inventory
     }
 
     // is there a better way to optimize this? see if a key exists first?
-    private void PopulateCraftingList() 
+    private void FillCraftingList() 
     {
         // Debug.Log("Populating master list of recipes...");
         recipes.Clear();
@@ -41,19 +43,10 @@ public class CraftingInventory : Inventory
         }
     }
 
-    private void PopulateStatList() 
+    private void GetMasterItemStatsList() 
     {
-        // Debug.Log("Populating master list of recipes...");
-        allStats.Clear();
-
-        string[] assetNames = AssetDatabase.FindAssets("t:Stat", new[] { "Assets/Stats" });
-        foreach (string SOName in assetNames)
-        {
-            var SOpath = AssetDatabase.GUIDToAssetPath(SOName);
-            var stat = AssetDatabase.LoadAssetAtPath<Stat>(SOpath);
-
-            allStats.Add(stat);
-        }
+        allItemStats.Clear();
+        allItemStats = statHelper.GetMasterItemStatsList();
     }
 
     public override bool AddItem(Item item)
@@ -62,8 +55,8 @@ public class CraftingInventory : Inventory
             return false;
         
         items.Add(item);
-        craftingItemAilments = craftingItemAilments.Concat(item.GetAilments()).ToList();
-
+        // inputIngGroups = inputIngGroups.Concat(item.GetItemStats()).ToList();
+        inputIngGroups.Add(((Ingredient)item).GetIngredientGroup());
         return true;
     }
 
@@ -72,7 +65,8 @@ public class CraftingInventory : Inventory
         if (!items.Contains(item))
             return false;
 
-        craftingItemAilments = craftingItemAilments.Except(item.GetAilments()).ToList();
+        // inputIngGroups = inputIngGroups.Except(item.GetItemStats()).ToList();
+        inputIngGroups.Remove(((Ingredient)item).GetIngredientGroup());
         items.Remove(item);
         return true;
     }
@@ -80,18 +74,19 @@ public class CraftingInventory : Inventory
     public override void ClearInventory()
     {
         base.ClearInventory();
-        craftingItemAilments.Clear();
+        inputIngGroups.Clear();
     }
 
+    // For the current items in the inventory, will look for a possible recipe.
     public Recipe GetRecipeForCurrent()
     {
         foreach (Recipe recipe in recipes)
         {
-            List<Ailment> recipeAilments = recipe.GetAilments();
+            List<IngredientGroup> recipeInputs = recipe.GetInputs();
             
             // checks for size equivalence first because .All method specs.... but change?
-            if (recipeAilments.Count == craftingItemAilments.Count &&
-                recipeAilments.All(craftingItemAilments.Contains))
+            if (recipeInputs.Count == inputIngGroups.Count &&
+                recipeInputs.All(inputIngGroups.Contains))
             {
                 return recipe;
             }
@@ -99,7 +94,8 @@ public class CraftingInventory : Inventory
 
         return null;
     }
-
+    
+    // Gets a list of recipe outputs for the current items in the inventory.
     public List<Item> GetRecipeOutputsForCurrent()
     {
         Recipe recipe = GetRecipeForCurrent();
@@ -110,30 +106,30 @@ public class CraftingInventory : Inventory
         return null;
     }
 
-    public Dictionary<Stat, int> CalculateStats()
+    public Dictionary<ItemStat, int> CalculateItemStats()
     {
-        Dictionary<Stat, int> newStats = new Dictionary<Stat, int>();
-
+        Dictionary<ItemStat, int> newItemStats = new Dictionary<ItemStat, int>();
         Debug.Log("calculating stats... ");
 
-        foreach (Stat stat in allStats)
+        // For each specific ItemStat (attribute)
+        foreach (ItemStat stat in allItemStats)
         {
             int statValue = 0;
 
             // looping through list of crafting items because could be an indefinite amount
             foreach (Item item in items)
             {
-                if (item.GetStatsDictionary().ContainsKey(stat))
+                if (item.GetItemStatsDictionary().ContainsKey(stat))
                 {
-                    statValue += item.GetStatsDictionary()[stat];
+                    statValue += item.GetItemStatsDictionary()[stat];
                     // could somehow add modifiers & bonuses stuff here?
                 }
             }
             
-            newStats.Add(stat, statValue);
+            newItemStats.Add(stat, statValue);
         }
 
-        return newStats;
+        return newItemStats;
     }
 
 

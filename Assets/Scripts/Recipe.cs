@@ -6,12 +6,14 @@ using UnityEngine.Serialization;
 [CreateAssetMenu(fileName = "New Recipe", menuName = "Recipe")]
 public class Recipe : ScriptableObject
 {
-    [SerializeField] List<Ailment> ailmentRequirements = new List<Ailment>();
+    [FormerlySerializedAs("inputs")]
+    [SerializeField] List<IngredientGroup> ingredientGroupInputs = new List<IngredientGroup>();
+    // TODO: Should this be typecast to a Potion? to be more specific???
     [SerializeField] List<Item> results = new List<Item>();
     
-    public List<Ailment> GetAilments()
+    public List<IngredientGroup> GetInputs()
     {
-        return ailmentRequirements;
+        return ingredientGroupInputs;
     }
 
     public List<Item> GetResults()

@@ -25,7 +25,7 @@ public class ItemSpawner : MonoBehaviour
         ClearSpawns();
 
         // make master list of ingredients able to spawn
-        PopulateSpawnList();
+        FillSpawnList();
 
         // spawn some items
         SpawnItems();
@@ -36,13 +36,14 @@ public class ItemSpawner : MonoBehaviour
         ClearSpawns();
     }
 
-    void PopulateSpawnList()
+    void FillSpawnList()
     {
         spawnList.Clear();
         List<Item> masterList = wildItemsInventory.GetMasterList();
         foreach (Item item in masterList)
         {
-            if (item.GetItemType() == spawnItemType)
+            // if (item.GetType().Equals(new Ingredient())) // TODO: does this work?
+            if (item is Ingredient i)
                 spawnList.Add(item);
         }
     }
@@ -66,15 +67,15 @@ public class ItemSpawner : MonoBehaviour
         }
     }
 
+    // Clears the wild inventory and subset
     void ClearSpawns()
     {
         wildItemsInventory.ClearInventory();
+        Debug.Log("destroying items in wild inventory & subset");
 
         for (int i = wildItemsSubset.items.Count - 1; i >= 0 ; i--)
         {
-            Debug.Log("wild Items Subset size: " + wildItemsSubset.items.Count);
             ItemObject item = wildItemsSubset.items[i];
-            
             item.Destroy();
         }
     }

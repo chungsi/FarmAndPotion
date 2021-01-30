@@ -34,6 +34,7 @@ public class ItemObject : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDr
 
     void OnDisable()
     {
+        // Debug.Log("disabling this ItemObject " + name + " " + this.item.name);
         itemObjectRuntimeSet.Remove(this);
     }
 
@@ -52,14 +53,14 @@ public class ItemObject : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDr
         return item;
     }
 
-    public Dictionary<Stat, int> GetItemStats()
+    public Dictionary<ItemStat, int> GetItemItemStats()
     {
-        return item.GetStatsDictionary();
+        return item.GetItemStatsDictionary();
     }
 
-    public void SetItemStats(Dictionary<Stat, int> newStats)
+    public void SetItemStats(Dictionary<ItemStat, int> newItemStats)
     {
-        item.PopulateStats(newStats);
+        item.SetItemStats(newItemStats);
     }
 
     public Transform GetStartParentTransform()
@@ -74,7 +75,7 @@ public class ItemObject : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDr
 
     public void Destroy()
     {
-        Debug.Log(name + " is destroying itself");
+        Debug.Log(item.name + " is destroying itself");
         Destroy(this.gameObject);
     }
 

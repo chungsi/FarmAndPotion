@@ -122,8 +122,8 @@ public class CraftingUI : ItemContainerUI
                 Item uniqueItem = Object.Instantiate(item);
                 itemObject.SetItem(uniqueItem);
 
-                Dictionary<Stat, int> newStats = craftingList.CalculateStats();
-                itemObject.SetItemStats(newStats);
+                Dictionary<ItemStat, int> newItemStats = craftingList.CalculateItemStats();
+                itemObject.SetItemStats(newItemStats);
 
                 SaveFloatingItem(itemObject);
                 SaveTheFloatingItemEvent.Invoke();

@@ -13,16 +13,33 @@ MonoBehaviour:
   m_Name: Test Request
   m_EditorClassIdentifier: 
   description: Make me something to help me!
-  ailmentRequirements:
-  - {fileID: 11400000, guid: a7b36688f708ec849b9dfff0c3b9b659, type: 2}
-  - {fileID: 11400000, guid: 97ce9cc9a46a3d44e82576c2ae4767eb, type: 2}
-  minStatRequirements:
-  - stat: {fileID: 11400000, guid: c4568f1005b13924fb7259ef398c64d1, type: 2}
+  potion: {fileID: 11400000, guid: 26813cad35170784f8f3f0ea9a3eafbd, type: 2}
+  difficulty: {fileID: 11400000, guid: a4d59aaf01532ab4d97b0683a99c98fc, type: 2}
+  lowestEval: {fileID: 11400000, guid: bb64ce21a67adff4f9d68462fe005e82, type: 2}
+  statReqs:
+  - stat: {fileID: 11400000, guid: 01a3fe689abe148488b287eadcfc32c2, type: 2}
     value: 0
-  - stat: {fileID: 11400000, guid: 9c089439c68db434683a50a572918064, type: 2}
-    value: 1
-  - stat: {fileID: 11400000, guid: 803bbec66b6826b4a9d0578dfbe99588, type: 2}
-    value: 2
-  - stat: {fileID: 11400000, guid: 7172949e6099cc947b4f41d418806ae9, type: 2}
-    value: 1
+  - stat: {fileID: 11400000, guid: 999cef21f54b26d4c8ff9fc3f668892d, type: 2}
+    value: 11
+  - stat: {fileID: 11400000, guid: 8ba3101572ec72f4dbfabff736369f36, type: 2}
+    value: 0
+  - stat: {fileID: 11400000, guid: 1438ccae114ccff4b86ebdcf5bcd7b71, type: 2}
+    value: 0
+  - stat: {fileID: 11400000, guid: 152f26c263d712440840ca2ecdd4560b, type: 2}
+    value: 11
+  - stat: {fileID: 11400000, guid: e081fd287fc89a74f95886e73bda5e1d, type: 2}
+    value: 0
+  - stat: {fileID: 11400000, guid: 42a58c3179c306f4c8587056074948d4, type: 2}
+    value: 0
+  - stat: {fileID: 11400000, guid: 0db68888dd4ce2b45be09524a806b096, type: 2}
+    value: 0
+  - stat: {fileID: 11400000, guid: 3cce2c07dd9f62643bea618074567057, type: 2}
+    value: 0
+  - stat: {fileID: 11400000, guid: ce03b7a48d27fdc4f9d14273aadf4e9f, type: 2}
+    value: 0
+  - stat: {fileID: 11400000, guid: 94b954906129e1749a8e031f957d27a3, type: 2}
+    value: 0
+  - stat: {fileID: 11400000, guid: 2db9e720fa063ad4c819daea573f4507, type: 2}
+    value: 0
   isCompleted: 0
+  completedEval: {fileID: 11400000, guid: c0ed45074ee3ebb4a87a15dde1620a0d, type: 2}

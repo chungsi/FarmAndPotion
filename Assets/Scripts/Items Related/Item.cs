@@ -5,41 +5,43 @@ using UnityEditor;
 using UnityEngine.Serialization;
 
 [Serializable]
-public struct StatValue 
+public struct ItemStatValue
 {
-    public Stat stat;
+    public ItemStat stat;
     public int value;
 }
 
-// blueprint class for all items
-[CreateAssetMenu(fileName = "New Item", menuName = "Item/Item")]
+// [CreateAssetMenu(menuName = "Item/Item")]
 public class Item : ScriptableObject
 {
     new public string name = "New Item";
+    // [SerializeField] ItemType itemType;
     public Sprite artwork = null;
-    [SerializeField] ItemType itemType;
-    [TextArea]
-    [SerializeField] string description = "";
-    [SerializeField] List<Ailment> solvesAilments = new List<Ailment>();
 
-    [Space]
-    [SerializeField] List<StatValue> stats = new List<StatValue>(); // to be inspector populated
+    [TextArea] 
+    [SerializeField] string description = "";
+    [SerializeField] List<ItemStatValue> itemStats = new List<ItemStatValue>(); // to be inspector populated
+    
+    // populated by code, used for internal traversals
+    private Dictionary<ItemStat, int> statDict = new Dictionary<ItemStat, int>();
+    private List<ItemStat> masterStatList = new List<ItemStat>();
     
     // helper functions to get stats stuff
-    private StatHelper statHelper = new StatHelper();
-    // populated by code, used for internal traversals
-    private Dictionary<Stat, int> statsDictionary = new Dictionary<Stat, int>();
-    private List<Stat> masterStatsList = new List<Stat>();
+    private ItemStatHelper statHelper = new ItemStatHelper();
+    
 
     void OnValidate()
     {
-        PopulateMasterStatsList();
-        statHelper.PopulateEmptyStatValueList(stats, masterStatsList);
+        // Gets a list of all item stats and populates the struct list with all stats.
+        // Newly defined stats will get added to the end of the list...
+        FillMasterItemStatsList();
+        statHelper.FillEmptyItemStatValueList(itemStats, masterStatList);
     }
 
     void OnEnable()
     {
-        statHelper.PopulateStatsDictionary(statsDictionary, stats);
+        // Fill the private dictionary with the values from the inspector.
+        statHelper.FillItemStatsDictionary(statDict, itemStats);
     }
 
     public virtual Item GetCopy()
@@ -47,14 +49,9 @@ public class Item : ScriptableObject
         return this;
     }
 
-    public List<Ailment> GetAilments()
+    public Dictionary<ItemStat, int> GetItemStatsDictionary()
     {
-        return solvesAilments;
-    }
-
-    public Dictionary<Stat, int> GetStatsDictionary()
-    {
-        Dictionary<Stat, int> newlist = statsDictionary;
+        Dictionary<ItemStat, int> newlist = statDict;
         return newlist;
     }
 
@@ -63,26 +60,24 @@ public class Item : ScriptableObject
         return description;
     }
 
-    public ItemType GetItemType()
+    // Fill the items itemStats dictionary with a new one.
+    // Useful when instantiating new items with programmatically defined itemStats.
+    public void SetItemStats(Dictionary<ItemStat, int> newItemStats)
     {
-        return itemType;
-    }
+        statDict = newItemStats;
 
-    public void PopulateStats(Dictionary<Stat, int> newStats)
-    {
-        statsDictionary = newStats;
-
-        stats.Clear();
-        foreach (KeyValuePair<Stat, int> stat in newStats)
+        // Also populates the inspector-visible list for easier debugging
+        itemStats.Clear();
+        foreach (KeyValuePair<ItemStat, int> newStat in newItemStats)
         {
-            stats.Add(new StatValue() { stat = stat.Key, value = stat.Value });
+            itemStats.Add(new ItemStatValue() { stat = newStat.Key, value = newStat.Value });
         }
     }
 
-    private void PopulateMasterStatsList()
+    private void FillMasterItemStatsList()
     {
-        masterStatsList.Clear(); // clear existing first
-        masterStatsList = statHelper.GetMasterStatsList();
+        masterStatList.Clear(); // clear existing first
+        masterStatList = statHelper.GetMasterItemStatsList();
     }
 
 }

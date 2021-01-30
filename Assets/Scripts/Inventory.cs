@@ -20,7 +20,7 @@ public class Inventory : ScriptableObject {
         masterList.Clear();
 
         // populate the Master list of all available Items
-        PopulateMasterList();
+        FillMasterList();
     }
 
     public virtual void OnEnable()
@@ -39,7 +39,6 @@ public class Inventory : ScriptableObject {
 
     public virtual bool AddItem(Item item)
     {
-        Debug.Log($"available space in the inventory: {space}; items previous count: {items.Count}");
         if (items.Count >= space)
         {
             Debug.Log("Not enough space in the inventory!!");
@@ -98,10 +97,11 @@ public class Inventory : ScriptableObject {
 
     public virtual void ClearInventory()
     {
+        // Debug.Log(name + " is clearing itself out");
         items.Clear();
     }
 
-    private void PopulateMasterList()
+    private void FillMasterList()
     {
         string[] assetNames = AssetDatabase.FindAssets("t:Item", new[] { "Assets/Items" });
         foreach (string SOName in assetNames)
