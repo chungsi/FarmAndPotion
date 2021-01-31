@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23bf843271ba9e143818e6fb62dee064, type: 3}
   m_Name: Tincture of Truth
   m_EditorClassIdentifier: 
-  result: {fileID: 0}
-  ingredientGroupInputs: []
+  result: {fileID: 11400000, guid: 4aa90c6af91c9674c9f88e3611656884, type: 2}
+  ingredientGroupInputs:
+  - {fileID: 11400000, guid: 795969a021032dd46a40e98cffe93ce4, type: 2}
+  - {fileID: 11400000, guid: 795969a021032dd46a40e98cffe93ce4, type: 2}

@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a15770bf6e689624fb078b810630cd5d, type: 3}
   m_Name: Attraction
   m_EditorClassIdentifier: 
-  statGroup: {fileID: 11400000, guid: 57d2a1300debf9b4e9c10e20236104f7, type: 2}
+  statGroup: {fileID: 11400000, guid: d5dadbee08315134d9b85dbf80d8c96d, type: 2}

@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23bf843271ba9e143818e6fb62dee064, type: 3}
   m_Name: Healing Potion
   m_EditorClassIdentifier: 
-  ingredientGroupInputs: []
-  results: []
+  result: {fileID: 11400000, guid: 73e47a99f20c6b845a689d0cc1febaf9, type: 2}
+  ingredientGroupInputs:
+  - {fileID: 11400000, guid: b54a46b2b924937489d729dbbe8ee737, type: 2}
+  - {fileID: 11400000, guid: b54a46b2b924937489d729dbbe8ee737, type: 2}

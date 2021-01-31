@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23bf843271ba9e143818e6fb62dee064, type: 3}
   m_Name: Poison
   m_EditorClassIdentifier: 
-  result: {fileID: 0}
-  ingredientGroupInputs: []
+  result: {fileID: 11400000, guid: c02aed4f9a293f84b958612cb193ca59, type: 2}
+  ingredientGroupInputs:
+  - {fileID: 11400000, guid: 112e7325f43e205458173a29fb0b8eca, type: 2}
+  - {fileID: 11400000, guid: 112e7325f43e205458173a29fb0b8eca, type: 2}

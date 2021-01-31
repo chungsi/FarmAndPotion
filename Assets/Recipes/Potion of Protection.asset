@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23bf843271ba9e143818e6fb62dee064, type: 3}
   m_Name: Potion of Protection
   m_EditorClassIdentifier: 
-  result: {fileID: 0}
-  ingredientGroupInputs: []
+  result: {fileID: 11400000, guid: 4230c6fcb89a7a84abbbd3c46e5a6e0b, type: 2}
+  ingredientGroupInputs:
+  - {fileID: 11400000, guid: e553b08798393ed4c9742f9d9dfcf538, type: 2}
+  - {fileID: 11400000, guid: b54a46b2b924937489d729dbbe8ee737, type: 2}
