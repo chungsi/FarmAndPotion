@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DryadsSaddle
   m_EditorClassIdentifier: 
   name: Dryad's Saddle
-  artwork: {fileID: 21300000, guid: ca64ffb185576fc45acbdbf4786d1a77, type: 3}
+  artwork: {fileID: 21300000, guid: 7e4bd9d1ffd93f343a395b5747a8a963, type: 3}
   description: 
   itemStats:
   - stat: {fileID: 11400000, guid: 01a3fe689abe148488b287eadcfc32c2, type: 2}

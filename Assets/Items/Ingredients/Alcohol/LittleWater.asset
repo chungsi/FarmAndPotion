@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: LittleWater
   m_EditorClassIdentifier: 
   name: Little Water
-  artwork: {fileID: 21300000, guid: 059dc1b4b96974f4e9e0ecf4b3be5702, type: 3}
+  artwork: {fileID: 21300000, guid: 1ab80584428611a46830f00b3e12c842, type: 3}
   description: 
   itemStats:
   - stat: {fileID: 11400000, guid: 01a3fe689abe148488b287eadcfc32c2, type: 2}
