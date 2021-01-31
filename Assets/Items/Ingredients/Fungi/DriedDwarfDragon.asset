@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57578dfb16431dd44babae116ba7aec4, type: 3}
   m_Name: DriedDwarfDragon
   m_EditorClassIdentifier: 
-  name: DriedDwarfDragon
-  artwork: {fileID: 21300000, guid: ca64ffb185576fc45acbdbf4786d1a77, type: 3}
+  name: Dried Dwarf Dragon
+  artwork: {fileID: 21300000, guid: b22ab42c8a6f6aa4996fd8946ab9fae9, type: 3}
   description: 
   itemStats:
   - stat: {fileID: 11400000, guid: 01a3fe689abe148488b287eadcfc32c2, type: 2}

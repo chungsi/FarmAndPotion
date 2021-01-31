@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: HartTonguesFern
   m_EditorClassIdentifier: 
   name: Hart-tongue's Fern
-  artwork: {fileID: 21300000, guid: ca64ffb185576fc45acbdbf4786d1a77, type: 3}
+  artwork: {fileID: 21300000, guid: 90a59c48a3cc0584abe60bebc2f6846d, type: 3}
   description: 
   itemStats:
   - stat: {fileID: 11400000, guid: 01a3fe689abe148488b287eadcfc32c2, type: 2}
