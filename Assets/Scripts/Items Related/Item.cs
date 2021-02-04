@@ -27,7 +27,7 @@ public class Item : ScriptableObject
     private List<ItemStat> masterStatList = new List<ItemStat>();
     
     // helper functions to get stats stuff
-    private ItemStatHelper statHelper = new ItemStatHelper();
+    private ItemHelper statHelper = new ItemHelper();
     
 
     void OnValidate()

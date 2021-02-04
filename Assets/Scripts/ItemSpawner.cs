@@ -11,6 +11,7 @@ public class ItemSpawner : MonoBehaviour
     public ItemObjectRuntimeSet wildItemsSubset;
     [Space]
     public ItemType spawnItemType;
+    public int maxSpawnNum;
     // [MinMaxRange(1,10)] public RangedFloat numSpawnRange;
     [Space]
     public Transform itemsParent; 
@@ -50,7 +51,7 @@ public class ItemSpawner : MonoBehaviour
 
     void SpawnItems()
     {
-        int randomNumSpawns = Random.Range(1, 4);
+        int randomNumSpawns = Random.Range(3, maxSpawnNum+1);
 
         for (int i = 0; i < randomNumSpawns; i++)
         {

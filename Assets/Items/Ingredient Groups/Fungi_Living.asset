@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36ad29aa1624f25428c1cc752bb6eb09, type: 3}
-  m_Name: Roots
+  m_Name: Fungi_Living
   m_EditorClassIdentifier: 
-  displayText: Roots
+  displayText: Fungi & Animal parts

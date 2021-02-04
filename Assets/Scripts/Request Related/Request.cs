@@ -19,7 +19,7 @@ public class Request : ScriptableObject
     [SerializeField] bool isCompleted = false;
     [SerializeField] RequestEvaluation completedEval;
     
-    private ItemStatHelper statHelper = new ItemStatHelper();
+    private ItemHelper statHelper = new ItemHelper();
     private List<ItemStat> masterItemStatsList = new List<ItemStat>();
 
     // Only contains attributes required (no zero-value stats)

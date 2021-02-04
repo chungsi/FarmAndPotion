@@ -4,16 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class BookPage : MonoBehaviour
+public class PageObject : MonoBehaviour
 {
 
     public Item item;
     public TextMeshProUGUI nameText;
+    public TextMeshProUGUI itemTypeText;
     public TextMeshProUGUI descripText;
     public Image artwork;
-    [Space]
-    public ItemObjectRuntimeSet inventorySet;
-    public FloatVariable itemSetIndex;
 
     void Start()
     {
@@ -23,23 +21,20 @@ public class BookPage : MonoBehaviour
 
     public void setItem(Item newItem) {
         item = newItem;
+        updatePage();
     }
 
     public void updatePage() {
         nameText.text = item.name;
         descripText.text = item.GetDescription();
         artwork.sprite = item.artwork;
+
+        if (item is Ingredient)
+            itemTypeText.text = ((Ingredient)item).GetIngredientGroup().GetDisplayText();
     }
 
-    #region Event Responses
-
-    public void ShowInfoOnClickedItem()
+    public void SetActive(bool b)
     {
-        ItemObject newItem = inventorySet.GetItem((int)itemSetIndex.value);
-        this.item = newItem.GetItem();
-        updatePage();
+        gameObject.SetActive(b);
     }
-
-    #endregion
-
 }

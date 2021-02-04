@@ -9,6 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36ad29aa1624f25428c1cc752bb6eb09, type: 3}
-  m_Name: Alcohol
+  m_Script: {fileID: 11500000, guid: 8360c1d1fca844e4a80565a0bf9f7830, type: 3}
+  m_Name: PrevTomeSpread
   m_EditorClassIdentifier: 

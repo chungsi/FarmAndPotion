@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 
 [CreateAssetMenu]
 public class Inventory : ScriptableObject {
@@ -14,13 +13,14 @@ public class Inventory : ScriptableObject {
     public bool useStartItemsOnInitialize;
     [SerializeField]
     private List<Item> masterList = new List<Item>();
+    private ItemHelper itemHelper = new ItemHelper();
 
     public virtual void OnValidate()
     {
         masterList.Clear();
 
         // populate the Master list of all available Items
-        FillMasterList();
+        masterList = itemHelper.GetMasterItemsList();
     }
 
     public virtual void OnEnable()
@@ -100,16 +100,4 @@ public class Inventory : ScriptableObject {
         // Debug.Log(name + " is clearing itself out");
         items.Clear();
     }
-
-    private void FillMasterList()
-    {
-        string[] assetNames = AssetDatabase.FindAssets("t:Item", new[] { "Assets/Items" });
-        foreach (string SOName in assetNames)
-        {
-            var SOpath = AssetDatabase.GUIDToAssetPath(SOName);
-            var item = AssetDatabase.LoadAssetAtPath<Item>(SOpath);
-            masterList.Add(item);
-        }
-    }
-
 }

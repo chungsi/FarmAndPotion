@@ -13,7 +13,7 @@ public class CraftingInventory : Inventory
     private List<IngredientGroup> inputIngGroups = new List<IngredientGroup>();
     private List<Recipe> recipes = new List<Recipe>();
 
-    private ItemStatHelper statHelper = new ItemStatHelper();
+    private ItemHelper statHelper = new ItemHelper();
 
     public override void OnValidate()
     {
@@ -83,10 +83,13 @@ public class CraftingInventory : Inventory
         foreach (Recipe recipe in recipes)
         {
             List<IngredientGroup> recipeInputs = recipe.GetInputs();
+
+            // sort the two lists first, then check set equivalence
+            // recipeInputs.Sort();
+            // inputIngGroups.Sort();
+            // if (recipeInputs.SequenceEqual(inputIngGroups))
             
-            // checks for size equivalence first because .All method specs.... but change?
-            if (recipeInputs.Count == inputIngGroups.Count &&
-                recipeInputs.All(inputIngGroups.Contains))
+            if (new HashSet<IngredientGroup>(recipeInputs).SetEquals(inputIngGroups))
             {
                 return recipe;
             }
