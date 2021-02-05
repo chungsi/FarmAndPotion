@@ -6,25 +6,19 @@ using TMPro;
 
 public class PageObject : MonoBehaviour
 {
-
+    // TODO: consider making this more strongly typed?
     public Item item;
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI itemTypeText;
     public TextMeshProUGUI descripText;
     public Image artwork;
-
-    void Start()
-    {
-        if (item != null)
-            updatePage();
-    }
-
-    public void setItem(Item newItem) {
+    
+    public virtual void SetItem(Item newItem) {
         item = newItem;
-        updatePage();
+        UpdatePage();
     }
 
-    public void updatePage() {
+    public virtual void UpdatePage() {
         nameText.text = item.name;
         descripText.text = item.GetDescription();
         artwork.sprite = item.artwork;

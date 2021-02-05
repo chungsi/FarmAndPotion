@@ -40,3 +40,6 @@ MonoBehaviour:
     value: 0
   - stat: {fileID: 11400000, guid: 2db9e720fa063ad4c819daea573f4507, type: 2}
     value: 0
+  ingredientGroupInputs:
+  - {fileID: 11400000, guid: e553b08798393ed4c9742f9d9dfcf538, type: 2}
+  - {fileID: 11400000, guid: e553b08798393ed4c9742f9d9dfcf538, type: 2}

@@ -5,47 +5,63 @@ using UnityEngine;
 
 public class TomeHandler : MonoBehaviour
 {
+    [SerializeField] Transform pagesParent;
+    [SerializeField] SpreadObject spreadPrefab;
     [SerializeField] PageObject pagePrefab;
     [SerializeField] PotionPageObject potionPagePrefab;
-    [SerializeField] Transform pagesParent;
 
     private ItemHelper itemHelper = new ItemHelper();
-    private List<PageObject> pageObjects = new List<PageObject>();
-    private int currentEvenIndex = 0;
+    private List<SpreadObject> spreads = new List<SpreadObject>();
+    private int currentIndex = 0;
 
     void Start()
     {
-        GetTomePages();
+        CreateTomePages();
         SetFirstPagesVisible();
     }
 
     public void SetFirstPagesVisible()
     {
-        pageObjects[0].SetActive(true);
-        pageObjects[1].SetActive(true);
+        spreads[0].SetActive(true);
     }
 
-    private void GetTomePages()
+    private void CreateTomePages()
     {
-        List<Ingredient> ingredients = GetSortedIngredientsList();
-        foreach (Ingredient ingredient in ingredients)
-        {
-            PageObject page = PageObject.Instantiate(pagePrefab, pagesParent);
-            page.setItem((Item)ingredient);
-            page.SetActive(false); // disable it to be invisible first
-            pageObjects.Add(page);
-        }
+        // Create ingredient pages
+        CreateSpreads(
+            spreadType: SpreadType.Item,
+            pagePrefab: pagePrefab,
+            itemList: GetSortedIngredientsList().Cast<Item>().ToList()
+        );
 
-        List<Potion> potions = itemHelper.GetMasterPotionsList();
-        foreach (Potion potion in potions)
+        // Create potion pages
+        CreateSpreads(
+            spreadType: SpreadType.Potion,
+            pagePrefab: potionPagePrefab,
+            itemList: itemHelper.GetMasterPotionsList().Cast<Item>().ToList()
+        );
+    }
+    
+    // Creates a spread for every even number of pages and
+    // calls the spread instantiate method to create the pages within it.
+    private void CreateSpreads(SpreadType spreadType, PageObject pagePrefab, List<Item> itemList)
+    {
+        for (int i = 0; i < itemList.Count(); i+=2)
         {
-            PotionPageObject page = PotionPageObject.Instantiate(potionPagePrefab, pagesParent);
-            page.setItem((Item)potion);
-            page.SetActive(false);
-            pageObjects.Add(page);
+            SpreadObject spread = SpreadObject.Instantiate(spreadPrefab, pagesParent);
+
+            // Check if there is an even number of items left;
+            // then instantiate the spread (with either next item or null value).
+            Item i2 = null;
+            if (i+1 < itemList.Count()) 
+                i2 = itemList[i+1];
+            spread.Instantiate(spreadType, pagePrefab, itemList[i], i2);
+            
+            spread.SetActive(false);
+            spreads.Add(spread);
         }
     }
-
+    
     // Sort the ingredients list by the group first.
     // Need some queries and traversals, so it's own method.
     private List<Ingredient> GetSortedIngredientsList()
@@ -70,46 +86,52 @@ public class TomeHandler : MonoBehaviour
         return ingredients;
     }
 
+    private void SetActiveSpreadToIndex(int index)
+    {
+        spreads[currentIndex].SetActive(false);
+        spreads[index].SetActive(true);
+        currentIndex = index;
+    }
+
     #region Event Responses
 
     public void HandleNextPageRequest()
     {
-        // Check if next index exists
-        int nextEvenIndex = currentEvenIndex + 2;
-        if (pageObjects.Count() > nextEvenIndex)
+        int nextIndex = currentIndex + 1;
+        if (spreads.Count() > nextIndex)
         {
-            pageObjects[currentEvenIndex].SetActive(false);
-            pageObjects[nextEvenIndex].SetActive(true);
-
-            // Disable right page regardless because there could be odd num of pages
-            if (pageObjects.Count() > currentEvenIndex+1)
-                pageObjects[currentEvenIndex+1].SetActive(false);
-
-            int nextOddIndex = currentEvenIndex + 3;
-            if (pageObjects.Count() > nextOddIndex)
-                pageObjects[nextOddIndex].SetActive(true);
-
-            currentEvenIndex = nextEvenIndex;
+            spreads[currentIndex].SetActive(false);
+            spreads[nextIndex].SetActive(true);
+            currentIndex = nextIndex;
         }
     }
 
     public void HandlePrevPageRequest()
     {
-        // If the previous even index is greater than zero,
-        // it's guaranteed there's an odd numbered page too
-        int prevEvenIndex = currentEvenIndex - 2;
-        if (prevEvenIndex >= 0)
+        int prevIndex = currentIndex - 1;
+        if (prevIndex >= 0)
         {
-            pageObjects[currentEvenIndex].SetActive(false);
+            spreads[currentIndex].SetActive(false);
+            spreads[prevIndex].SetActive(true);
+            currentIndex = prevIndex;
+        }
+    }
 
-            // Double check if there's an existing odd numbered page to disable
-            if (pageObjects.Count() > currentEvenIndex+1)
-                pageObjects[currentEvenIndex+1].SetActive(false);
+    public void GoToIngredientBookmark()
+    {
+        int index = spreads.FindIndex(spread => spread.GetSpreadType() == SpreadType.Item);
+        if (index >= 0) // check null
+        {
+            SetActiveSpreadToIndex(index);
+        }
+    }
 
-            pageObjects[prevEvenIndex].SetActive(true);
-            pageObjects[prevEvenIndex+1].SetActive(true);
-
-            currentEvenIndex = prevEvenIndex;
+    public void GoToPotionBookmark()
+    {
+        int index = spreads.FindIndex(spread => spread.GetSpreadType() == SpreadType.Potion);
+        if (index >= 0) // check null
+        {
+            SetActiveSpreadToIndex(index);
         }
     }
 
