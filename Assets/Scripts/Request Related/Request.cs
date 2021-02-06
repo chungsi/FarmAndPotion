@@ -8,7 +8,8 @@ using UnityEngine.Serialization;
 [CreateAssetMenu(menuName = "Request/Request")]
 public class Request : ScriptableObject
 {
-    [TextArea] public string description;
+    [SerializeField] string requestBy;
+    [TextArea(7, 15)] public string description;
     [Space]
     [SerializeField] Potion potion;
     [SerializeField] RequestDifficulty difficulty;
@@ -40,6 +41,11 @@ public class Request : ScriptableObject
         statReqsDict = statHelper.GetNonZeroItemStatsDictionary(statReqs);
         // Clear dictionary data and such
         statEvalsDict.Clear();
+    }
+
+    public string GetRequestBy()
+    {
+        return requestBy;
     }
 
     public RequestDifficulty GetDifficulty()

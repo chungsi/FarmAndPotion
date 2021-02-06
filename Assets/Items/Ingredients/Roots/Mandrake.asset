@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Mandrake
   artwork: {fileID: 21300000, guid: 3902354b520b26b4a945d0e02ad4a047, type: 3}
-  description: 
+  description: An angry looking root, mad at you for waking its deep underground
+    slumber. It is rumored to bring great <b>favor</b> but prolonged exposure to
+    its potent odor will <b>numb the senses</b>.
   itemStats:
   - stat: {fileID: 11400000, guid: 01a3fe689abe148488b287eadcfc32c2, type: 2}
     value: 8

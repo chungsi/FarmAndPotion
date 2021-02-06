@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Yam
   artwork: {fileID: 21300000, guid: 986688e4100558e43a748d4bb599ae14, type: 3}
-  description: 
+  description: A sweet and delicious root, used in a lot of cooking. Gives great
+    <b>spirit</b> and <b>strength</b>. Can also be used for preventative measures
+    against illness.
   itemStats:
   - stat: {fileID: 11400000, guid: 01a3fe689abe148488b287eadcfc32c2, type: 2}
     value: 0

@@ -12,7 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fdccbdde5e208d42b9f7f4cb92def83, type: 3}
   m_Name: Test Request
   m_EditorClassIdentifier: 
-  description: Make me something to help me!
+  requestBy: Buff Bird Man
+  description: I traded my weak bird wings for buff human arms a long time ago to
+    become the best of the best. But now that I am the Champion of the Ring I realize
+    loneliness is the hardest opponent to conquer. The female birds laugh at my arms.
+    They only like delicate feathered wings they say! But my wings are long gone.
+    I need a Serum of seduction to help me attract the females. They have to know
+    I'm more than just muscles!
   potion: {fileID: 11400000, guid: 26813cad35170784f8f3f0ea9a3eafbd, type: 2}
   difficulty: {fileID: 11400000, guid: a4d59aaf01532ab4d97b0683a99c98fc, type: 2}
   lowestEval: {fileID: 11400000, guid: bb64ce21a67adff4f9d68462fe005e82, type: 2}

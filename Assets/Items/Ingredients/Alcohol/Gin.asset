@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Gin
   artwork: {fileID: 21300000, guid: 086ce315f57830343aaa0f0ab6e54147, type: 3}
-  description: 
+  description: 'A staple to healers and alchemists. Has great <b>cleansing</b> and
+    <b>strength</b> properties and often used for <b>preventative</b> measures. Some
+    side effects include <b>loss of inhibition</b>. '
   itemStats:
   - stat: {fileID: 11400000, guid: 01a3fe689abe148488b287eadcfc32c2, type: 2}
     value: 3

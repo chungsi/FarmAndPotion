@@ -10,6 +10,7 @@ public class RequestUI : ItemContainerUI
 {
     public ItemObjectRuntimeSet requestItemsSubset;
     [Space]
+    public TextMeshProUGUI requesterNameText;
     public TextMeshProUGUI requestText;
     [TextArea] public string defaultRequestBoardText;
     [Space]
@@ -133,6 +134,7 @@ public class RequestUI : ItemContainerUI
         if (currentRequest != null && !currentRequest.IsCompleted())
         {
             requestText.text = currentRequest.description;
+            requesterNameText.text = currentRequest.GetRequestBy();
         }
         // means there's no more new requests
         // TODO: make a different way to check?

@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Little Water
   artwork: {fileID: 21300000, guid: 1ab80584428611a46830f00b3e12c842, type: 3}
-  description: 
+  description: A concentrated alcohol used for <b>sterilization</b>. Its consumption
+    will cause <b>delirious happiness</b>.
   itemStats:
   - stat: {fileID: 11400000, guid: 01a3fe689abe148488b287eadcfc32c2, type: 2}
     value: 3

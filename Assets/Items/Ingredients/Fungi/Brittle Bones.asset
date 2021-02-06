@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Brittle Bones
   artwork: {fileID: 21300000, guid: f22768dddab0e16479b8150cb4f7f5b5, type: 3}
-  description: 
+  description: Remnants of an animal left to be <b>forgotten</b>. It crumbles in
+    your hands, the dull edges feel <b>numbing</b>.
   itemStats:
   - stat: {fileID: 11400000, guid: 01a3fe689abe148488b287eadcfc32c2, type: 2}
     value: 0

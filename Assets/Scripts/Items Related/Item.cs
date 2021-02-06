@@ -18,8 +18,9 @@ public class Item : ScriptableObject
     // [SerializeField] ItemType itemType;
     public Sprite artwork = null;
 
-    [TextArea] 
+    [TextArea(7, 15)] 
     [SerializeField] string description = "";
+    [Space]
     [SerializeField] List<ItemStatValue> itemStats = new List<ItemStatValue>(); // to be inspector populated
     
     // populated by code, used for internal traversals

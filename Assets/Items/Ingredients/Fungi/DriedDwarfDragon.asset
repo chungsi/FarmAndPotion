@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Dried Dwarf Dragon
   artwork: {fileID: 21300000, guid: b22ab42c8a6f6aa4996fd8946ab9fae9, type: 3}
-  description: 
+  description: A mysterious creature sometimes found washed up on shore after turbulent
+    storms. Often dried and mixed into <b>deadly</b> blends that leave one numb.
+    Yet, it's strangely <b>compelling</b>...
   itemStats:
   - stat: {fileID: 11400000, guid: 01a3fe689abe148488b287eadcfc32c2, type: 2}
     value: 8

@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Camphor
   artwork: {fileID: 21300000, guid: fc00749a25840c84e9edad18b7a79eed, type: 3}
-  description: 
+  description: A <b>musky</b> smelling sap concentrate extrated from trees. A main
+    ingredient in perfume, as it is known to bring <b>good luck</b> and <b>resilience</b>.
+    Its alluring scent <b>brightens</b> your senses.
   itemStats:
   - stat: {fileID: 11400000, guid: 01a3fe689abe148488b287eadcfc32c2, type: 2}
     value: 10
