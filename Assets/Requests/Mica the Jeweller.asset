@@ -9,14 +9,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57578dfb16431dd44babae116ba7aec4, type: 3}
-  m_Name: Brittle Bones
+  m_Script: {fileID: 11500000, guid: 8fdccbdde5e208d42b9f7f4cb92def83, type: 3}
+  m_Name: Mica the Jeweller
   m_EditorClassIdentifier: 
-  name: Brittle Bones
-  artwork: {fileID: 21300000, guid: f22768dddab0e16479b8150cb4f7f5b5, type: 3}
-  description: Remnants of an animal left to be <b>forgotten</b>. It crumbles in
-    your hands, the dull edges feel <b>numbing</b>.
-  itemStats:
+  requestBy: Mica the Jeweller
+  description: You got anything to deal with some troublesome gem thieves? In all
+    the years I've been a jeweller, these pesky fairies come around every so often
+    and take some of my best gems when I'm not looking. I would try to catch them
+    to give 'em a piece of mind but I've got a big commission to finsh up, so I need
+    something like fast-acting rat poison to get rid of them. Make sure it's strong
+    and lasting!
+  difficulty: {fileID: 11400000, guid: a4d59aaf01532ab4d97b0683a99c98fc, type: 2}
+  lowestEval: {fileID: 11400000, guid: bb64ce21a67adff4f9d68462fe005e82, type: 2}
+  potion: {fileID: 11400000, guid: c02aed4f9a293f84b958612cb193ca59, type: 2}
+  statReqs:
   - stat: {fileID: 11400000, guid: 01a3fe689abe148488b287eadcfc32c2, type: 2}
     value: 0
   - stat: {fileID: 11400000, guid: 999cef21f54b26d4c8ff9fc3f668892d, type: 2}
@@ -32,13 +38,14 @@ MonoBehaviour:
   - stat: {fileID: 11400000, guid: 42a58c3179c306f4c8587056074948d4, type: 2}
     value: 0
   - stat: {fileID: 11400000, guid: 0db68888dd4ce2b45be09524a806b096, type: 2}
-    value: 5
+    value: 20
   - stat: {fileID: 11400000, guid: 3cce2c07dd9f62643bea618074567057, type: 2}
     value: 0
   - stat: {fileID: 11400000, guid: ce03b7a48d27fdc4f9d14273aadf4e9f, type: 2}
-    value: 10
+    value: 0
   - stat: {fileID: 11400000, guid: 94b954906129e1749a8e031f957d27a3, type: 2}
-    value: 18
+    value: 0
   - stat: {fileID: 11400000, guid: 2db9e720fa063ad4c819daea573f4507, type: 2}
-    value: 5
-  ingredientGroup: {fileID: 11400000, guid: 112e7325f43e205458173a29fb0b8eca, type: 2}
+    value: 20
+  isCompleted: 0
+  completedEval: {fileID: 0}

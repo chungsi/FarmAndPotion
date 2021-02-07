@@ -9,37 +9,41 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db8a3a76e0e23934ebd9bd31c02630ea, type: 3}
-  m_Name: Decoction of Dullness
+  m_Script: {fileID: 11500000, guid: 8fdccbdde5e208d42b9f7f4cb92def83, type: 3}
+  m_Name: Gerty the Truffle Hunter
   m_EditorClassIdentifier: 
-  name: Decoction of Dullness
-  artwork: {fileID: 21300000, guid: d512690ffd781e14c913f9a95566a0e4, type: 3}
-  description: 
-  itemStats:
+  requestBy: Gerty the Truffle Hunter
+  description: Hello potion master sir, my pet pig is sick :( Willie, that's him,
+    he and I go out for walks to collect mushroom truffles! We collect lots and bring
+    some home to eat and sell so we can buy Willie more pretty bows :D But he's been
+    sniffling a lot and can't smell anything anymore! Can you help him feel better?
+  difficulty: {fileID: 11400000, guid: a4d59aaf01532ab4d97b0683a99c98fc, type: 2}
+  lowestEval: {fileID: 11400000, guid: bb64ce21a67adff4f9d68462fe005e82, type: 2}
+  potion: {fileID: 11400000, guid: 73e47a99f20c6b845a689d0cc1febaf9, type: 2}
+  statReqs:
   - stat: {fileID: 11400000, guid: 01a3fe689abe148488b287eadcfc32c2, type: 2}
     value: 0
   - stat: {fileID: 11400000, guid: 999cef21f54b26d4c8ff9fc3f668892d, type: 2}
     value: 0
   - stat: {fileID: 11400000, guid: 8ba3101572ec72f4dbfabff736369f36, type: 2}
-    value: 0
+    value: 10
   - stat: {fileID: 11400000, guid: 1438ccae114ccff4b86ebdcf5bcd7b71, type: 2}
     value: 0
   - stat: {fileID: 11400000, guid: 152f26c263d712440840ca2ecdd4560b, type: 2}
-    value: 0
+    value: 12
   - stat: {fileID: 11400000, guid: e081fd287fc89a74f95886e73bda5e1d, type: 2}
-    value: 0
+    value: 20
   - stat: {fileID: 11400000, guid: 42a58c3179c306f4c8587056074948d4, type: 2}
     value: 0
   - stat: {fileID: 11400000, guid: 0db68888dd4ce2b45be09524a806b096, type: 2}
     value: 0
   - stat: {fileID: 11400000, guid: 3cce2c07dd9f62643bea618074567057, type: 2}
-    value: 0
+    value: 14
   - stat: {fileID: 11400000, guid: ce03b7a48d27fdc4f9d14273aadf4e9f, type: 2}
     value: 0
   - stat: {fileID: 11400000, guid: 94b954906129e1749a8e031f957d27a3, type: 2}
     value: 0
   - stat: {fileID: 11400000, guid: 2db9e720fa063ad4c819daea573f4507, type: 2}
     value: 0
-  ingredientGroupInputs:
-  - {fileID: 11400000, guid: e553b08798393ed4c9742f9d9dfcf538, type: 2}
-  - {fileID: 11400000, guid: 112e7325f43e205458173a29fb0b8eca, type: 2}
+  isCompleted: 0
+  completedEval: {fileID: 0}

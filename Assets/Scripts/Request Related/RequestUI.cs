@@ -111,8 +111,8 @@ public class RequestUI : ItemContainerUI
             DisplayEvaluation();
 
             // Set request to be completed & get new
-            currentRequest.SetIsCompleted(true);
-            availableRequests.Remove(currentRequest);
+            // currentRequest.SetIsCompleted(true);
+            // availableRequests.Remove(currentRequest);
             GetAnotherAvailableRequest();
 
             // Clear input inventory and subset to prepare for a new request.

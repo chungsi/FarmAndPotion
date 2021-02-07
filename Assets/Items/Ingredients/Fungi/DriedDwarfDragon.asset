@@ -15,17 +15,17 @@ MonoBehaviour:
   name: Dried Dwarf Dragon
   artwork: {fileID: 21300000, guid: b22ab42c8a6f6aa4996fd8946ab9fae9, type: 3}
   description: A mysterious creature sometimes found washed up on shore after turbulent
-    storms. Often dried and mixed into <b>deadly</b> blends that leave one numb.
-    Yet, it's strangely <b>compelling</b>...
+    storms. Often dried and mixed into <b>deadly</b> blends that <b>swiftly</b> leave
+    one numb. Yet, it's strangely <b>compelling</b>...
   itemStats:
   - stat: {fileID: 11400000, guid: 01a3fe689abe148488b287eadcfc32c2, type: 2}
-    value: 8
+    value: 11
   - stat: {fileID: 11400000, guid: 999cef21f54b26d4c8ff9fc3f668892d, type: 2}
     value: 0
   - stat: {fileID: 11400000, guid: 8ba3101572ec72f4dbfabff736369f36, type: 2}
     value: 0
   - stat: {fileID: 11400000, guid: 1438ccae114ccff4b86ebdcf5bcd7b71, type: 2}
-    value: 9
+    value: 0
   - stat: {fileID: 11400000, guid: 152f26c263d712440840ca2ecdd4560b, type: 2}
     value: 0
   - stat: {fileID: 11400000, guid: e081fd287fc89a74f95886e73bda5e1d, type: 2}
@@ -39,7 +39,7 @@ MonoBehaviour:
   - stat: {fileID: 11400000, guid: ce03b7a48d27fdc4f9d14273aadf4e9f, type: 2}
     value: 0
   - stat: {fileID: 11400000, guid: 94b954906129e1749a8e031f957d27a3, type: 2}
-    value: 7
+    value: 0
   - stat: {fileID: 11400000, guid: 2db9e720fa063ad4c819daea573f4507, type: 2}
-    value: 18
+    value: 0
   ingredientGroup: {fileID: 11400000, guid: 112e7325f43e205458173a29fb0b8eca, type: 2}

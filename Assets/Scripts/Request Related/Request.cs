@@ -9,12 +9,12 @@ using UnityEngine.Serialization;
 public class Request : ScriptableObject
 {
     [SerializeField] string requestBy;
-    [TextArea(7, 15)] public string description;
+    [TextArea(10, 15)] public string description;
     [Space]
-    [SerializeField] Potion potion;
     [SerializeField] RequestDifficulty difficulty;
     [SerializeField] RequestEvaluation lowestEval;
     [Space]
+    [SerializeField] Potion potion;
     [SerializeField] List<ItemStatValue> statReqs = new List<ItemStatValue>();
     [Space]
     [SerializeField] bool isCompleted = false;
