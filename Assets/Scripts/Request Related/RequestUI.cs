@@ -8,7 +8,10 @@ using TMPro;
 
 public class RequestUI : ItemContainerUI
 {
+    [Space]
     public ItemObjectRuntimeSet requestItemsSubset;
+    [Space]
+    public Inventory playerInventory;
     [Space]
     public TextMeshProUGUI requesterNameText;
     public TextMeshProUGUI requestText;
@@ -111,6 +114,7 @@ public class RequestUI : ItemContainerUI
             DisplayEvaluation();
 
             // Set request to be completed & get new
+            currentRequest.ResetRequestToDefault(); // temp reset
             // currentRequest.SetIsCompleted(true);
             // availableRequests.Remove(currentRequest);
             GetAnotherAvailableRequest();
@@ -120,6 +124,7 @@ public class RequestUI : ItemContainerUI
             {
                 ItemObject item = requestItemsSubset.items[i];
                 requestItemsSubset.Remove(item);
+                playerInventory.RemoveItem(item.GetItem()); // Remove from the player inventory!!!
                 item.Destroy();
             }
             inventory.ClearInventory();

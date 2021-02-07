@@ -83,6 +83,14 @@ public class Request : ScriptableObject
         return statReqsDict;
     }
 
+    // Clears data related to calculating the evaluation and whatnot,
+    // to reset the status for another chance.
+    public void ResetRequestToDefault()
+    {
+        isCompleted = false;
+        statEvalsDict.Clear();
+    }
+
     public Dictionary<ItemStat, RequestEvaluation> GetItemStatEvals(Dictionary<ItemStat, int> solutionStats)
     {
         Dictionary<RequestEvaluation, int> evalMargins = difficulty.GetEvaluationMargins();
@@ -124,7 +132,7 @@ public class Request : ScriptableObject
     {
         List<RequestEvaluation> evals = GetItemStatEvals(solutionStats).Values.ToList();
         evals.Sort(); // sorts by descending order
-        RequestEvaluation lowestEval = evals[evals.Count-1];
+        RequestEvaluation lowestEval = evals[evals.Count()-1];
 
         Debug.Log("Lowest eval: " + lowestEval.name);
         return lowestEval;
