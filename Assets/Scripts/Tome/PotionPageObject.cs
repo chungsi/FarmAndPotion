@@ -26,13 +26,13 @@ public class PotionPageObject : PageObject
         base.UpdatePage();
 
         string recipeString = "";
-        if (potion != null)
-        {
-            foreach (IngredientGroup ingrGroup in potion.GetInputs())
-            {
-                recipeString += ingrGroup.GetDisplayText() + "\n";
-            }
-        }
+        // if (potion != null)
+        // {
+        //     foreach (IngredientGroup ingrGroup in potion.StatInputs)
+        //     {
+        //         recipeString += ingrGroup.Name + "\n";
+        //     }
+        // }
         recipeText.text = recipeString;
     }
 }

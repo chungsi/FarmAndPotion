@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fdccbdde5e208d42b9f7f4cb92def83, type: 3}
   m_Name: Igor from the Brewery
   m_EditorClassIdentifier: 
-  requestBy: Igor from the Brewery
+  requester: Igor from the Brewery
   description: Hey it's Igor from the Brewery next door! You've come by for a cup
     of coffee a few times. You probs noticed the sign saying we've sold out the past
     few days. Well the real story is that our Civets haven't been able to poop any

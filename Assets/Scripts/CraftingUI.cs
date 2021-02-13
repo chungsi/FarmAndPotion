@@ -5,12 +5,6 @@ using UnityEngine.Events;
 
 public class CraftingUI : ItemContainerUI
 {
-    // public Transform itemsParent;
-    // [Space]
-    // public FloatVariable startSlotIndex;
-    // public FloatVariable dropSlotIndex;
-    // public FloatVariable floatingItemMasterIndex;
-    // public ItemObjectRuntimeSet inventorySet;
     [Space]
     public CraftingInventory craftingList; // hrmmm takes its own inventory....
     public ItemObjectRuntimeSet craftingSubset;
@@ -35,13 +29,13 @@ public class CraftingUI : ItemContainerUI
 
     protected override void AddItem(ItemObject itemObject)
     {
-        craftingList.AddItem(itemObject.GetItem());
+        craftingList.AddItem(itemObject.Item);
         craftingSubset.Add(itemObject);
     }
 
     protected override void RemoveItem(ItemObject itemObject)
     {
-        craftingList.RemoveItem(itemObject.GetItem());
+        craftingList.RemoveItem(itemObject.Item);
         craftingSubset.Remove(itemObject);
     }
 
@@ -71,13 +65,13 @@ public class CraftingUI : ItemContainerUI
         ItemObject floatingItem = GetFloatingItem();
 
         // Just drop the item when dropSlot is empty
-        if (dropSlot.isEmpty()) 
+        if (dropSlot.IsEmpty && (floatingItem.Item is Ingredient))
         {
             AddItem(floatingItem);
             AddItemToSlot(floatingItem, dropSlot);
         } 
         // Swap the two items if the dropSlot isn't empty
-        else if (!dropSlot.isEmpty())
+        else if (!dropSlot.IsEmpty)
         {
             // save the existing item first
             // and get the start slot from the itemObject; maybe not use GetComponent?
@@ -113,27 +107,27 @@ public class CraftingUI : ItemContainerUI
 
         Recipe possibleRecipe = craftingList.GetRecipeForCurrent();
 
-        if (possibleRecipe != null)
-        {
-            Debug.Log("recipe exists! creating " + possibleRecipe.name);
-            // foreach (Item item in possibleRecipe.GetResults())
-            // {
-            ItemObject itemObject = ItemObject.Instantiate(itemObjectPrefab, slots[0].transform);
-            Item uniqueItem = Object.Instantiate(possibleRecipe.GetResult());
-            itemObject.SetItem(uniqueItem);
+        // if (possibleRecipe != null)
+        // {
+        //     Debug.Log("recipe exists! creating " + possibleRecipe.name);
+        //     // foreach (Item item in possibleRecipe.GetResults())
+        //     // {
+        //     ItemObject itemObject = ItemObject.Instantiate(itemObjectPrefab, slots[0].transform);
+        //     Item uniqueItem = Object.Instantiate(possibleRecipe.GetResult());
+        //     itemObject.Item = uniqueItem;
 
-            Dictionary<ItemStat, int> newItemStats = craftingList.CalculateItemStats();
-            itemObject.SetItemStats(newItemStats);
+        //     Dictionary<ItemStat, int> newItemStats = craftingList.CalculateItemStats();
+        //     itemObject.ItemStats = newItemStats;
 
-            SaveFloatingItem(itemObject);
-            SaveTheFloatingItemEvent.Invoke();
-            // }
+        //     SaveFloatingItem(itemObject);
+        //     SaveTheFloatingItemEvent.Invoke();
+        //     // }
 
-            // numCraftingResults.value = possibleRecipe.GetResults().Count;
-            OnCraftingSuccessfulEvent.Invoke();
+        //     // numCraftingResults.value = possibleRecipe.GetResults().Count;
+        //     OnCraftingSuccessfulEvent.Invoke();
 
-            ClearCraftingInventory();
-        }
+        //     ClearCraftingInventory();
+        // }
     }
 
     #endregion

@@ -6,17 +6,12 @@ using UnityEngine.Serialization;
 [CreateAssetMenu(fileName = "New Recipe", menuName = "Recipe")]
 public class Recipe : ScriptableObject
 {
-    [SerializeField] Potion result;
-    [Space]
-    [SerializeField] List<IngredientGroup> ingredientGroupInputs = new List<IngredientGroup>();
+    [SerializeField]
+    private Potion result;
     
-    public List<IngredientGroup> GetInputs()
-    {
-        return ingredientGroupInputs;
-    }
-
-    public Potion GetResult()
-    {
-        return result;
-    }
+    [SerializeField]
+    private List<ItemStat> statInputs = new List<ItemStat>();
+    
+    public Potion Result => result;
+    public List<ItemStat> StatInputs => statInputs;
 }

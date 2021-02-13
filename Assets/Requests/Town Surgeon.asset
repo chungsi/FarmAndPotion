@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fdccbdde5e208d42b9f7f4cb92def83, type: 3}
   m_Name: Town Surgeon
   m_EditorClassIdentifier: 
-  requestBy: Town Surgeon
+  requester: Town Surgeon
   description: There's a patient of mine, he's a 153 year old Elder Dwarf who's recently
     gone under extensive heart surgery. He's been having some pains, I need any kind
     of sleeping potion to dull his nervous sytem and help him sleep. He's in a delicate

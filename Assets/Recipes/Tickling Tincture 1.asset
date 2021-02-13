@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 23bf843271ba9e143818e6fb62dee064, type: 3}
-  m_Name: Healing Potion
+  m_Name: Tickling Tincture 1
   m_EditorClassIdentifier: 
-  result: {fileID: 11400000, guid: 73e47a99f20c6b845a689d0cc1febaf9, type: 2}
-  ingredientGroupInputs:
-  - {fileID: 11400000, guid: b54a46b2b924937489d729dbbe8ee737, type: 2}
-  - {fileID: 11400000, guid: b54a46b2b924937489d729dbbe8ee737, type: 2}
+  _result: {fileID: 11400000, guid: 6b18ef2ae7009bb48a22a02c334d74df, type: 2}
+  _statInputs:
+  - {fileID: 11400000, guid: 42a58c3179c306f4c8587056074948d4, type: 2}
+  - {fileID: 11400000, guid: 8ba3101572ec72f4dbfabff736369f36, type: 2}

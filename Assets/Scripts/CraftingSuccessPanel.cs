@@ -26,8 +26,8 @@ public class CraftingSuccessPanel : MonoBehaviour, IPointerDownHandler
 
     void SetDisplay(Item item)
     {
-        icon.sprite = item.artwork;
-        resultName.text = item.name;
+        icon.sprite = item.Artwork;
+        resultName.text = item.Name;
     }
 
     void ShowUI()
@@ -61,7 +61,7 @@ public class CraftingSuccessPanel : MonoBehaviour, IPointerDownHandler
     {
         ShowUI();
         ItemObject item = inventorySet.GetItem((int)floatingItemIndex.value);
-        SetDisplay(item.GetItem());
+        SetDisplay(item.Item);
     }
 
     #endregion

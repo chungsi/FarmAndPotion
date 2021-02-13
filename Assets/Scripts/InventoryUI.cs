@@ -44,7 +44,7 @@ public class InventoryUI : ItemContainerUI
         Item uniqueItem = Object.Instantiate(item);
 
         inventory.AddItem(uniqueItem); // setup start
-        ui.SetItem(uniqueItem);
+        ui.Item = uniqueItem;
         return ui;
     }
 
@@ -52,9 +52,9 @@ public class InventoryUI : ItemContainerUI
     {
         foreach (ItemSlot slot in slots)
         {
-            if (slot.isEmpty())
+            if (slot.IsEmpty)
             {
-                Debug.Log("empty slot index: " + slot.GetIndexWithinContainer());
+                Debug.Log("empty slot index: " + slot.IndexWithinContainer);
                 return slot;
             }
         }
@@ -67,29 +67,6 @@ public class InventoryUI : ItemContainerUI
         AddItemToSlot(newItem, slot);
     }
 
-    // public void AddItem(ItemObject itemObject)
-    // {
-    //     inventory.AddItem(itemObject.GetItem());
-    //     inventorySet.Add(itemObject);
-    // }
-
-    // public void RemoveItem(ItemObject itemObject)
-    // {
-    //     inventory.RemoveItem(itemObject.GetItem());
-    //     inventorySet.Remove(itemObject);
-    // }
-
-    // private ItemObject GetFloatingItem()
-    // {
-    //     return inventorySet.GetItem((int)floatingItemMasterIndex.value);
-    // }
-
-    // private void AddItemToSlot(ItemObject item, ItemSlot slot)
-    // {
-    //     item.transform.SetParent(slot.transform);
-    //     item.transform.localPosition = new Vector3(0,0,0);
-    // }
-
     #region Event Responses
 
     public void DropResponse() 
@@ -98,16 +75,16 @@ public class InventoryUI : ItemContainerUI
         ItemObject floatingItem = GetFloatingItem();
 
         // Just drop the item when dropSlot is empty
-        if (dropSlot.isEmpty()) 
+        if (dropSlot.IsEmpty) 
         {
             AddItemToSlot(floatingItem, dropSlot);
         } 
         // Swap the two items if the dropSlot isn't empty
-        else if (!dropSlot.isEmpty())
+        else if (!dropSlot.IsEmpty)
         {
             // save the existing item first
             // and get the start slot from the itemObject; maybe not use GetComponent?
-            ItemSlot startSlot = floatingItem.GetParentItemSlot();
+            ItemSlot startSlot = floatingItem.ParentItemSlot;
             ItemObject existingItem = dropSlot.GetComponentInChildren<ItemObject>();
 
             AddItemToSlot(floatingItem, dropSlot);
@@ -116,10 +93,22 @@ public class InventoryUI : ItemContainerUI
     }
 
     // this means the item has successfully been dropped into a crafting slot
-    public void CraftingPanelDropResponse()
+    public void RemoveItemDroppedIntoCraftingContainer()
     {
         ItemObject item = GetFloatingItem();
-        RemoveItem(item);
+        if (item.Item is Ingredient)
+        {
+            RemoveItem(item);
+        }
+    }
+
+    public void RemoveItemDroppedIntoRequestBoard()
+    {
+        ItemObject item = GetFloatingItem();
+        if (item.Item is Potion)
+        {
+            RemoveItem(item);
+        }
     }
 
     // add the "floating item" to the inventory
@@ -129,7 +118,7 @@ public class InventoryUI : ItemContainerUI
         ItemObject newItem = GetFloatingItem();
 
         // only add to the inventory if the item doesn't already exist
-        if (!inventory.ContainsItem(newItem.GetItem()))
+        if (!inventory.ContainsItem(newItem.Item))
             AddItem(newItem);
 
         AddToFirstEmptySlot(newItem);
@@ -144,7 +133,7 @@ public class InventoryUI : ItemContainerUI
         if (!inventory.isFull() && slot != null)
         {
             ItemObject floatingItem = GetFloatingItem();
-            ItemObject newItem = InstantiateAndAddUniqueItem(floatingItem.GetItem(), slot.transform);
+            ItemObject newItem = InstantiateAndAddUniqueItem(floatingItem.Item, slot.transform);
             AddItemToSlot(newItem, slot);
 
             floatingItem.Destroy(); // removes the wildItem because replaced by "tamed"
@@ -154,7 +143,7 @@ public class InventoryUI : ItemContainerUI
     public void DisplayItemName()
     {
         ItemObject newItem = GetFloatingItem();
-        displayText.SetText(newItem.GetItem().name);
+        displayText.SetText(newItem.Item.name);
     }
 
     #endregion

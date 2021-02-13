@@ -19,12 +19,13 @@ public class PageObject : MonoBehaviour
     }
 
     public virtual void UpdatePage() {
-        nameText.text = item.name;
-        descripText.text = item.GetDescription();
-        artwork.sprite = item.artwork;
+        nameText.text = item.Name;
+        descripText.text = item.Description;
+        artwork.sprite = item.Artwork;
 
+        // TODO: change this
         if (item is Ingredient)
-            itemTypeText.text = ((Ingredient)item).GetIngredientGroup().GetDisplayText();
+            itemTypeText.text = ((Ingredient)item).Group.Name;
     }
 
     public void SetActive(bool b)

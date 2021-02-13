@@ -8,26 +8,66 @@ using UnityEngine.Serialization;
 [CreateAssetMenu(menuName = "Request/Request")]
 public class Request : ScriptableObject
 {
-    [SerializeField] string requestBy;
-    [TextArea(10, 15)] public string description;
-    [Space]
-    [SerializeField] RequestDifficulty difficulty;
-    [SerializeField] RequestEvaluation lowestEval;
-    [Space]
-    [SerializeField] Potion potion;
-    [SerializeField] List<ItemStatValue> statReqs = new List<ItemStatValue>();
-    [Space]
-    [SerializeField] bool isCompleted = false;
-    [SerializeField] RequestEvaluation completedEval;
-    
-    private ItemHelper statHelper = new ItemHelper();
-    private List<ItemStat> masterItemStatsList = new List<ItemStat>();
+    [SerializeField]
+    private string requester;
 
-    // Only contains attributes required (no zero-value stats)
+    [TextArea(10, 15)]
+    [SerializeField]
+    private string description;
+
+    [Space]
+
+    [SerializeField]
+    private RequestDifficulty difficulty;
+
+    [SerializeField]
+    private RequestEvaluation lowestEval;
+
+    [Space]
+    [SerializeField]
+    private Potion potion;
+
+    [SerializeField]
+    private List<ItemStatValue> statReqs = new List<ItemStatValue>();
+
+    [Space]
+
+    [SerializeField]
+    private bool isCompleted = false;
+
+    [SerializeField]
+    private RequestEvaluation completedEval;
+
+    private ItemHelper statHelper = new ItemHelper();
+    
+    private List<ItemStat> masterItemStatsList = new List<ItemStat>();
+    
+    // Only contains attributes required (no zero-value stats).
     private Dictionary<ItemStat, int> statReqsDict = new Dictionary<ItemStat, int>();
 
-    // Corresponding Evaluation to each individual ItemStat
+    // Corresponding Evaluation to each individual ItemStat.
     private Dictionary<ItemStat, RequestEvaluation> statEvalsDict = new Dictionary<ItemStat, RequestEvaluation>();
+
+
+    public string Requester => requester;
+    public string Description => description;
+    public RequestDifficulty Difficulty => difficulty;
+    public RequestEvaluation LowestPossibleEval => lowestEval;
+    
+    public RequestEvaluation CompletionEvaluation
+    {
+        get => completedEval;
+        set => completedEval = value;
+    }
+
+    public bool Completed 
+    { 
+        get => isCompleted; 
+        set => isCompleted = value;
+    }
+
+    public Dictionary<ItemStat, int> StatRequirements => statReqsDict;
+
 
     void OnValidate()
     {
@@ -41,46 +81,6 @@ public class Request : ScriptableObject
         statReqsDict = statHelper.GetNonZeroItemStatsDictionary(statReqs);
         // Clear dictionary data and such
         statEvalsDict.Clear();
-    }
-
-    public string GetRequestBy()
-    {
-        return requestBy;
-    }
-
-    public RequestDifficulty GetDifficulty()
-    {
-        return difficulty;
-    }
-
-    public void SetIsCompleted(bool b)
-    {
-        isCompleted = b;
-    }
-
-    public bool IsCompleted()
-    {
-        return isCompleted;
-    }
-
-    public RequestEvaluation GetLowestEval()
-    {
-        return lowestEval;
-    }
-
-    public RequestEvaluation GetCompletedEval()
-    {
-        return completedEval;
-    }
-
-    public void SetCompletedEval(RequestEvaluation eval)
-    {
-        completedEval = eval;
-    }
-
-    public Dictionary<ItemStat, int> GetItemStatRequirements()
-    {
-        return statReqsDict;
     }
 
     // Clears data related to calculating the evaluation and whatnot,

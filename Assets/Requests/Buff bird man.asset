@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fdccbdde5e208d42b9f7f4cb92def83, type: 3}
   m_Name: Buff bird man
   m_EditorClassIdentifier: 
-  requestBy: Buff Bird Man
+  requester: Buff bird man
   description: I traded my weak bird wings for buff human arms a long time ago to
     become the best of the best. But now that I am the Champion of the Ring I realize
     loneliness is the hardest opponent to conquer. The female birds laugh at my arms.

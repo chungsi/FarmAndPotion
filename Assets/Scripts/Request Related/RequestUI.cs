@@ -11,13 +11,13 @@ public class RequestUI : ItemContainerUI
     [Space]
     public ItemObjectRuntimeSet requestItemsSubset;
     [Space]
-    public Inventory playerInventory;
-    [Space]
     public TextMeshProUGUI requesterNameText;
     public TextMeshProUGUI requestText;
-    [TextArea] public string defaultRequestBoardText;
+    [TextArea]
+    public string defaultRequestBoardText;
     [Space]
     public UnityEvent SaveTheFloatingItemEvent;
+    public UnityEvent SuccessfulItemDropEvent;
 
     private List<Request> masterRequestsList = new List<Request>();
     private List<Request> availableRequests = new List<Request>(); // only those not completed yet
@@ -63,17 +63,18 @@ public class RequestUI : ItemContainerUI
         ItemObject floatingItem = GetFloatingItem();
 
         // TODO: probably not the best way to do this; does this work???
-        // if (floatingItem.GetItem().GetType().Equals("Potion"))
-        if (floatingItem.GetItem() is Potion p)
+        // if (floatingItem.Item.GetType().Equals("Potion"))
+        if (floatingItem.Item is Potion p)
         {
             // Just drop the item when dropSlot is empty
-            if (dropSlot.isEmpty()) 
+            if (dropSlot.IsEmpty && (floatingItem.Item is Potion)) 
             {
                 AddItem(floatingItem);
                 AddItemToSlot(floatingItem, dropSlot);
+                SuccessfulItemDropEvent.Invoke();
             } 
             // Swap the two items if the dropSlot isn't empty
-            else if (!dropSlot.isEmpty())
+            else if (!dropSlot.IsEmpty)
             {
                 // save the existing item first
                 // and get the start slot from the itemObject; maybe not use GetComponent?
@@ -109,8 +110,8 @@ public class RequestUI : ItemContainerUI
             Item solutionItem = inventory.items[0];
             
             // Get the lowest evaluation of the stats
-            RequestEvaluation eval = currentRequest.GetLowestEval(solutionItem.GetItemStatsDictionary());
-            currentRequest.SetCompletedEval(eval);
+            // RequestEvaluation eval = currentRequest.GetLowestEval(solutionItem.StatDict);
+            // currentRequest.SetCompletedEval(eval);
             DisplayEvaluation();
 
             // Set request to be completed & get new
@@ -124,7 +125,6 @@ public class RequestUI : ItemContainerUI
             {
                 ItemObject item = requestItemsSubset.items[i];
                 requestItemsSubset.Remove(item);
-                playerInventory.RemoveItem(item.GetItem()); // Remove from the player inventory!!!
                 item.Destroy();
             }
             inventory.ClearInventory();
@@ -136,14 +136,14 @@ public class RequestUI : ItemContainerUI
 
     public void ResetBoardDisplayForNew()
     {
-        if (currentRequest != null && !currentRequest.IsCompleted())
+        if (currentRequest != null && !currentRequest.Completed)
         {
-            requestText.text = currentRequest.description;
-            requesterNameText.text = currentRequest.GetRequestBy();
+            requestText.text = currentRequest.Description;
+            requesterNameText.text = currentRequest.Requester;
         }
         // means there's no more new requests
         // TODO: make a different way to check?
-        else if (availableRequests.Count == 0 || currentRequest.IsCompleted())
+        else if (availableRequests.Count == 0 || currentRequest.Completed)
         {
             requestText.text = defaultRequestBoardText;
         }
@@ -153,9 +153,9 @@ public class RequestUI : ItemContainerUI
 
     private void DisplayEvaluation()
     {
-        if (currentRequest.GetCompletedEval() != null)
+        if (currentRequest.CompletionEvaluation != null)
         {
-            requestText.text = currentRequest.GetCompletedEval().GetDisplayText();
+            requestText.text = currentRequest.CompletionEvaluation.GetDisplayText();
         }
     }
 
@@ -174,7 +174,7 @@ public class RequestUI : ItemContainerUI
 
         foreach (Request request in masterRequestsList)
         {
-            if (!request.IsCompleted())
+            if (!request.Completed)
                 availableRequests.Add(request);
         }
 
@@ -198,7 +198,7 @@ public class RequestUI : ItemContainerUI
     {
         foreach (Request request in masterRequestsList)
         {
-            request.SetIsCompleted(false);
+            request.Completed = false;
         }
     }
 

@@ -1,15 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(menuName = "Item/Ingredient")]
 public class Ingredient : Item
 {
-    [Space]
-    [SerializeField] IngredientGroup ingredientGroup;
+    [Header("Ingredient-Specific Fields")]
 
-    public IngredientGroup GetIngredientGroup()
-    {
-        return ingredientGroup;
-    }
+    [SerializeField]
+    private IngredientGroup ingredientGroup;
+
+    public IngredientGroup Group => ingredientGroup;
 }

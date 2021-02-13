@@ -7,13 +7,27 @@ using UnityEngine.EventSystems;
 
 public class ItemObject : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerDownHandler, IPointerEnterHandler
 {
+    [SerializeField]
+    private Item item;
 
-    [SerializeField] Item item;
-    public Image artwork;
-    public ItemObjectRuntimeSet itemObjectRuntimeSet;
-    public FloatVariable floatingItemSetIndex;
+    [SerializeField]
+    private Image artwork;
+
     [Space]
-    public bool isDraggable = false;
+    
+    [SerializeField]
+    private ItemObjectRuntimeSet itemObjectRuntimeSet;
+
+    [SerializeField]
+    private FloatVariable floatingItemSetIndex;
+
+    [Space]
+
+    [SerializeField]
+    private bool isDraggable = false;
+
+    [Space]
+
     public UnityEvent DragBeginEvent;
     public UnityEvent DraggingEvent;
     public UnityEvent DragEndEvent;
@@ -23,11 +37,26 @@ public class ItemObject : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDr
     
     private CanvasGroup canvasGroup;
     private Transform startParent;
+    
+    
+    public Item Item
+    {
+        get => item;
+        set
+        {
+            item = value;
+            artwork.sprite = item.Artwork;
+        }
+    }
+
+    // TODO: Add some kind of nullity check
+    public ItemSlot ParentItemSlot => startParent.GetComponent<ItemSlot>();
+
 
     void OnEnable()
     {
         if (item != null)
-            artwork.sprite = item.artwork;
+            artwork.sprite = item.Artwork;
 
         itemObjectRuntimeSet.Add(this);
     }
@@ -41,36 +70,6 @@ public class ItemObject : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDr
     void Start() 
     {
         canvasGroup = GetComponent<CanvasGroup>();
-    }
-
-    public virtual void SetItem(Item newItem) {
-        item = newItem;
-        artwork.sprite = item.artwork;
-    }
-
-    public Item GetItem()
-    {
-        return item;
-    }
-
-    public Dictionary<ItemStat, int> GetItemItemStats()
-    {
-        return item.GetItemStatsDictionary();
-    }
-
-    public void SetItemStats(Dictionary<ItemStat, int> newItemStats)
-    {
-        item.SetItemStats(newItemStats);
-    }
-
-    public Transform GetStartParentTransform()
-    {
-        return startParent;
-    }
-
-    public ItemSlot GetParentItemSlot()
-    {
-        return startParent.GetComponent<ItemSlot>();
     }
 
     public void Destroy()

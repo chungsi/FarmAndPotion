@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fdccbdde5e208d42b9f7f4cb92def83, type: 3}
   m_Name: Slug Merchant
   m_EditorClassIdentifier: 
-  requestBy: Slug Merchant
+  requester: Slug Merchant
   description: 'I''m allergic to salt, but I''m so sick of living such a flavorless
     life! I''m so jealous of those who can just eat whatever they want, without having
     to worry about the salt burning through the tissues of their throat. I''m requesting

@@ -56,7 +56,7 @@ public class CraftingInventory : Inventory
         
         items.Add(item);
         // inputIngGroups = inputIngGroups.Concat(item.GetItemStats()).ToList();
-        inputIngGroups.Add(((Ingredient)item).GetIngredientGroup());
+        inputIngGroups.Add(((Ingredient)item).Group);
         return true;
     }
 
@@ -66,7 +66,7 @@ public class CraftingInventory : Inventory
             return false;
 
         // inputIngGroups = inputIngGroups.Except(item.GetItemStats()).ToList();
-        inputIngGroups.Remove(((Ingredient)item).GetIngredientGroup());
+        inputIngGroups.Remove(((Ingredient)item).Group);
         items.Remove(item);
         return true;
     }
@@ -82,17 +82,18 @@ public class CraftingInventory : Inventory
     {
         foreach (Recipe recipe in recipes)
         {
-            List<IngredientGroup> recipeInputs = recipe.GetInputs();
+            List<ItemStat> recipeInputs = recipe.StatInputs;
 
-            // sort the two lists first, then check set equivalence
+            // One way: sort the two lists first, then check sequence equivalence.
             // recipeInputs.Sort();
             // inputIngGroups.Sort();
             // if (recipeInputs.SequenceEqual(inputIngGroups))
             
-            if (new HashSet<IngredientGroup>(recipeInputs).SetEquals(inputIngGroups))
-            {
-                return recipe;
-            }
+            // Other way: use hash sets and set equivalence.
+            // if (new HashSet<ItemStat>(recipeInputs).SetEquals(inputIngGroups))
+            // {
+            //     return recipe;
+            // }
         }
 
         return null;
@@ -104,7 +105,7 @@ public class CraftingInventory : Inventory
         Recipe recipe = GetRecipeForCurrent();
 
         if (recipe != null)
-            return recipe.GetResult();
+            return recipe.Result;
 
         return null;
     }
@@ -115,22 +116,22 @@ public class CraftingInventory : Inventory
         Debug.Log("calculating stats... ");
 
         // For each specific ItemStat (attribute)
-        foreach (ItemStat stat in allItemStats)
-        {
-            int statValue = 0;
+        // foreach (ItemStat stat in allItemStats)
+        // {
+        //     int statValue = 0;
 
-            // looping through list of crafting items because could be an indefinite amount
-            foreach (Item item in items)
-            {
-                if (item.GetItemStatsDictionary().ContainsKey(stat))
-                {
-                    statValue += item.GetItemStatsDictionary()[stat];
-                    // could somehow add modifiers & bonuses stuff here?
-                }
-            }
+        //     // looping through list of crafting items because could be an indefinite amount
+        //     foreach (Item item in items)
+        //     {
+        //         if (item.StatDict.ContainsKey(stat))
+        //         {
+        //             statValue += item.StatDict[stat];
+        //             // could somehow add modifiers & bonuses stuff here?
+        //         }
+        //     }
             
-            newItemStats.Add(stat, statValue);
-        }
+        //     newItemStats.Add(stat, statValue);
+        // }
 
         return newItemStats;
     }

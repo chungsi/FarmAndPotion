@@ -10,7 +10,6 @@ public class ItemSpawner : MonoBehaviour
     public FloatVariable floatingItemIndex;
     public ItemObjectRuntimeSet wildItemsSubset;
     [Space]
-    public ItemType spawnItemType;
     public int maxSpawnNum;
     // [MinMaxRange(1,10)] public RangedFloat numSpawnRange;
     [Space]
@@ -62,7 +61,7 @@ public class ItemSpawner : MonoBehaviour
             Item uniqueItem = Object.Instantiate(spawnList[randomItemIndex]);
 
             wildItemsInventory.AddItem(uniqueItem);
-            ui.SetItem(uniqueItem);
+            ui.Item = uniqueItem;
 
             wildItemsSubset.Add(ui);
         }

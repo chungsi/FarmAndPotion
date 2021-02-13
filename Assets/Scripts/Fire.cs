@@ -13,7 +13,7 @@ public class Fire : MonoBehaviour, IDropHandler
     {
         Debug.Log("Throwing an item into the fire!");
         ItemObject item = masterInventorySet.GetItem((int)floatingItemMasterIndex.value);
-        playerInventory.RemoveItem(item.GetItem());
+        playerInventory.RemoveItem(item.Item);
         item.Destroy();
     }
 }

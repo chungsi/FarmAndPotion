@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fdccbdde5e208d42b9f7f4cb92def83, type: 3}
   m_Name: Gerty the Truffle Hunter
   m_EditorClassIdentifier: 
-  requestBy: Gerty the Truffle Hunter
+  requester: Gerty the Truffle Hunter
   description: Hello potion master sir, my pet pig is sick :( Willie, that's him,
     he and I go out for walks to collect mushroom truffles! We collect lots and bring
     some home to eat and sell so we can buy Willie more pretty bows :D But he's been

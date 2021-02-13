@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fdccbdde5e208d42b9f7f4cb92def83, type: 3}
   m_Name: Mudmouth the Smith
   m_EditorClassIdentifier: 
-  requestBy: Mudmouth the Smith
+  requester: Mudmouth the Smith
   description: It's hunting season again and it's been insanely busy at the Smith's.
     Request after request, and these Adventurers have been returning with new materials
     for more equipment. I'm running on fumes. You think you having anything for me

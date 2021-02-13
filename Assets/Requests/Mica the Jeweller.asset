@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fdccbdde5e208d42b9f7f4cb92def83, type: 3}
   m_Name: Mica the Jeweller
   m_EditorClassIdentifier: 
-  requestBy: Mica the Jeweller
+  requester: Mica the Jeweller
   description: You got anything to deal with some troublesome gem thieves? In all
     the years I've been a jeweller, these pesky fairies come around every so often
     and take some of my best gems when I'm not looking. I would try to catch them

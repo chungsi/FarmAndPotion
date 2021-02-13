@@ -69,7 +69,7 @@ public class TomeHandler : MonoBehaviour
         List<Ingredient> ingredients = new List<Ingredient>();
         var ingrGroups = 
             itemHelper.GetMasterIngredientsList()
-            .GroupBy(ingr => ingr.GetIngredientGroup())
+            .GroupBy(ingr => ingr.Group)
             .OrderBy(ingr => ingr.Key)
             .ToList();
         

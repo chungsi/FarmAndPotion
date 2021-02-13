@@ -5,11 +5,17 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Item/Potion")]
 public class Potion : Item
 {
-    [Space]
-    [SerializeField] List<IngredientGroup> ingredientGroupInputs = new List<IngredientGroup>();
-    
-    public List<IngredientGroup> GetInputs()
+    // Override base Item's read-only accessors for stats, as Potions will have
+    // their main & secondary stats be set at runtime based on crafting.
+    new public List<ItemStat> MainStats
     {
-        return ingredientGroupInputs;
+        get => base.MainStats;
+        set => mainStats = value;
+    }
+
+    new public List<ItemStat> SecondaryStats
+    {
+        get => base.SecondaryStats;
+        set => secondaryStats = value;
     }
 }

@@ -6,7 +6,6 @@ public abstract class ItemContainerUI : MonoBehaviour
 {
     public ItemObject itemObjectPrefab;
     public Transform itemsParent;
-    protected ItemSlot[] slots;
     [Space]
     public Inventory inventory;
     public ItemObjectRuntimeSet inventorySet;
@@ -15,6 +14,7 @@ public abstract class ItemContainerUI : MonoBehaviour
     public FloatVariable startSlotIndex;
     public FloatVariable dropSlotIndex;
 
+    protected ItemSlot[] slots;
 
     protected virtual void Start()
     {
@@ -23,12 +23,12 @@ public abstract class ItemContainerUI : MonoBehaviour
 
     protected virtual void AddItem(ItemObject itemObject)
     {
-        inventory.AddItem(itemObject.GetItem());
+        inventory.AddItem(itemObject.Item);
     }
 
     protected virtual void RemoveItem(ItemObject itemObject)
     {
-        inventory.RemoveItem(itemObject.GetItem());
+        inventory.RemoveItem(itemObject.Item);
     }
 
     protected virtual ItemObject GetFloatingItem()
