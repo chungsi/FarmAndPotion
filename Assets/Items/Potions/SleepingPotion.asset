@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: db8a3a76e0e23934ebd9bd31c02630ea, type: 3}
-  m_Name: Lulldraft
+  m_Name: SleepingPotion
   m_EditorClassIdentifier: 
-  name: Lulldraft
+  name: Sleeping Potion
   artwork: {fileID: 21300000, guid: d512690ffd781e14c913f9a95566a0e4, type: 3}
   description: 
   mainStats: []
@@ -20,13 +20,13 @@ MonoBehaviour:
   recipes:
   - prefix: 
     statInputs:
-    - {fileID: 11400000, guid: 1438ccae114ccff4b86ebdcf5bcd7b71, type: 2}
-    - {fileID: 11400000, guid: 0db68888dd4ce2b45be09524a806b096, type: 2}
-  - prefix: 
-    statInputs:
-    - {fileID: 11400000, guid: 1438ccae114ccff4b86ebdcf5bcd7b71, type: 2}
-    - {fileID: 11400000, guid: ce03b7a48d27fdc4f9d14273aadf4e9f, type: 2}
-  - prefix: 
-    statInputs:
+    - {fileID: 11400000, guid: 999cef21f54b26d4c8ff9fc3f668892d, type: 2}
     - {fileID: 11400000, guid: 94b954906129e1749a8e031f957d27a3, type: 2}
-    - {fileID: 11400000, guid: 0db68888dd4ce2b45be09524a806b096, type: 2}
+  - prefix: 
+    statInputs:
+    - {fileID: 11400000, guid: 8ba3101572ec72f4dbfabff736369f36, type: 2}
+    - {fileID: 11400000, guid: 94b954906129e1749a8e031f957d27a3, type: 2}
+  - prefix: Deathly
+    statInputs:
+    - {fileID: 11400000, guid: 2db9e720fa063ad4c819daea573f4507, type: 2}
+    - {fileID: 11400000, guid: 94b954906129e1749a8e031f957d27a3, type: 2}

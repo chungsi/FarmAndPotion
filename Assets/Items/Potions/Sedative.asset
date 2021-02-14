@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: db8a3a76e0e23934ebd9bd31c02630ea, type: 3}
-  m_Name: Lulldraft
+  m_Name: Sedative
   m_EditorClassIdentifier: 
-  name: Lulldraft
-  artwork: {fileID: 21300000, guid: d512690ffd781e14c913f9a95566a0e4, type: 3}
+  name: Sedative
+  artwork: {fileID: 21300000, guid: 55905d4ca0363a4419ce0a4c2237c754, type: 3}
   description: 
   mainStats: []
   secondaryStats: []
@@ -21,12 +21,12 @@ MonoBehaviour:
   - prefix: 
     statInputs:
     - {fileID: 11400000, guid: 1438ccae114ccff4b86ebdcf5bcd7b71, type: 2}
-    - {fileID: 11400000, guid: 0db68888dd4ce2b45be09524a806b096, type: 2}
-  - prefix: 
-    statInputs:
-    - {fileID: 11400000, guid: 1438ccae114ccff4b86ebdcf5bcd7b71, type: 2}
-    - {fileID: 11400000, guid: ce03b7a48d27fdc4f9d14273aadf4e9f, type: 2}
-  - prefix: 
-    statInputs:
     - {fileID: 11400000, guid: 94b954906129e1749a8e031f957d27a3, type: 2}
-    - {fileID: 11400000, guid: 0db68888dd4ce2b45be09524a806b096, type: 2}
+  - prefix: 
+    statInputs:
+    - {fileID: 11400000, guid: 152f26c263d712440840ca2ecdd4560b, type: 2}
+    - {fileID: 11400000, guid: 94b954906129e1749a8e031f957d27a3, type: 2}
+  - prefix: 
+    statInputs:
+    - {fileID: 11400000, guid: 42a58c3179c306f4c8587056074948d4, type: 2}
+    - {fileID: 11400000, guid: 94b954906129e1749a8e031f957d27a3, type: 2}
