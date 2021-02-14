@@ -17,8 +17,7 @@ MonoBehaviour:
   description: Remnants of an animal left to be <b>forgotten</b>. It crumbles in
     your hands, the dull edges feel <b>numbing</b>.
   mainStats:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: ce03b7a48d27fdc4f9d14273aadf4e9f, type: 2}
   secondaryStats:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 1438ccae114ccff4b86ebdcf5bcd7b71, type: 2}
   ingredientGroup: {fileID: 11400000, guid: 112e7325f43e205458173a29fb0b8eca, type: 2}
