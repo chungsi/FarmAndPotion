@@ -14,7 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Brew of Blessing
   artwork: {fileID: 21300000, guid: f4ae44b7adb894c4e997416c273ae14d, type: 3}
-  _description: 
-  _mainStats:
-  - {fileID: 0}
-  _secondaryStats: []
+  description: 
+  mainStats: []
+  secondaryStats: []
+  recipes:
+  - prefix: Strong
+    statInputs:
+    - {fileID: 11400000, guid: 999cef21f54b26d4c8ff9fc3f668892d, type: 2}
+    - {fileID: 11400000, guid: 999cef21f54b26d4c8ff9fc3f668892d, type: 2}
+  - prefix: Protecting
+    statInputs:
+    - {fileID: 11400000, guid: 3cce2c07dd9f62643bea618074567057, type: 2}
+    - {fileID: 11400000, guid: 999cef21f54b26d4c8ff9fc3f668892d, type: 2}

@@ -105,7 +105,7 @@ public class CraftingUI : ItemContainerUI
         // TODO: will need to change how the results are output, to account for stats
         // Recipe possibleRecipe = craftingList.GetRecipeForItems(craftingList.items);
 
-        Recipe possibleRecipe = craftingList.GetRecipeForCurrent();
+        // Recipe possibleRecipe = craftingList.GetRecipeForCurrent();
 
         // if (possibleRecipe != null)
         // {

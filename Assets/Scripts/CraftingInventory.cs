@@ -33,14 +33,14 @@ public class CraftingInventory : Inventory
         // Debug.Log("Populating master list of recipes...");
         recipes.Clear();
 
-        string[] assetNames = AssetDatabase.FindAssets("t:Recipe", new[] { "Assets/Recipes" });
-        foreach (string SOName in assetNames)
-        {
-            var SOpath = AssetDatabase.GUIDToAssetPath(SOName);
-            var recipe = AssetDatabase.LoadAssetAtPath<Recipe>(SOpath);
+        // string[] assetNames = AssetDatabase.FindAssets("t:Recipe", new[] { "Assets/Recipes" });
+        // foreach (string SOName in assetNames)
+        // {
+        //     var SOpath = AssetDatabase.GUIDToAssetPath(SOName);
+        //     var recipe = AssetDatabase.LoadAssetAtPath<Recipe>(SOpath);
 
-            recipes.Add(recipe);
-        }
+        //     recipes.Add(recipe);
+        // }
     }
 
     private void GetMasterItemStatsList() 
@@ -78,34 +78,34 @@ public class CraftingInventory : Inventory
     }
 
     // For the current items in the inventory, will look for a possible recipe.
-    public Recipe GetRecipeForCurrent()
-    {
-        foreach (Recipe recipe in recipes)
-        {
-            List<ItemStat> recipeInputs = recipe.StatInputs;
+    // public Recipe GetRecipeForCurrent()
+    // {
+    //     foreach (Recipe recipe in recipes)
+    //     {
+    //         // List<ItemStat> recipeInputs = recipe.StatInputs;
 
-            // One way: sort the two lists first, then check sequence equivalence.
-            // recipeInputs.Sort();
-            // inputIngGroups.Sort();
-            // if (recipeInputs.SequenceEqual(inputIngGroups))
+    //         // One way: sort the two lists first, then check sequence equivalence.
+    //         // recipeInputs.Sort();
+    //         // inputIngGroups.Sort();
+    //         // if (recipeInputs.SequenceEqual(inputIngGroups))
             
-            // Other way: use hash sets and set equivalence.
-            // if (new HashSet<ItemStat>(recipeInputs).SetEquals(inputIngGroups))
-            // {
-            //     return recipe;
-            // }
-        }
+    //         // Other way: use hash sets and set equivalence.
+    //         // if (new HashSet<ItemStat>(recipeInputs).SetEquals(inputIngGroups))
+    //         // {
+    //         //     return recipe;
+    //         // }
+    //     }
 
-        return null;
-    }
+    //     return null;
+    // }
     
     // Gets a list of recipe outputs for the current items in the inventory.
     public Potion GetRecipeOutputForCurrent()
     {
-        Recipe recipe = GetRecipeForCurrent();
+        // Recipe recipe = GetRecipeForCurrent();
 
-        if (recipe != null)
-            return recipe.Result;
+        // if (recipe != null)
+        //     return recipe.Result;
 
         return null;
     }
