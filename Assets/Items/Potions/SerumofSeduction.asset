@@ -10,27 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: db8a3a76e0e23934ebd9bd31c02630ea, type: 3}
-  m_Name: Serum of Seduction
+  m_Name: SerumofSeduction
   m_EditorClassIdentifier: 
   name: Serum of Seduction
   artwork: {fileID: 21300000, guid: 1bbb37fdd9127ff4fbc88b2f12b4a654, type: 3}
   description: 
   mainStats: []
   secondaryStats: []
+  variationOfPotion: {fileID: 0}
   recipes:
-  - prefix: 
-    statInputs:
+  - statInputs:
     - {fileID: 11400000, guid: 01a3fe689abe148488b287eadcfc32c2, type: 2}
     - {fileID: 11400000, guid: 01a3fe689abe148488b287eadcfc32c2, type: 2}
-  - prefix: Purified
-    statInputs:
-    - {fileID: 11400000, guid: 01a3fe689abe148488b287eadcfc32c2, type: 2}
-    - {fileID: 11400000, guid: 8ba3101572ec72f4dbfabff736369f36, type: 2}
-  - prefix: Muted
-    statInputs:
-    - {fileID: 11400000, guid: 01a3fe689abe148488b287eadcfc32c2, type: 2}
-    - {fileID: 11400000, guid: 1438ccae114ccff4b86ebdcf5bcd7b71, type: 2}
-  - prefix: Vigorous
-    statInputs:
-    - {fileID: 11400000, guid: 01a3fe689abe148488b287eadcfc32c2, type: 2}
-    - {fileID: 11400000, guid: 152f26c263d712440840ca2ecdd4560b, type: 2}

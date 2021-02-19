@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.Text;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,160 +8,154 @@ using UnityEditor;
 [CreateAssetMenu]
 public class CraftingInventory : Inventory
 {
-    [SerializeField]
-    private List<ItemStat> allItemStats = new List<ItemStat>();
-    [SerializeField]
-    private List<IngredientGroup> inputIngGroups = new List<IngredientGroup>();
+    // private List<ItemStat> inputIngredientMainStats = new List<ItemStat>();
+
     private List<Recipe> recipes = new List<Recipe>();
 
-    private ItemHelper statHelper = new ItemHelper();
+    private ItemHelper itemHelper = new ItemHelper();
 
-    public override void OnValidate()
-    {
-        base.OnValidate();
-        FillCraftingList();
-        GetMasterItemStatsList();
-    }
+
+    public List<Recipe> Recipes => recipes;
+
 
     public override void OnEnable()
     {
-        // Debug.Log("crafting inventory initialize");
-    }
-
-    // is there a better way to optimize this? see if a key exists first?
-    private void FillCraftingList() 
-    {
-        // Debug.Log("Populating master list of recipes...");
-        recipes.Clear();
-
-        // string[] assetNames = AssetDatabase.FindAssets("t:Recipe", new[] { "Assets/Recipes" });
-        // foreach (string SOName in assetNames)
-        // {
-        //     var SOpath = AssetDatabase.GUIDToAssetPath(SOName);
-        //     var recipe = AssetDatabase.LoadAssetAtPath<Recipe>(SOpath);
-
-        //     recipes.Add(recipe);
-        // }
-    }
-
-    private void GetMasterItemStatsList() 
-    {
-        allItemStats.Clear();
-        allItemStats = statHelper.GetMasterItemStatsList();
+        GetAllPotionRecipes();
     }
 
     public override bool AddItem(Item item)
     {
         if (items.Count >= space)
+        {
             return false;
+        }
         
         items.Add(item);
-        // inputIngGroups = inputIngGroups.Concat(item.GetItemStats()).ToList();
-        inputIngGroups.Add(((Ingredient)item).Group);
         return true;
     }
 
     public override bool RemoveItem(Item item)
     {
         if (!items.Contains(item))
+        {
             return false;
+        }
 
-        // inputIngGroups = inputIngGroups.Except(item.GetItemStats()).ToList();
-        inputIngGroups.Remove(((Ingredient)item).Group);
         items.Remove(item);
         return true;
     }
 
-    public override void ClearInventory()
-    {
-        base.ClearInventory();
-        inputIngGroups.Clear();
-    }
-
     // For the current items in the inventory, will look for a possible recipe.
-    // public Recipe GetRecipeForCurrent()
-    // {
-    //     foreach (Recipe recipe in recipes)
-    //     {
-    //         // List<ItemStat> recipeInputs = recipe.StatInputs;
+    public Recipe GetRecipeForCurrentIngredients()
+    {
+        List<ItemStat> ingredientMainStats = GetCurrentIngredientsMainStats();
+        
+        foreach (Recipe recipe in recipes)
+        {
+            List<ItemStat> recipeInputs = recipe.StatInputs;
 
-    //         // One way: sort the two lists first, then check sequence equivalence.
-    //         // recipeInputs.Sort();
-    //         // inputIngGroups.Sort();
-    //         // if (recipeInputs.SequenceEqual(inputIngGroups))
+            // One way: sort the two lists first, then check sequence equivalence.
+            // recipeInputs.Sort();
+            // ingredientMainStats.Sort();
+            // if (recipeInputs.SequenceEqual(inputIngGroups))
             
-    //         // Other way: use hash sets and set equivalence.
-    //         // if (new HashSet<ItemStat>(recipeInputs).SetEquals(inputIngGroups))
-    //         // {
-    //         //     return recipe;
-    //         // }
-    //     }
-
-    //     return null;
-    // }
+            // Other way: use hash sets and set equivalence.
+            if (new HashSet<ItemStat>(recipeInputs).SetEquals(ingredientMainStats))
+            {
+                return recipe;
+            }
+        }
+        return null;
+    }
     
     // Gets a list of recipe outputs for the current items in the inventory.
-    public Potion GetRecipeOutputForCurrent()
+    public Potion GetRecipeOutputForCurrentIngredients()
     {
-        // Recipe recipe = GetRecipeForCurrent();
-
-        // if (recipe != null)
-        //     return recipe.Result;
-
+        Recipe recipe = GetRecipeForCurrentIngredients();
+        if (recipe != null)
+        {
+            return recipe.Result;
+        }
         return null;
     }
 
-    public Dictionary<ItemStat, int> CalculateItemStats()
+    // TODO: The current functionality with secondary stats is to remove duplicates.
+    // This may be changed in the future, like if duplicates makes that attribute stronger...
+    public List<ItemStat> GetOutputSecondaryItemStats()
     {
-        Dictionary<ItemStat, int> newItemStats = new Dictionary<ItemStat, int>();
-        Debug.Log("calculating stats... ");
+        List<ItemStat> tempSecondaryStats = new List<ItemStat>();
+        foreach (Item item in items)
+        {
+            tempSecondaryStats.AddRange(item.SecondaryStats);
+        }
 
-        // For each specific ItemStat (attribute)
-        // foreach (ItemStat stat in allItemStats)
-        // {
-        //     int statValue = 0;
-
-        //     // looping through list of crafting items because could be an indefinite amount
-        //     foreach (Item item in items)
-        //     {
-        //         if (item.StatDict.ContainsKey(stat))
-        //         {
-        //             statValue += item.StatDict[stat];
-        //             // could somehow add modifiers & bonuses stuff here?
-        //         }
-        //     }
-            
-        //     newItemStats.Add(stat, statValue);
-        // }
-
-        return newItemStats;
+        // Cast to a HashSet and back to quickly remove duplicates.
+        List<ItemStat> noDupesSecondaryStats = new HashSet<ItemStat>(tempSecondaryStats).ToList();
+        
+        // Remove the duplicate stats with the main stats.
+        List<ItemStat> noDupesWithMainStats = RemoveDuplicateStatsAndReturnNew(noDupesSecondaryStats, GetCurrentIngredientsMainStats());
+        return noDupesWithMainStats;
     }
 
+    // Converse to the secondary stats, main stats can have duplicates.
+    public List<ItemStat> GetCurrentIngredientsMainStats()
+    {
+        var itemsString = new StringBuilder();
+        List<ItemStat> currentMainStats = new List<ItemStat>();
+        foreach (Item item in items)
+        {
+            currentMainStats.AddRange(item.MainStats);
+            itemsString.Append(item.Name + ", ");
+        }
 
-    // public Recipe GetRecipeForItems(List<Item> inputs)
-    // {
-    //     foreach (Recipe recipe in recipes)
-    //     {
-    //         List<Item> recipeIngredients = recipe.ingredients;
-    //         List<Item> craftingInputs = inputs;
+        var stringOutput = new StringBuilder();
+        foreach (ItemStat stat in currentMainStats)
+        {
+            stringOutput.Append(stat.name + ", ");
+        }
+        Debug.Log("Curent ingredients: " + itemsString + "\n  Main ingredients: " + stringOutput);
 
-    //         if (recipeIngredients.Count == craftingInputs.Count &&
-    //             recipeIngredients.All(inputs.Contains))
-    //             return recipe;
-    //     }
+        return currentMainStats;
+    }
 
-    //     return null;
-
-    //     // IEnumerable<Recipe> recipeQuery = 
-    //     //     from recipe in recipes
-    //     //     where recipe.ingredients.Equals(inputs)
-    //     //     select recipe;
+    // Remove the stats in the _dupeStatList from the _primaryStatList if they exist.
+    // This is useful for removing stats from the secondary stats that exist in the main stats.
+    private List<ItemStat> RemoveDuplicateStatsAndReturnNew(List<ItemStat> _primaryStatList, List<ItemStat> _dupeStatList)
+    {
+        List<ItemStat> newStatList = _primaryStatList;
         
-    //     // List<Recipe> list = recipeQuery.ToList<Recipe>();
+        foreach (ItemStat stat in _dupeStatList)
+        {
+            // stat exists in the primary list
+            if (newStatList.IndexOf(stat) >= 0)
+            {
+                newStatList.Remove(stat);
+            }
+        }
 
-    //     // Debug.Log("printing.... " + recipeQuery.Count() + "; list count... " + list.Count);
+        return newStatList;
+    }
 
-    //     // return recipeQuery.FirstOrDefault();
+    // private void RemoveItemMainStatsFromList(Item item)
+    // {
+    //     foreach (ItemStat stat in item.MainStats)
+    //     {
+    //         inputIngredientMainStats.Remove(stat);
+    //     }
     // }
 
+    // TODO: Is there a better way to optimize this? see if a key exists first?
+    private void GetAllPotionRecipes() 
+    {
+        recipes.Clear();
+
+        List<Potion> allPotions = itemHelper.GetMasterPotionsList();
+        foreach (Potion potion in allPotions)
+        {
+            foreach (Recipe recipe in potion.Recipes)
+            {
+                recipes.Add(recipe);
+            }
+        }
+    }
 }

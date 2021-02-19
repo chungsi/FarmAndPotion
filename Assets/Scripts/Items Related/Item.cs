@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using UnityEngine.Serialization;
 
+// TODO: Delete this, but causes errors before updating requests & evals.
 [Serializable]
 public struct ItemStatValue
 {
@@ -15,14 +16,14 @@ public class Item : ScriptableObject
 {
     // Unity Inspector visible fields.
     [SerializeField]
-    new private string name = "Item";
+    new protected string name = "Item";
 
     [SerializeField]
-    private Sprite artwork = null;
+    protected Sprite artwork = null;
 
     [TextArea(7, 15)]
     [SerializeField]
-    private string description = "";
+    protected string description = "";
 
     [Header("Stat Definitions")]
 

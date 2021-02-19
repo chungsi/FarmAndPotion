@@ -6,10 +6,13 @@ using UnityEngine.Events;
 public class CraftingUI : ItemContainerUI
 {
     [Space]
+
     public CraftingInventory craftingList; // hrmmm takes its own inventory....
     public ItemObjectRuntimeSet craftingSubset;
     public FloatVariable numCraftingResults;
-    [Space]    
+
+    [Space]
+
     public UnityEvent SaveTheFloatingItemEvent;
     public UnityEvent OnCraftingSuccessfulEvent;
 
@@ -46,19 +49,15 @@ public class CraftingUI : ItemContainerUI
         for (int i = craftingSubset.items.Count - 1; i >= 0; i--)
         {
             ItemObject item = craftingSubset.items[i];
-            // inventorySet.Remove(item);
             craftingSubset.Remove(item);
 
-            // Destroy(item.gameObject);
             item.Destroy();
         }
     }
 
     #region EventResponses
 
-    /* 
-        When an item is dropped onto a crafting slot
-     */
+    // When an item is dropped onto a crafting slot
     public void DropResponse()
     {
         ItemSlot dropSlot = slots[(int)dropSlotIndex.value];
@@ -88,9 +87,7 @@ public class CraftingUI : ItemContainerUI
         }
     }
 
-    /*
-        clears the slot of the item that was in it
-     */    
+    // clears the slot of the item that was in it.
     public void ResetSlotResponse() 
     {
         ItemObject item = GetFloatingItem();
@@ -99,35 +96,32 @@ public class CraftingUI : ItemContainerUI
         SaveTheFloatingItemEvent.Invoke();
     }
 
-    /* When a crafting request comes in */
+    // When a crafting request comes in.
     public void CraftRequestResponse()
     {
-        // TODO: will need to change how the results are output, to account for stats
-        // Recipe possibleRecipe = craftingList.GetRecipeForItems(craftingList.items);
+        Debug.Log("a craft request has come in.");
+        Recipe possibleRecipe = craftingList.GetRecipeForCurrentIngredients();
 
-        // Recipe possibleRecipe = craftingList.GetRecipeForCurrent();
+        if (possibleRecipe != null)
+        {
+            Debug.Log("recipe exists! creating " + possibleRecipe.Result.Name);
 
-        // if (possibleRecipe != null)
-        // {
-        //     Debug.Log("recipe exists! creating " + possibleRecipe.name);
-        //     // foreach (Item item in possibleRecipe.GetResults())
-        //     // {
-        //     ItemObject itemObject = ItemObject.Instantiate(itemObjectPrefab, slots[0].transform);
-        //     Item uniqueItem = Object.Instantiate(possibleRecipe.GetResult());
-        //     itemObject.Item = uniqueItem;
+            // Instantiate instances of both the game object and scriptable object.
+            ItemObject itemObject = ItemObject.Instantiate(itemObjectPrefab, slots[0].transform);
+            Item uniqueItem = Object.Instantiate(possibleRecipe.Result);
+            itemObject.Item = uniqueItem;
 
-        //     Dictionary<ItemStat, int> newItemStats = craftingList.CalculateItemStats();
-        //     itemObject.ItemStats = newItemStats;
+            // TODO: Should be a better way to instantiate these potions... should be handled elsewhere?
+            ((Potion)itemObject.Item).MainStats = craftingList.GetCurrentIngredientsMainStats();
+            ((Potion)itemObject.Item).SecondaryStats = craftingList.GetOutputSecondaryItemStats();
 
-        //     SaveFloatingItem(itemObject);
-        //     SaveTheFloatingItemEvent.Invoke();
-        //     // }
+            SaveFloatingItem(itemObject);
+            SaveTheFloatingItemEvent.Invoke();
 
-        //     // numCraftingResults.value = possibleRecipe.GetResults().Count;
-        //     OnCraftingSuccessfulEvent.Invoke();
+            OnCraftingSuccessfulEvent.Invoke();
 
-        //     ClearCraftingInventory();
-        // }
+            ClearCraftingInventory();
+        }
     }
 
     #endregion
