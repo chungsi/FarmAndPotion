@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SerumofSeduction_Muted
   m_EditorClassIdentifier: 
   name: Muted Serum of Seduction
-  artwork: {fileID: 21300000, guid: 1bbb37fdd9127ff4fbc88b2f12b4a654, type: 3}
+  artwork: {fileID: 21300000, guid: 2766d10cda51e2a41a0968accd257a3f, type: 3}
   description: 
   mainStats: []
   secondaryStats: []

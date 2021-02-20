@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: DrinkofDeceit
   m_EditorClassIdentifier: 
   name: Drink of Deceit
-  artwork: {fileID: 21300000, guid: f4ae44b7adb894c4e997416c273ae14d, type: 3}
+  artwork: {fileID: 21300000, guid: a3ff33ea5f817b0489b6e80eadedd641, type: 3}
   description: 
   mainStats: []
   secondaryStats: []
+  variationOfPotion: {fileID: 0}
   recipes:
-  - prefix: 
-    statInputs:
+  - statInputs:
     - {fileID: 11400000, guid: 94b954906129e1749a8e031f957d27a3, type: 2}
     - {fileID: 11400000, guid: ce03b7a48d27fdc4f9d14273aadf4e9f, type: 2}

@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: SwiftDeath
   m_EditorClassIdentifier: 
   name: Swift Death
-  artwork: {fileID: 21300000, guid: f4ae44b7adb894c4e997416c273ae14d, type: 3}
+  artwork: {fileID: 21300000, guid: 73a049940e85401449c7fd9d66d815cc, type: 3}
   description: 
   mainStats: []
   secondaryStats: []
+  variationOfPotion: {fileID: 0}
   recipes:
-  - prefix: 
-    statInputs:
+  - statInputs:
     - {fileID: 11400000, guid: 2db9e720fa063ad4c819daea573f4507, type: 2}
     - {fileID: 11400000, guid: 0db68888dd4ce2b45be09524a806b096, type: 2}

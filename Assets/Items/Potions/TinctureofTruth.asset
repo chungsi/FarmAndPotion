@@ -13,24 +13,21 @@ MonoBehaviour:
   m_Name: TinctureofTruth
   m_EditorClassIdentifier: 
   name: Tincture of Truth
-  artwork: {fileID: 21300000, guid: 4e706d299ef5e9549b78760178d10d31, type: 3}
+  artwork: {fileID: 21300000, guid: 03453a6a66d33f8499372bbeb2acc4c0, type: 3}
   description: 
   mainStats: []
   secondaryStats: []
+  variationOfPotion: {fileID: 0}
   recipes:
-  - prefix: 
-    statInputs:
+  - statInputs:
     - {fileID: 11400000, guid: 01a3fe689abe148488b287eadcfc32c2, type: 2}
     - {fileID: 11400000, guid: ce03b7a48d27fdc4f9d14273aadf4e9f, type: 2}
-  - prefix: 
-    statInputs:
+  - statInputs:
     - {fileID: 11400000, guid: 999cef21f54b26d4c8ff9fc3f668892d, type: 2}
     - {fileID: 11400000, guid: ce03b7a48d27fdc4f9d14273aadf4e9f, type: 2}
-  - prefix: 
-    statInputs:
+  - statInputs:
     - {fileID: 11400000, guid: e081fd287fc89a74f95886e73bda5e1d, type: 2}
     - {fileID: 11400000, guid: ce03b7a48d27fdc4f9d14273aadf4e9f, type: 2}
-  - prefix: 
-    statInputs:
+  - statInputs:
     - {fileID: 11400000, guid: 42a58c3179c306f4c8587056074948d4, type: 2}
     - {fileID: 11400000, guid: ce03b7a48d27fdc4f9d14273aadf4e9f, type: 2}

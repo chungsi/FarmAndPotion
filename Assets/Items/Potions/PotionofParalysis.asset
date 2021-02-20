@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: PotionofParalysis
   m_EditorClassIdentifier: 
   name: Potion of Paralysis
-  artwork: {fileID: 21300000, guid: 4e706d299ef5e9549b78760178d10d31, type: 3}
+  artwork: {fileID: 21300000, guid: 6704b6b897cdc9342bbf57b310a4120d, type: 3}
   description: 
   mainStats: []
   secondaryStats: []
+  variationOfPotion: {fileID: 0}
   recipes:
-  - prefix: 
-    statInputs:
+  - statInputs:
     - {fileID: 11400000, guid: e081fd287fc89a74f95886e73bda5e1d, type: 2}
     - {fileID: 11400000, guid: 94b954906129e1749a8e031f957d27a3, type: 2}

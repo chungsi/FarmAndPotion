@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PotionofProtection
   m_EditorClassIdentifier: 
   name: Potion of Protection
-  artwork: {fileID: 21300000, guid: 57094223fd6e7784d907a17ae62ef8be, type: 3}
+  artwork: {fileID: 21300000, guid: af89ba7ab2bd98a40a362e600ee2d2bc, type: 3}
   description: 
   mainStats: []
   secondaryStats: []

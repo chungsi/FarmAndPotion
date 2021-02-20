@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Wolfwhisk
   m_EditorClassIdentifier: 
   name: Wolfwhisk
-  artwork: {fileID: 21300000, guid: 1bbb37fdd9127ff4fbc88b2f12b4a654, type: 3}
+  artwork: {fileID: 21300000, guid: f115460a89b0cac448862f107842e1c1, type: 3}
   description: 
   mainStats: []
   secondaryStats: []
+  variationOfPotion: {fileID: 0}
   recipes:
-  - prefix: 
-    statInputs:
+  - statInputs:
     - {fileID: 11400000, guid: 01a3fe689abe148488b287eadcfc32c2, type: 2}
     - {fileID: 11400000, guid: 0db68888dd4ce2b45be09524a806b096, type: 2}

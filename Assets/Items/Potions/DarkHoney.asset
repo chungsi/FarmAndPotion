@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: DarkHoney
   m_EditorClassIdentifier: 
   name: Dark Honey
-  artwork: {fileID: 21300000, guid: 55905d4ca0363a4419ce0a4c2237c754, type: 3}
+  artwork: {fileID: 21300000, guid: f13d25ed3efe776428cc4c7d309eb53f, type: 3}
   description: 
   mainStats: []
   secondaryStats: []
+  variationOfPotion: {fileID: 0}
   recipes:
-  - prefix: 
-    statInputs:
+  - statInputs:
     - {fileID: 11400000, guid: 1438ccae114ccff4b86ebdcf5bcd7b71, type: 2}
     - {fileID: 11400000, guid: 3cce2c07dd9f62643bea618074567057, type: 2}

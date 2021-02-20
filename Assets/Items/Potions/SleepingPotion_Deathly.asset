@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SleepingPotion_Deathly
   m_EditorClassIdentifier: 
   name: Deathly Sleeping Potion
-  artwork: {fileID: 21300000, guid: d512690ffd781e14c913f9a95566a0e4, type: 3}
+  artwork: {fileID: 21300000, guid: 52adddb50f9450f48bff006b0b5786f6, type: 3}
   description: 
   mainStats: []
   secondaryStats: []

@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: EphemeralBlessing
   m_EditorClassIdentifier: 
   name: Ephemeral Blessing
-  artwork: {fileID: 21300000, guid: f4ae44b7adb894c4e997416c273ae14d, type: 3}
+  artwork: {fileID: 21300000, guid: 34a672f251818214d9b3e75616181a2c, type: 3}
   description: 
   mainStats: []
   secondaryStats: []
+  variationOfPotion: {fileID: 0}
   recipes:
-  - prefix: 
-    statInputs:
+  - statInputs:
     - {fileID: 11400000, guid: 999cef21f54b26d4c8ff9fc3f668892d, type: 2}
     - {fileID: 11400000, guid: 0db68888dd4ce2b45be09524a806b096, type: 2}

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SerumofSeduction
   m_EditorClassIdentifier: 
   name: Serum of Seduction
-  artwork: {fileID: 21300000, guid: 1bbb37fdd9127ff4fbc88b2f12b4a654, type: 3}
+  artwork: {fileID: 21300000, guid: bf32f22f6fdeb8f45847c7e330a446e8, type: 3}
   description: 
   mainStats: []
   secondaryStats: []

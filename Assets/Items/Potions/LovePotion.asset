@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: LovePotion
   m_EditorClassIdentifier: 
   name: Love Potion
-  artwork: {fileID: 21300000, guid: 1bbb37fdd9127ff4fbc88b2f12b4a654, type: 3}
+  artwork: {fileID: 21300000, guid: 5c89fca1015f0a74196113b1177ca1c2, type: 3}
   description: 
   mainStats: []
   secondaryStats: []
+  variationOfPotion: {fileID: 0}
   recipes:
-  - prefix: 
-    statInputs:
+  - statInputs:
     - {fileID: 11400000, guid: 01a3fe689abe148488b287eadcfc32c2, type: 2}
     - {fileID: 11400000, guid: 42a58c3179c306f4c8587056074948d4, type: 2}

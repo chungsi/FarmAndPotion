@@ -13,16 +13,15 @@ MonoBehaviour:
   m_Name: TicklingTincture
   m_EditorClassIdentifier: 
   name: Tickling Tincture
-  artwork: {fileID: 21300000, guid: 5a13aa2862cc5654c9b8ace4e29553ac, type: 3}
+  artwork: {fileID: 21300000, guid: 65e527601cf2c4a4a90c5d31260280ea, type: 3}
   description: 
   mainStats: []
   secondaryStats: []
+  variationOfPotion: {fileID: 0}
   recipes:
-  - prefix: 
-    statInputs:
+  - statInputs:
     - {fileID: 11400000, guid: 8ba3101572ec72f4dbfabff736369f36, type: 2}
     - {fileID: 11400000, guid: 42a58c3179c306f4c8587056074948d4, type: 2}
-  - prefix: 
-    statInputs:
+  - statInputs:
     - {fileID: 11400000, guid: 152f26c263d712440840ca2ecdd4560b, type: 2}
     - {fileID: 11400000, guid: e081fd287fc89a74f95886e73bda5e1d, type: 2}

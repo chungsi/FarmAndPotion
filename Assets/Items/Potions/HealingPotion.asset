@@ -13,16 +13,15 @@ MonoBehaviour:
   m_Name: HealingPotion
   m_EditorClassIdentifier: 
   name: Healing Potion
-  artwork: {fileID: 21300000, guid: e0fb20ae3e20948459af207787258c43, type: 3}
+  artwork: {fileID: 21300000, guid: d1d2bead31981ca4885dd733aa11310c, type: 3}
   description: 
   mainStats: []
   secondaryStats: []
+  variationOfPotion: {fileID: 0}
   recipes:
-  - prefix: 
-    statInputs:
+  - statInputs:
     - {fileID: 11400000, guid: 999cef21f54b26d4c8ff9fc3f668892d, type: 2}
     - {fileID: 11400000, guid: 8ba3101572ec72f4dbfabff736369f36, type: 2}
-  - prefix: 
-    statInputs:
+  - statInputs:
     - {fileID: 11400000, guid: 8ba3101572ec72f4dbfabff736369f36, type: 2}
     - {fileID: 11400000, guid: 8ba3101572ec72f4dbfabff736369f36, type: 2}

@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: PotionofLostDreams
   m_EditorClassIdentifier: 
   name: Potion of Lost Dreams
-  artwork: {fileID: 21300000, guid: 4e706d299ef5e9549b78760178d10d31, type: 3}
+  artwork: {fileID: 21300000, guid: c26592377f67f4243b8982663a5c54b0, type: 3}
   description: 
   mainStats: []
   secondaryStats: []
+  variationOfPotion: {fileID: 0}
   recipes:
-  - prefix: 
-    statInputs:
+  - statInputs:
     - {fileID: 11400000, guid: 01a3fe689abe148488b287eadcfc32c2, type: 2}
     - {fileID: 11400000, guid: 94b954906129e1749a8e031f957d27a3, type: 2}
