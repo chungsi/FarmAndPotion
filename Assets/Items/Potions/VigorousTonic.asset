@@ -20,5 +20,5 @@ MonoBehaviour:
   variationOfPotion: {fileID: 0}
   recipes:
   - statInputs:
-    - {fileID: 11400000, guid: e081fd287fc89a74f95886e73bda5e1d, type: 2}
-    - {fileID: 11400000, guid: e081fd287fc89a74f95886e73bda5e1d, type: 2}
+    - {fileID: 11400000, guid: 152f26c263d712440840ca2ecdd4560b, type: 2}
+    - {fileID: 11400000, guid: 152f26c263d712440840ca2ecdd4560b, type: 2}
