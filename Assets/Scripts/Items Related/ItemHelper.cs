@@ -72,69 +72,21 @@ public class ItemHelper
     }
 
     // 
-    public void FillEmptyItemStatValueList(List<ItemStatValue> itemStatValueList, List<ItemStat> masterItemStatList)
+    public void FillEmptyItemStatValueList(List<ItemStatValue> _itemStatValueList, List<ItemStat> _masterItemStatList)
     {
         // loop through master attribute list to get attribute
         // check if attribute already exists
         // add new ItemStatvalue if it doesn't
-        foreach (ItemStat statReference in masterItemStatList)
+        foreach (ItemStat statReference in _masterItemStatList)
         {
-            if (!itemStatValueList.Exists(s => s.stat == statReference))
+            if (!_itemStatValueList.Exists(s => s.stat == statReference))
             {
-                itemStatValueList.Add(new ItemStatValue() {
+                _itemStatValueList.Add(new ItemStatValue() {
                     stat = statReference,
                     value = 0
                 });
 
             }
         }
-    }
-
-    // Fill the given dictionary with the Item Stat values.
-    public void FillItemStatsDictionary(Dictionary<ItemStat, int> itemStatDict, List<ItemStatValue> itemStatValueList)
-    {
-        if (itemStatValueList != null) // double check null
-        {
-            // loop through user defined stats
-            foreach(ItemStatValue statValue in itemStatValueList) 
-            {
-                // If the key exists already, just update the value
-                if (itemStatDict.ContainsKey(statValue.stat))
-                    itemStatDict[statValue.stat] = statValue.value;
-                else
-                    itemStatDict.Add(statValue.stat, statValue.value);
-            }
-        }
-    }
-
-    // Returns a dictionary of all Item Stat keys and values.
-    public Dictionary<ItemStat, int> GetItemStatsDictionary(List<ItemStatValue> itemStatValueList)
-    {
-        Dictionary<ItemStat, int> dict = new Dictionary<ItemStat, int>();
-        if (itemStatValueList != null)
-        {
-            // Loop through a list of structs (ItemStatValue), which means it's user defined data
-            foreach(ItemStatValue statValue in itemStatValueList)
-            {
-                dict.Add(statValue.stat, statValue.value);
-            }
-        }
-        return dict;
-    }
-
-    // Returns a dictionary ignoring zero-value Item Stats; all stats are >= 1.
-    public Dictionary<ItemStat, int> GetNonZeroItemStatsDictionary(List<ItemStatValue> itemStatValueList)
-    {
-        Dictionary<ItemStat, int> dict = new Dictionary<ItemStat, int>();
-        if (itemStatValueList != null)
-        {
-            // Loop through a list of structs (ItemStatValue), which means it's user defined data
-            foreach(ItemStatValue statValue in itemStatValueList)
-            {
-                if (statValue.value != 0)
-                    dict.Add(statValue.stat, statValue.value);
-            }
-        }
-        return dict;
     }
 }

@@ -107,10 +107,9 @@ public class RequestUI : ItemContainerUI
         if (inventory.items.Count > 0)
         {
             // TODO: get the first item for now.... will there ever be more than 1 item to give???
-            Item solutionItem = inventory.items[0];
+            Potion solutionItem = (Potion)inventory.items[0];
             
-            // Get the lowest evaluation of the stats
-            // RequestEvaluation eval = currentRequest.GetLowestEval(solutionItem.StatDict);
+            currentRequest.CalculateSolutionPoints(solutionItem);
             // currentRequest.SetCompletedEval(eval);
             DisplayEvaluation();
 
@@ -153,10 +152,7 @@ public class RequestUI : ItemContainerUI
 
     private void DisplayEvaluation()
     {
-        if (currentRequest.CompletionEvaluation != null)
-        {
-            requestText.text = currentRequest.CompletionEvaluation.GetDisplayText();
-        }
+        requestText.text = $"Score: {currentRequest.FinalScore} / {currentRequest.PerfectScore}";
     }
 
     private void GetAnotherAvailableRequest()

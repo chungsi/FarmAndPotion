@@ -55,6 +55,17 @@ public class Potion : Item
         set => secondaryStats = value;
     }
 
+    // public List<ItemStat> AllStats => allStats;
+    public List<ItemStat> AllStats
+    {
+        get 
+        {
+            List<ItemStat> allStats = new List<ItemStat>(mainStats);
+            allStats.AddRange(secondaryStats);
+            return allStats;
+        }
+    }
+
     public Potion ParentPotion => variationOfPotion != null ? variationOfPotion : null; 
 
     public List<Recipe> Recipes => recipes;

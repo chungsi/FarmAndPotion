@@ -4,30 +4,42 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public struct RequestEvaluationMargin
+public struct RequestStatRequirementPoints
 {
-    public RequestEvaluation evaluation;
-    public int margin;
+    public RequestStatRequirement requirement;
+    public int points;
 }
 
 [CreateAssetMenu(menuName = "Request/Difficulty Level")]
 public class RequestDifficulty : ScriptableObject
 {
-    [SerializeField] List<RequestEvaluationMargin> evalMargins = new List<RequestEvaluationMargin>();
-    private Dictionary<RequestEvaluation, int> evalMarginDict = new Dictionary<RequestEvaluation, int>();
+    [SerializeField]
+    List<RequestStatRequirementPoints> statRequirementPoints = new List<RequestStatRequirementPoints>();
+
+    private Dictionary<RequestStatRequirement, int> statRequirementPointsDict = new Dictionary<RequestStatRequirement, int>();
+
+
+    public Dictionary<RequestStatRequirement, int> StatRequirementPointsDict => statRequirementPointsDict;
+    
 
     void OnEnable()
     {
-        // populate dictionary with inspector values
-        evalMarginDict.Clear();
-        foreach (RequestEvaluationMargin refMargin in evalMargins)
-        {
-            evalMarginDict.Add(refMargin.evaluation, refMargin.margin);
-        }
+        MakeStatRequirementPointsDict();
     }
-
-    public Dictionary<RequestEvaluation, int> GetEvaluationMargins()
+    
+    
+    private void MakeStatRequirementPointsDict()
     {
-        return evalMarginDict;
+        foreach (RequestStatRequirementPoints requirementPoints in statRequirementPoints)
+        {
+            if (statRequirementPointsDict.ContainsKey(requirementPoints.requirement))
+            {
+                statRequirementPointsDict[requirementPoints.requirement] = requirementPoints.points;
+            }
+            else
+            {
+                statRequirementPointsDict.Add(requirementPoints.requirement, requirementPoints.points);
+            }
+        }
     }
 }

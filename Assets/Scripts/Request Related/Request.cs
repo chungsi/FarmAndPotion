@@ -1,9 +1,17 @@
 ﻿using System;
+using System.Text;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
+
+[Serializable]
+public struct RequestStatRequirementDefinitions
+{
+    public RequestStatRequirement requirement;
+    public List<ItemStat> stats;
+}
 
 [CreateAssetMenu(menuName = "Request/Request")]
 public class Request : ScriptableObject
@@ -20,17 +28,28 @@ public class Request : ScriptableObject
     [SerializeField]
     private RequestDifficulty difficulty;
 
+    [Space]
+
     [SerializeField]
-    private RequestEvaluation lowestEval;
+    private List<RequestStatRequirementDefinitions> statRequirementDefinitions = new List<RequestStatRequirementDefinitions>();
+    
+    [Space]
+    
+    [SerializeField]
+    private List<RequestStatRequirementDefinitions> posStatRequirementDefinitions = new List<RequestStatRequirementDefinitions>();
+    
+    [Space]
+
+    [SerializeField]
+    private List<RequestStatRequirementDefinitions> negStatRequirementDefinitions = new List<RequestStatRequirementDefinitions>();
 
     [Space]
-    [SerializeField]
-    private Potion potion;
 
     [SerializeField]
-    private List<ItemStatValue> statReqs = new List<ItemStatValue>();
+    private int perfectScore = 0;
 
-    [Space]
+    [SerializeField]
+    private int finalScore = 0;
 
     [SerializeField]
     private bool isCompleted = false;
@@ -39,20 +58,20 @@ public class Request : ScriptableObject
     private RequestEvaluation completedEval;
 
     private ItemHelper statHelper = new ItemHelper();
-    
     private List<ItemStat> masterItemStatsList = new List<ItemStat>();
     
-    // Only contains attributes required (no zero-value stats).
-    private Dictionary<ItemStat, int> statReqsDict = new Dictionary<ItemStat, int>();
+    // Dictionary object for internal traversal and use.
+    private Dictionary<RequestStatRequirement, List<ItemStat>> posStatRequirementsDefinitionsDict = new Dictionary<RequestStatRequirement, List<ItemStat>>();
+    private Dictionary<RequestStatRequirement, List<ItemStat>> negStatRequirementsDefinitionsDict = new Dictionary<RequestStatRequirement, List<ItemStat>>();
+    
+    private Dictionary<RequestStatRequirement, List<ItemStat>> statRequirementsDefinitionsDict = new Dictionary<RequestStatRequirement, List<ItemStat>>();
 
-    // Corresponding Evaluation to each individual ItemStat.
-    private Dictionary<ItemStat, RequestEvaluation> statEvalsDict = new Dictionary<ItemStat, RequestEvaluation>();
 
-
+    public int FinalScore => finalScore;
+    public int PerfectScore => perfectScore;
     public string Requester => requester;
     public string Description => description;
     public RequestDifficulty Difficulty => difficulty;
-    public RequestEvaluation LowestPossibleEval => lowestEval;
     
     public RequestEvaluation CompletionEvaluation
     {
@@ -66,21 +85,17 @@ public class Request : ScriptableObject
         set => isCompleted = value;
     }
 
-    public Dictionary<ItemStat, int> StatRequirements => statReqsDict;
-
 
     void OnValidate()
     {
-        FillMasterItemStatsList();
-        statHelper.FillEmptyItemStatValueList(statReqs, masterItemStatsList);
+        masterItemStatsList.Clear(); // clear existing first
+        masterItemStatsList = statHelper.GetMasterItemStatsList();
     }
 
     void OnEnable()
     {
-        // Get a dictionary with only the non-zero attribute requirements
-        statReqsDict = statHelper.GetNonZeroItemStatsDictionary(statReqs);
-        // Clear dictionary data and such
-        statEvalsDict.Clear();
+        MakeStatRequirementsDictionary();
+        CalculatePerfectScore();
     }
 
     // Clears data related to calculating the evaluation and whatnot,
@@ -88,60 +103,115 @@ public class Request : ScriptableObject
     public void ResetRequestToDefault()
     {
         isCompleted = false;
-        statEvalsDict.Clear();
     }
 
-    public Dictionary<ItemStat, RequestEvaluation> GetItemStatEvals(Dictionary<ItemStat, int> solutionStats)
+    public void CalculateSolutionPoints(Potion _potion)
     {
-        Dictionary<RequestEvaluation, int> evalMargins = difficulty.GetEvaluationMargins();
+        int solutionScore = 0;
+        Dictionary<RequestStatRequirement, int> statReqPointsDef = difficulty.StatRequirementPointsDict;
 
-        // For each required stat of the request:
-        foreach (KeyValuePair<ItemStat, int> reqStat in statReqsDict)
+        // Each stat requirement definition, get the score from the difficulty setting.
+        foreach (KeyValuePair<RequestStatRequirement, List<ItemStat>> thisStatReqDef in statRequirementsDefinitionsDict)
         {
-            // If value for a stat on the item given is 0 => auto-fail (or lowest) evaluation;
-            if (solutionStats[reqStat.Key] == 0)
+            int thisStatsPoints = 0;
+            if (statReqPointsDef.ContainsKey(thisStatReqDef.Key))
             {
-                statEvalsDict.Add(reqStat.Key, lowestEval);
-                Debug.Log("The stat " + reqStat.Key.name + " is zero on the given item.");
-                continue;
+                thisStatsPoints = statReqPointsDef[thisStatReqDef.Key];
             }
 
-            // Stat value of the solution
-            int solStatValue = solutionStats[reqStat.Key];
-            // TODO: if using words to describe what's wrong, might get rid of abs
-            //          to show "too much" or "too little"
-            int statDifference = Mathf.Abs(reqStat.Value - solStatValue);
+            // Now loop through each item stat within this stat requirement.
+            List<ItemStat> theseDefStats = thisStatReqDef.Value;
+            List<ItemStat> allPotionStats = _potion.AllStats;
 
-            // Check the evaluation margins for this stat;
-            // Adding only the first condition to be met (the best score)
-            foreach (KeyValuePair<RequestEvaluation, int> evalMargin in evalMargins)
+            Debug.Log($"Checking for stats within the {thisStatReqDef.Key.name} category... list size: {theseDefStats.Count}");
+            var debugStr = new StringBuilder();
+
+            foreach (ItemStat stat in theseDefStats)
             {
-                if (statDifference <= evalMargin.Value)
+                debugStr.Append($"Potion allStats size: {allPotionStats.Count}; Does potion contain {stat}? \n");
+                if (allPotionStats.Contains(stat))
                 {
-                    statEvalsDict.Add(reqStat.Key, evalMargin.Key);
-                    Debug.Log("The " + reqStat.Key.name + " stat is being evaluated... " + statEvalsDict[reqStat.Key]);
-                    break;
+                    debugStr.Append($"Yes \n");
+                    solutionScore += thisStatsPoints;
                 }
+            }
+            Debug.Log(debugStr);
+        }
+
+        finalScore = solutionScore;
+    }
+
+    private void MakeStatRequirementsDictionary()
+    {
+        // For all.
+        List<RequestStatRequirementDefinitions> allStatReqsList = new List<RequestStatRequirementDefinitions>();
+        allStatReqsList.AddRange(posStatRequirementDefinitions);
+        allStatReqsList.AddRange(negStatRequirementDefinitions);
+
+        foreach (RequestStatRequirementDefinitions statReq in allStatReqsList)
+        {
+            if (statRequirementsDefinitionsDict.ContainsKey(statReq.requirement))
+            {
+                statRequirementsDefinitionsDict[statReq.requirement] = statReq.stats;
+            } 
+            else
+            {
+                statRequirementsDefinitionsDict.Add(statReq.requirement, statReq.stats);
             }
         }
 
-        return statEvalsDict;
+        // For positive stat requirements.
+        foreach (RequestStatRequirementDefinitions statReq in posStatRequirementDefinitions)
+        {
+            if (posStatRequirementsDefinitionsDict.ContainsKey(statReq.requirement))
+            {
+                posStatRequirementsDefinitionsDict[statReq.requirement] = statReq.stats;
+            } 
+            else
+            {
+                posStatRequirementsDefinitionsDict.Add(statReq.requirement, statReq.stats);
+            }
+        }
+
+        // For negative stat requirements.
+        foreach (RequestStatRequirementDefinitions statReq in negStatRequirementDefinitions)
+        {
+            if (negStatRequirementsDefinitionsDict.ContainsKey(statReq.requirement))
+            {
+                negStatRequirementsDefinitionsDict[statReq.requirement] = statReq.stats;
+            } 
+            else
+            {
+                negStatRequirementsDefinitionsDict.Add(statReq.requirement, statReq.stats);
+            }
+        }
     }
 
-    public RequestEvaluation GetLowestEval(Dictionary<ItemStat, int> solutionStats)
+    private void CalculatePerfectScore()
     {
-        List<RequestEvaluation> evals = GetItemStatEvals(solutionStats).Values.ToList();
-        evals.Sort(); // sorts by descending order
-        RequestEvaluation lowestEval = evals[evals.Count()-1];
+        int calculatingPerfectScore = 0;
 
-        Debug.Log("Lowest eval: " + lowestEval.name);
-        return lowestEval;
+        // Loop through positive list of stat requirements and get the point
+        // value from the request difficulty;
+        // Then multiply the point value with how many attributes are in that
+        // requirement category.
+        foreach (KeyValuePair<RequestStatRequirement, List<ItemStat>> currentStatReqDef in posStatRequirementsDefinitionsDict)
+        {
+            RequestStatRequirement currentStatReq = currentStatReqDef.Key;
+            List<ItemStat> currentReqStatsList = currentStatReqDef.Value;
+            Dictionary<RequestStatRequirement, int> difficultyStatReqPoints = difficulty.StatRequirementPointsDict;
+
+            Debug.Log($"{requester} - {currentStatReq.name}'s list size: {currentReqStatsList.Count}; difficulty {difficulty.name}");
+
+            // TODO: doesn't work for certain requesters, for some reason...
+            if (difficultyStatReqPoints.ContainsKey(currentStatReq))
+            {
+                int thisStatPoints = difficultyStatReqPoints[currentStatReq];
+                Debug.Log($"{currentStatReq.name} point value: {thisStatPoints}");
+                calculatingPerfectScore += thisStatPoints * currentReqStatsList.Count();
+            }
+        }
+
+        perfectScore = calculatingPerfectScore;
     }
-
-    private void FillMasterItemStatsList()
-    {
-        masterItemStatsList.Clear(); // clear existing first
-        masterItemStatsList = statHelper.GetMasterItemStatsList();
-    }
-
 }
