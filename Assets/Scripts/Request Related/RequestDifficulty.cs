@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,17 +20,35 @@ public class RequestDifficulty : ScriptableObject
     private Dictionary<RequestStatRequirement, int> statRequirementPointsDict = new Dictionary<RequestStatRequirement, int>();
 
 
-    public Dictionary<RequestStatRequirement, int> StatRequirementPointsDict => statRequirementPointsDict;
+    public Dictionary<RequestStatRequirement, int> StatRequirementPointsDict
+    {
+        get {
+            if (statRequirementPointsDict.Count != 0)
+            {
+                return statRequirementPointsDict;
+            }
+            else
+            {
+                MakeStatRequirementPointsDict();
+                return statRequirementPointsDict;
+            }
+        }
+    }
     
 
     void OnEnable()
     {
+        // TODO: for some reason, the OnEnable is only called after the first loop
+        // through the requests items on initialization... weird?
         MakeStatRequirementPointsDict();
     }
     
     
     private void MakeStatRequirementPointsDict()
     {
+        var str = new StringBuilder();
+        str.Append($"Request difficulty dictionary initiating...");
+
         foreach (RequestStatRequirementPoints requirementPoints in statRequirementPoints)
         {
             if (statRequirementPointsDict.ContainsKey(requirementPoints.requirement))
@@ -40,6 +59,8 @@ public class RequestDifficulty : ScriptableObject
             {
                 statRequirementPointsDict.Add(requirementPoints.requirement, requirementPoints.points);
             }
+            str.Append($"\n {requirementPoints.requirement} with value {requirementPoints.points}");
         }
+        Debug.Log(str);
     }
 }

@@ -199,15 +199,13 @@ public class Request : ScriptableObject
         {
             RequestStatRequirement currentStatReq = currentStatReqDef.Key;
             List<ItemStat> currentReqStatsList = currentStatReqDef.Value;
-            Dictionary<RequestStatRequirement, int> difficultyStatReqPoints = difficulty.StatRequirementPointsDict;
+            Dictionary<RequestStatRequirement, int> difficultyStatReqPointsDict = difficulty.StatRequirementPointsDict;
 
-            Debug.Log($"{requester} - {currentStatReq.name}'s list size: {currentReqStatsList.Count}; difficulty {difficulty.name}");
+            Debug.Log($"{requester} - {currentStatReq.name}'s list size: {currentReqStatsList.Count}; difficulty {difficulty.name} with size {difficultyStatReqPointsDict.Count}");
 
-            // TODO: doesn't work for certain requesters, for some reason...
-            if (difficultyStatReqPoints.ContainsKey(currentStatReq))
+            if (difficultyStatReqPointsDict.ContainsKey(currentStatReq))
             {
-                int thisStatPoints = difficultyStatReqPoints[currentStatReq];
-                Debug.Log($"{currentStatReq.name} point value: {thisStatPoints}");
+                int thisStatPoints = difficultyStatReqPointsDict[currentStatReq];
                 calculatingPerfectScore += thisStatPoints * currentReqStatsList.Count();
             }
         }
