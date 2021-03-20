@@ -4,22 +4,24 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    // singleton
+    public static GameManager instance = null;
 
-    // Cursor stuff
-    // public Texture2D cursorTexture;
-    // public CursorMode cursorMode = CursorMode.Auto;
-    // public Vector2 hotSpot = Vector2.zero;
-
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        // Cursor.visible = true;
-        // Cursor.SetCursor(cursorTexture, hotSpot, cursorMode);
+        EnsureOnlyOneInstanceExists();
+        DontDestroyOnLoad(gameObject);
     }
 
-    // Update is called once per frame
-    void Update()
+    void EnsureOnlyOneInstanceExists()
     {
-        
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
     }
 }
