@@ -7,6 +7,11 @@ public abstract class RuntimeSet<T> : ScriptableObject
     [Space]
     public List<T> items = new List<T>();
 
+    public void Initialize()
+    {
+        items.Clear();
+    }
+
     public void Add(T t)
     {
         if (!items.Contains(t)) items.Add(t);

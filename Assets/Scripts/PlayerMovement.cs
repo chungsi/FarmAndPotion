@@ -10,22 +10,25 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private Rigidbody rb;
 
-    private Vector2 movement;
+    private Vector3 movement;
+
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
 
     void Update()
     {
         // Process input.
-        movement.x = Input.GetAxis("Horizontal"); // gives -1 to 1
-        movement.y = Input.GetAxis("Vertical");
+        movement.x = Input.GetAxisRaw("Horizontal"); // gives -1 to 1
+        movement.z = Input.GetAxisRaw("Vertical");
+        // movement.y = 0; // always zero??? maybe not if there are slopes are such
         movement.Normalize();
-
-        rb.velocity = new Vector3(movement.x * moveSpeed, rb.velocity.y, movement.y * moveSpeed);
     }
 
-   // void FixedUpdate()
-    //{
-        // Actual movement stuff.
-       // rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
-        // transform.Translate(new Vector3(movement.x, movement.y, 0) * moveSpeed * Time.fixedDeltaTime);
-   // }
+   void FixedUpdate()
+    {
+        // Actual movement stuff for rigid bodies are calculated here.
+        rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
+    }
 }
