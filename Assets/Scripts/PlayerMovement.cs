@@ -12,9 +12,13 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector3 movement;
 
+    public Animator animator;
+    bool moving;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        moving = false;
     }
 
     void Update()
@@ -24,11 +28,24 @@ public class PlayerMovement : MonoBehaviour
         movement.z = Input.GetAxisRaw("Vertical");
         // movement.y = 0; // always zero??? maybe not if there are slopes are such
         movement.Normalize();
+
+        if (movement.x != 0 || movement.z != 0)
+        {
+            moving = true;
+        }
+        else
+        {
+            moving = false;
+        }
+
+        animator.SetBool("Movement", moving);   
     }
 
-   void FixedUpdate()
+    void FixedUpdate()
     {
         // Actual movement stuff for rigid bodies are calculated here.
         rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
     }
 }
+      
+
