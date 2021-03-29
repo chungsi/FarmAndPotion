@@ -13,12 +13,13 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 movement;
 
     public Animator animator;
-    bool moving;
+    bool movingLeft, movingRight;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        moving = false;
+        movingLeft = false;
+        movingRight = false;
     }
 
     void Update()
@@ -29,16 +30,26 @@ public class PlayerMovement : MonoBehaviour
         // movement.y = 0; // always zero??? maybe not if there are slopes are such
         movement.Normalize();
 
-        if (movement.x != 0 || movement.z != 0)
+        if (movement.x == -1 || movement.z != 0)
         {
-            moving = true;
+            movingLeft = true;
         }
         else
         {
-            moving = false;
+            movingLeft = false;
         }
 
-        animator.SetBool("Movement", moving);   
+        if (movement.x == 1 || movement.z != 0)
+        {
+            movingRight = true;
+        }
+        else
+        {
+            movingRight = false;
+        }
+
+        animator.SetBool("MoveLeft", movingLeft);
+        animator.SetBool("MoveRight", movingRight);
     }
 
     void FixedUpdate()
