@@ -11,4 +11,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Crafting.unity
     guid: f8c11aff36d2f194abd11a40fe432c74
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: f1fecb426b0620446b7a024a48277bfa,
+      type: 2}
