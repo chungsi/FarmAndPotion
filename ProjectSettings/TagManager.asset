@@ -50,6 +50,9 @@ TagManager:
   - name: Character
     uniqueID: 1215593869
     locked: 0
+  - name: PropsFB2
+    uniqueID: 544177967
+    locked: 0
   - name: PropsFG
     uniqueID: 947857669
     locked: 0
