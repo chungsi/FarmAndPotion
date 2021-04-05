@@ -5,11 +5,13 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement_Test : MonoBehaviour
 {
-    Animator animator;
+    private Animator animator;
 
-    PlayerInput input;
-    Vector2 currentMovement;
-    bool isMovementPressed;
+    private int moveRightHash;
+    private int moveLeftHash;
+
+    private Vector2 currentMovement;
+    private bool isMovementPressed;
 
     [SerializeField]
     private float moveSpeed = 5f;
@@ -17,16 +19,38 @@ public class PlayerMovement_Test : MonoBehaviour
     [SerializeField]
     private Rigidbody rb;
 
-    private Vector3 movement;
 
     [Header("Input Settings")]
-    public PlayerInput playerInput;
+    public GameInput gameInput;
     private Vector3 rawInputMovement;
+
+    // private void Awake()
+    // {
+    //     gameInput = new GameInput();
+    //     gameInput.Gameplay.Move.performed += ctx => {
+    //         currentMovement = ctx.ReadValue<Vector2>();
+    //         isMovementPressed = currentMovement.x != 0 || currentMovement.y != 0;
+    //     };
+    // }
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        // animator = GetComponent<Animator>();
+
+        // moveRightHash = Animator.StringToHash("moveRight");
+        // moveLeftHash = Animator.StringToHash("moveLeft");
     }
+
+    // private void OnEnable()
+    // {
+    //     gameInput.Gameplay.Move.Enable();
+    // }
+
+    // private void OnDisable()
+    // {
+    //     gameInput.Gameplay.Move.Disable();
+    // }
 
     void Update()
     {
@@ -37,6 +61,12 @@ public class PlayerMovement_Test : MonoBehaviour
         // Actual movement stuff for rigid bodies are calculated here.
         rb.MovePosition(rb.position + rawInputMovement * moveSpeed * Time.fixedDeltaTime);
     }
+
+    // public void handleMovement()
+    // {
+    //     bool isMoveRight = animator.GetBool(moveRightHash);
+    //     bool isMoveLeft = animator.GetBool(moveLeftHash);
+    // }
 
     public void OnMovement(InputAction.CallbackContext value)
     {

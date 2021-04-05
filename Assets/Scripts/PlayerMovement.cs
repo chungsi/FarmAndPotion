@@ -1,105 +1,52 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField]
-    private float moveSpeed = 5f;
+    [SerializeField] private InputReader _inputReader = default;
+    [SerializeField] private float moveSpeed = 5f;
 
-    [SerializeField]
-    private Rigidbody rb;
-
-    private Vector3 movement;
-
-    public Animator animator;
-    bool movingLeft, movingRight;
-
-    //for interact UI icon
-    public GameObject interactUI;
-    private Vector3 hitSize = new Vector3(1f, 1f, 1f);
-
+    [SerializeField] private Rigidbody rb;
+    [SerializeField] private Animator _animator;
+    private int _movementHash;
+    private Vector2 _prevMovementInput;
+    private Vector3 _rawInputMovement;
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        // rb = GetComponent<Rigidbody>();
 
-        movingLeft = false;
-        movingRight = false;
-
-        interactUI.SetActive(false);
+        // _animator = GetComponent<Animator>();
+        _movementHash = Animator.StringToHash("Movement");
     }
 
-    void Update()
+    private void OnEnable()
     {
-        // Process input.
-        movement.x = Input.GetAxisRaw("Horizontal"); // gives -1 to 1
-        movement.z = Input.GetAxisRaw("Vertical");
-        // movement.y = 0; // always zero??? maybe not if there are slopes are such
-        movement.Normalize();
-
-        //update character animation when moving
-        if (movement.x == -1 || movement.z != 0)
-        {
-            movingLeft = true;
-        }
-        else
-        {
-            movingLeft = false;
-        }
-
-        if (movement.x == 1 || movement.z != 0)
-        {
-            movingRight = true;
-        }
-        else
-        {
-            movingRight = false;
-        }
-
-        animator.SetBool("MoveLeft", movingLeft);
-        animator.SetBool("MoveRight", movingRight);
-
-        //let player trigger interaction when pressing key
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            CheckInteraction();
-            Debug.Log("you pressed E");
-        }
+        _inputReader.moveEvent += OnMovement;
     }
 
-    void FixedUpdate()
+    private void OnDisable()
+    {
+        _inputReader.moveEvent -= OnMovement;
+    }
+
+   void FixedUpdate()
     {
         // Actual movement stuff for rigid bodies are calculated here.
-        rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + _rawInputMovement * moveSpeed * Time.fixedDeltaTime);
     }
 
-    //check if character will trigger interactions
-    public void OpenInteractableIcon()
+    private void OnMovement(Vector2 _movement)
     {
-        interactUI.SetActive(true);
-    }
+        _prevMovementInput = _movement;
+        _rawInputMovement = new Vector3(_prevMovementInput.x, 0f, _prevMovementInput.y);
 
-    public void CloseInteractableIcon()
-    {
-        interactUI.SetActive(false);
-    }
-
-    private void CheckInteraction()
-    {
-        RaycastHit[] hits = Physics.RaycastAll(transform.position, hitSize, 0F);
-        if(hits.Length >0)
-        {
-          foreach(RaycastHit rc in hits)
-            {
-                if (rc.transform.GetComponent<Interactable>())
-                {
-                    rc.transform.GetComponent<Interactable>().Interact();
-                }
-            }
-        }
-
+        if (_prevMovementInput.x != 0)
+            _animator.SetFloat("Horizontal", _prevMovementInput.x);
+            
+        _animator.SetFloat("Vertical", _prevMovementInput.y);
+        _animator.SetFloat("Speed", _prevMovementInput.sqrMagnitude);
     }
 }
-      
-

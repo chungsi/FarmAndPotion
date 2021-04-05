@@ -15,12 +15,12 @@ public abstract class Interactable : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            other.GetComponent<PlayerMovement>().OpenInteractableIcon();
+            // other.GetComponent<PlayerMovement>().OpenInteractableIcon();
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        other.GetComponent<PlayerMovement>().CloseInteractableIcon();
+        // other.GetComponent<PlayerMovement>().CloseInteractableIcon();
     }
 }
