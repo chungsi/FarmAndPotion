@@ -12,7 +12,7 @@ public class ItemHelper
     {
         List<Ingredient> masterList = new List<Ingredient>();
 
-        string[] assetNames = AssetDatabase.FindAssets("t:Ingredient", new[] { "Assets/Items" });
+        string[] assetNames = AssetDatabase.FindAssets("t:Ingredient", new[] { "Assets/ScriptableObjects/Items" });
         foreach (string SOName in assetNames)
         {
             var SOpath = AssetDatabase.GUIDToAssetPath(SOName);
@@ -26,7 +26,7 @@ public class ItemHelper
     {
         List<Potion> masterList = new List<Potion>();
 
-        string[] assetNames = AssetDatabase.FindAssets("t:Potion", new[] { "Assets/Items" });
+        string[] assetNames = AssetDatabase.FindAssets("t:Potion", new[] { "Assets/ScriptableObjects/Items" });
         foreach (string SOName in assetNames)
         {
             var SOpath = AssetDatabase.GUIDToAssetPath(SOName);
@@ -40,7 +40,7 @@ public class ItemHelper
     {
         List<Item> masterList = new List<Item>();
 
-        string[] assetNames = AssetDatabase.FindAssets("t:Item", new[] { "Assets/Items" });
+        string[] assetNames = AssetDatabase.FindAssets("t:Item", new[] { "Assets/ScriptableObjects/Items" });
         foreach (string SOName in assetNames)
         {
             var SOpath = AssetDatabase.GUIDToAssetPath(SOName);
@@ -60,7 +60,7 @@ public class ItemHelper
     {
         List<ItemStat> masterItemStatList = new List<ItemStat>();
 
-        string[] assetNames = AssetDatabase.FindAssets("t:ItemStat", new[] { "Assets/Items/Item Stats" });
+        string[] assetNames = AssetDatabase.FindAssets("t:ItemStat", new[] { "Assets/ScriptableObjects/Items/Item Stats" });
         foreach (string SOName in assetNames)
         {
             var SOpath = AssetDatabase.GUIDToAssetPath(SOName);
