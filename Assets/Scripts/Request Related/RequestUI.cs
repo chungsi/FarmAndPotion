@@ -179,7 +179,7 @@ public class RequestUI : ItemContainerUI
 
     private void FillMasterRequestList()
     {
-        string[] assetNames = AssetDatabase.FindAssets("t:Request", new[] { "Assets/Requests" });
+        string[] assetNames = AssetDatabase.FindAssets("t:Request", new[] { "Assets/ScriptableObjects/Requests" });
         foreach (string SOName in assetNames)
         {
             var SOpath = AssetDatabase.GUIDToAssetPath(SOName);
