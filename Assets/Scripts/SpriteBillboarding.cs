@@ -13,8 +13,10 @@ public class SpriteBillboarding : MonoBehaviour
 
     void LateUpdate()
     {
-        transform.LookAt(mainCamera.transform);
+        // transform.LookAt(mainCamera.transform);
 
-        transform.rotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0f);
+        Debug.Log("camera rotation: " + mainCamera.transform.rotation.eulerAngles.x);
+
+        transform.rotation = Quaternion.Euler(mainCamera.transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, 0f);
     }
 }

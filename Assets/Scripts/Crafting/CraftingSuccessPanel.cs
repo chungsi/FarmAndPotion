@@ -46,7 +46,7 @@ public class CraftingSuccessPanel : MonoBehaviour, IPointerDownHandler
         int difference = numInventoryItems - (int)numCraftingResults.value;
         for (int i = numInventoryItems-1; i >= difference; i--)
         {
-            craftedResults.Add(inventorySet.GetItem(i));
+            craftedResults.Add((ItemObject)inventorySet.GetItem(i));
         }
     }
 
@@ -60,7 +60,7 @@ public class CraftingSuccessPanel : MonoBehaviour, IPointerDownHandler
     public void ActivateSuccessPanel()
     {
         ShowUI();
-        ItemObject item = inventorySet.GetItem((int)floatingItemIndex.value);
+        ItemObject item = (ItemObject)inventorySet.GetItem((int)floatingItemIndex.value);
         SetDisplay(item.Item);
     }
 

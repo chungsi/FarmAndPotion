@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu]
-public class ItemObjectRuntimeSet : RuntimeSet<ItemObject>
+public class ItemObjectRuntimeSet : RuntimeSet<BaseItemObject>
 {
     
 }

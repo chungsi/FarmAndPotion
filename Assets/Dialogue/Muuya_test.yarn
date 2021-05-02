@@ -1,6 +1,28 @@
-﻿title: Muuya
-tags:
+title: Muuya
+tags: 
+colorID: 0
+position: -168,-159
 ---
-Muuya: Hello Apothecary!
-Player: Hi Muuya.
+Muuya: Hello Apothecary! 
+<<if $get_muuya_quest_1 is false>>
+    Muuya: Could you spare some time to help me out?
+    [[Sure, helping people is my passion!|help]]
+    [[I'm a little held up right now, ask me again in a bit...|busy]]
+<<endif>>
+===
+title: help
+tags: 
+colorID: 0
+position: -359,135
+---
+Muuya: Oh, thank you so much!
+<<set $get_muuya_quest_1 to true>>
+Muuya: It's just my little piggy seems to be sick...
+===
+title: busy
+tags: 
+colorID: 0
+position: 25,126
+---
+Muuya: Oh... ok, I'll ask again!
 ===

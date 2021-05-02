@@ -12,7 +12,7 @@ public class Fire : MonoBehaviour, IDropHandler
     public void OnDrop(PointerEventData eventData) 
     {
         Debug.Log("Throwing an item into the fire!");
-        ItemObject item = masterInventorySet.GetItem((int)floatingItemMasterIndex.value);
+        ItemObject item = (ItemObject)masterInventorySet.GetItem((int)floatingItemMasterIndex.value);
         playerInventory.RemoveItem(item.Item);
         item.Destroy();
     }

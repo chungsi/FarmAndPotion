@@ -48,7 +48,7 @@ public class CraftingUI : ItemContainerUI
 
         for (int i = craftingSubset.items.Count - 1; i >= 0; i--)
         {
-            ItemObject item = craftingSubset.items[i];
+            ItemObject item = (ItemObject)craftingSubset.items[i];
             craftingSubset.Remove(item);
 
             item.Destroy();

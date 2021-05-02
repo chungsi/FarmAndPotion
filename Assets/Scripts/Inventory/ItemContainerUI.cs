@@ -33,7 +33,7 @@ public abstract class ItemContainerUI : MonoBehaviour
 
     protected virtual ItemObject GetFloatingItem()
     {
-        return inventorySet.GetItem((int)floatingItemMasterIndex.value);
+        return (ItemObject)inventorySet.GetItem((int)floatingItemMasterIndex.value);
     }
 
     protected virtual void AddItemToSlot(ItemObject item, ItemSlot slot)

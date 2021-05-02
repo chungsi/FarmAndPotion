@@ -75,7 +75,7 @@ public class ItemSpawner : MonoBehaviour
 
         for (int i = wildItemsSubset.items.Count - 1; i >= 0 ; i--)
         {
-            ItemObject item = wildItemsSubset.items[i];
+            ItemObject item = (ItemObject)wildItemsSubset.items[i];
             item.Destroy();
         }
     }

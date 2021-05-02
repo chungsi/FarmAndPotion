@@ -122,7 +122,7 @@ public class RequestUI : ItemContainerUI
             // Clear input inventory and subset to prepare for a new request.
             for (int i = requestItemsSubset.items.Count - 1; i >= 0; i--)
             {
-                ItemObject item = requestItemsSubset.items[i];
+                ItemObject item = (ItemObject)requestItemsSubset.items[i];
                 requestItemsSubset.Remove(item);
                 item.Destroy();
             }

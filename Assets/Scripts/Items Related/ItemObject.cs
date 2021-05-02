@@ -5,26 +5,11 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-public class ItemObject : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerDownHandler, IPointerEnterHandler
+public class ItemObject : BaseItemObject, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerDownHandler, IPointerEnterHandler
 {
-    [SerializeField]
-    private Item item;
-
-    [SerializeField]
-    private Image artwork;
-
-    [Space]
-    
-    [SerializeField]
-    private ItemObjectRuntimeSet itemObjectRuntimeSet;
-
-    [SerializeField]
-    private FloatVariable floatingItemSetIndex;
-
     [Space]
 
-    [SerializeField]
-    private bool isDraggable = false;
+    [SerializeField] private bool isDraggable = false;
 
     [Space]
 
@@ -38,34 +23,10 @@ public class ItemObject : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDr
     private CanvasGroup canvasGroup;
     private Transform startParent;
     
-    
-    public Item Item
-    {
-        get => item;
-        set
-        {
-            item = value;
-            artwork.sprite = item.Artwork;
-        }
-    }
 
     // TODO: Add some kind of nullity check
     public ItemSlot ParentItemSlot => startParent.GetComponent<ItemSlot>();
-
-
-    void OnEnable()
-    {
-        if (item != null)
-            artwork.sprite = item.Artwork;
-
-        itemObjectRuntimeSet.Add(this);
-    }
-
-    void OnDisable()
-    {
-        // Debug.Log("disabling this ItemObject " + name + " " + this.item.name);
-        itemObjectRuntimeSet.Remove(this);
-    }
+    
 
     void Start() 
     {
@@ -80,64 +41,64 @@ public class ItemObject : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDr
 
     #region Interface Interaction Handlers
 
-    public void OnBeginDrag(PointerEventData eventData) 
-    {
-        if (isDraggable)
+        public void OnBeginDrag(PointerEventData eventData) 
         {
-            // sets the floating index of the item in the set
-            floatingItemSetIndex.value = itemObjectRuntimeSet.GetIndex(this);
-            startParent = transform.parent;
+            if (isDraggable)
+            {
+                // sets the floating index of the item in the set
+                floatingItemSetIndex.value = itemObjectRuntimeSet.GetIndex(this);
+                startParent = transform.parent;
 
-            // canvasGroup.alpha = .6f;
-            canvasGroup.blocksRaycasts = false;
+                // canvasGroup.alpha = .6f;
+                canvasGroup.blocksRaycasts = false;
 
-            DragBeginEvent.Invoke();
+                DragBeginEvent.Invoke();
+            }
         }
-    }
 
-    public void OnDrag(PointerEventData eventData) 
-    {
-        if (isDraggable)
+        public void OnDrag(PointerEventData eventData) 
         {
-            artwork.transform.position = Input.mousePosition;
+            if (isDraggable)
+            {
+                artwork.transform.position = Input.mousePosition;
 
-            DraggingEvent.Invoke();
+                DraggingEvent.Invoke();
+            }
         }
-    }
 
-    public void OnEndDrag(PointerEventData eventData) 
-    {
-        if (isDraggable)
+        public void OnEndDrag(PointerEventData eventData) 
         {
-            artwork.transform.localPosition = new Vector3(0,0,0);
-            // canvasGroup.alpha = 1f;
-            canvasGroup.blocksRaycasts = true;
+            if (isDraggable)
+            {
+                artwork.transform.localPosition = new Vector3(0,0,0);
+                // canvasGroup.alpha = 1f;
+                canvasGroup.blocksRaycasts = true;
 
-            DragEndEvent.Invoke();
+                DragEndEvent.Invoke();
+            }
         }
-    }
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        // if right click
-        if (Input.GetMouseButtonDown(1))
+        public void OnPointerDown(PointerEventData eventData)
         {
-            floatingItemSetIndex.value = itemObjectRuntimeSet.GetIndex(this);
-            OnItemRightClick.Invoke();
+            // if right click
+            if (Input.GetMouseButtonDown(1))
+            {
+                floatingItemSetIndex.value = itemObjectRuntimeSet.GetIndex(this);
+                OnItemRightClick.Invoke();
+            }
+            // if left click
+            else if (Input.GetMouseButton(0))
+            {
+                floatingItemSetIndex.value = itemObjectRuntimeSet.GetIndex(this);
+                OnItemLeftClick.Invoke();
+            }
         }
-        // if left click
-        else if (Input.GetMouseButton(0))
-        {
-            floatingItemSetIndex.value = itemObjectRuntimeSet.GetIndex(this);
-            OnItemLeftClick.Invoke();
-        }
-    }
 
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        // floatingItemSetIndex.value = itemObjectRuntimeSet.GetIndex(this);
-        // OnItemHover.Invoke();
-    }
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            // floatingItemSetIndex.value = itemObjectRuntimeSet.GetIndex(this);
+            // OnItemHover.Invoke();
+        }
 
     #endregion
 }
