@@ -72,12 +72,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8afe9bd740dac747925ab10ad0ac7b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: 9e71ef68404d5bc42a5bb97811029bac, type: 2}
-  artwork: {fileID: 9147805766235892422}
+  item: {fileID: 0}
+  spriteGO: {fileID: 0}
   itemObjectRuntimeSet: {fileID: 11400000, guid: 0ac82322d9fe9534bb69124d21ec25b0,
     type: 2}
   floatingItemSetIndex: {fileID: 11400000, guid: 6c7ea5011d84c0c47b22f2d7cdff7d39,
     type: 2}
+  artwork: {fileID: 9147805766235892422}
   isDraggable: 0
   DragBeginEvent:
     m_PersistentCalls:

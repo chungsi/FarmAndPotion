@@ -7,6 +7,9 @@ using UnityEngine.EventSystems;
 
 public class ItemObject : BaseItemObject, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerDownHandler, IPointerEnterHandler
 {
+    // Use a UI element here instead of standard Sprite
+    [SerializeField] private Image artwork;
+
     [Space]
 
     [SerializeField] private bool isDraggable = false;
@@ -28,7 +31,7 @@ public class ItemObject : BaseItemObject, IDragHandler, IBeginDragHandler, IEndD
     public ItemSlot ParentItemSlot => startParent.GetComponent<ItemSlot>();
     
 
-    void Start() 
+    void Start()
     {
         canvasGroup = GetComponent<CanvasGroup>();
     }
@@ -41,7 +44,7 @@ public class ItemObject : BaseItemObject, IDragHandler, IBeginDragHandler, IEndD
 
     #region Interface Interaction Handlers
 
-        public void OnBeginDrag(PointerEventData eventData) 
+        public void OnBeginDrag(PointerEventData eventData)
         {
             if (isDraggable)
             {
@@ -60,6 +63,7 @@ public class ItemObject : BaseItemObject, IDragHandler, IBeginDragHandler, IEndD
         {
             if (isDraggable)
             {
+                // uses the image/sprite renderer separately to just move an image
                 artwork.transform.position = Input.mousePosition;
 
                 DraggingEvent.Invoke();
@@ -70,6 +74,7 @@ public class ItemObject : BaseItemObject, IDragHandler, IBeginDragHandler, IEndD
         {
             if (isDraggable)
             {
+                // uses the image/sprite renderer separately to just move an image
                 artwork.transform.localPosition = new Vector3(0,0,0);
                 // canvasGroup.alpha = 1f;
                 canvasGroup.blocksRaycasts = true;

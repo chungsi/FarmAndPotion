@@ -5,7 +5,7 @@ public class BaseItemObject : MonoBehaviour
 {
     [Header("Item Specs")]
     [SerializeField] protected Item item;
-    protected Image artwork;
+    [SerializeField] private GameObject spriteGO;
     
     [Space]
     
@@ -19,7 +19,7 @@ public class BaseItemObject : MonoBehaviour
         set
         {
             item = value;
-            artwork.sprite = item.Artwork;
+            spriteGO.GetComponent<SpriteRenderer>().sprite = item.Artwork;
         }
     }
 
@@ -27,7 +27,7 @@ public class BaseItemObject : MonoBehaviour
     void OnEnable()
     {
         if (item != null)
-            artwork.sprite = item.Artwork;
+            spriteGO.GetComponent<SpriteRenderer>().sprite = item.Artwork;
 
         itemObjectRuntimeSet.Add(this);
     }
