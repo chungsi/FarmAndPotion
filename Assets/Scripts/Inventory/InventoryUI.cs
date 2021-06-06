@@ -38,9 +38,10 @@ public class InventoryUI : ItemContainerUI
         }
     }
 
-    ItemObject InstantiateAndAddUniqueItem(Item item, Transform parent)
+    ItemUIObject InstantiateAndAddUniqueItem(Item item, Transform parent)
     {
-        ItemObject ui = ItemObject.Instantiate(itemObjectPrefab, parent);
+        // Casting to more specificity
+        ItemUIObject ui = (ItemUIObject) ItemObject.Instantiate(itemObjectPrefab, parent);
         Item uniqueItem = Object.Instantiate(item);
 
         inventory.AddItem(uniqueItem); // setup start
@@ -72,7 +73,7 @@ public class InventoryUI : ItemContainerUI
     public void DropResponse() 
     {
         ItemSlot dropSlot = slots[(int)dropSlotIndex.value];
-        ItemObject floatingItem = GetFloatingItem();
+        ItemUIObject floatingItem = (ItemUIObject) GetFloatingItem();
 
         // Just drop the item when dropSlot is empty
         if (dropSlot.IsEmpty) 

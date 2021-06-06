@@ -12,6 +12,7 @@ public class Interactor : MonoBehaviour
 
     [Header("Player Inventory Related")]
     [SerializeField] private Inventory playerInventory;
+    [SerializeField] private GameEvent triggerPlayerInventoryAddition;
 
     private IInteractable currentInteractable = null;
     private Collider currentInteractableGO = null;
@@ -63,6 +64,7 @@ public class Interactor : MonoBehaviour
 
         if (playerInventory.AddItem(item))
         {
+            triggerPlayerInventoryAddition.Raise();
             currentInteractableGO.gameObject.SetActive(false);
             ResetInteractableCollider();
         }

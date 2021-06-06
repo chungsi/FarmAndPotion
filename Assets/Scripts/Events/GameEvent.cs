@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New GameEvent", menuName = "Game Event")]
 public class GameEvent : ScriptableObject
 {
+    [SerializeField] [TextArea]
+    private string description;
     private List<GameEventListener> listeners = new List<GameEventListener>();
 
     public void Raise() {
