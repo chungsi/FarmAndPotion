@@ -24,12 +24,14 @@ public class Interactor : MonoBehaviour
     {
         _inputReader.interactEvent += OnInteraction;
         _inputReader.advanceDialogueEvent += OnAdvanceDialogue;
+        _inputReader.openInventoryEvent += OnOpenInventory;
     }
 
     private void OnDisable()
     {
         _inputReader.interactEvent -= OnInteraction;
         _inputReader.advanceDialogueEvent -= OnAdvanceDialogue;
+        _inputReader.openInventoryEvent -= OnOpenInventory;
     }
 
     void Start()
@@ -53,6 +55,12 @@ public class Interactor : MonoBehaviour
         {
             dialogueUI.MarkLineComplete();
         }
+    }
+
+
+    private void OnOpenInventory()
+    {
+        //
     }
 
 
