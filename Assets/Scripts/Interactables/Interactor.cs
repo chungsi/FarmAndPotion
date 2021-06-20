@@ -12,7 +12,9 @@ public class Interactor : MonoBehaviour
 
     [Header("Player Inventory Related")]
     [SerializeField] private Inventory playerInventory;
-    [SerializeField] private GameEvent triggerPlayerInventoryAddition;
+    [SerializeField] private FloatVariable itemIndexInMasterRuntimeSet;
+    [SerializeField] private ItemObjectRuntimeSet masterItemsRuntimeSet;
+    [SerializeField] private GameEvent triggerInventoryUIUpdate;
 
     private IInteractable currentInteractable = null;
     private Collider currentInteractableGO = null;
@@ -24,14 +26,12 @@ public class Interactor : MonoBehaviour
     {
         _inputReader.interactEvent += OnInteraction;
         _inputReader.advanceDialogueEvent += OnAdvanceDialogue;
-        _inputReader.openInventoryEvent += OnOpenInventory;
     }
 
     private void OnDisable()
     {
         _inputReader.interactEvent -= OnInteraction;
         _inputReader.advanceDialogueEvent -= OnAdvanceDialogue;
-        _inputReader.openInventoryEvent -= OnOpenInventory;
     }
 
     void Start()
@@ -58,23 +58,22 @@ public class Interactor : MonoBehaviour
     }
 
 
-    private void OnOpenInventory()
-    {
-        //
-    }
-
-
     public void OnItemPickup()
     {
         if (!(currentInteractable is ItemRpgObject)) { return; }
 
-        Item item = ((ItemRpgObject)currentInteractable).Item;
+        // Save interactable item index
+        ItemObject itemObject = (ItemRpgObject)currentInteractable;
+        itemIndexInMasterRuntimeSet.value = masterItemsRuntimeSet.GetIndex(itemObject);
 
-        if (playerInventory.AddItem(item))
+        if (!playerInventory.isFull())
         {
-            triggerPlayerInventoryAddition.Raise();
+            triggerInventoryUIUpdate.Raise();
             currentInteractableGO.gameObject.SetActive(false);
             ResetInteractableCollider();
+        } else {
+            // add something for cases when inventory is full. letting the player know.
+            Debug.Log($"can't pick up item {itemObject.Item.name} because inventory is full!");
         }
     }
 

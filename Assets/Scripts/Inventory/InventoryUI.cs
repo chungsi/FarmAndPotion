@@ -68,7 +68,10 @@ public class InventoryUI : ItemContainerUI
         AddItemToSlot(newItem, slot);
     }
 
+
+
     #region Event Responses
+
 
     public void DropResponse() 
     {
@@ -93,6 +96,7 @@ public class InventoryUI : ItemContainerUI
         }
     }
 
+
     // this means the item has successfully been dropped into a crafting slot
     public void RemoveItemDroppedIntoCraftingContainer()
     {
@@ -103,6 +107,7 @@ public class InventoryUI : ItemContainerUI
         }
     }
 
+
     public void RemoveItemDroppedIntoRequestBoard()
     {
         ItemObject item = GetFloatingItem();
@@ -111,6 +116,7 @@ public class InventoryUI : ItemContainerUI
             RemoveItem(item);
         }
     }
+
 
     // add the "floating item" to the inventory
     public void InsertAFloatingItem() 
@@ -124,6 +130,7 @@ public class InventoryUI : ItemContainerUI
 
         AddToFirstEmptySlot(newItem);
     }
+
 
     // add an item that requires instantiating a new object
     public void AddWildItem()
@@ -140,6 +147,7 @@ public class InventoryUI : ItemContainerUI
             floatingItem.Destroy(); // removes the wildItem because replaced by "tamed"
         }
     }
+
 
     public void DisplayItemName()
     {
