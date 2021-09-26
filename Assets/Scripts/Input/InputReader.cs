@@ -16,7 +16,7 @@ public class InputReader : ScriptableObject, GameInput.IGameplayActions, GameInp
 
     // Gameplay
     public event UnityAction interactEvent = delegate { }; // Used to talk, pickup objects, interact with tools like the cooking cauldron
-    // public event UnityAction openInventoryEvent = delegate { }; // Used to bring up the inventory
+    public event UnityAction openInventoryEvent = delegate { }; // Used to bring up the inventory
     public event UnityAction<Vector2> moveEvent = delegate { };
 
     public event UnityAction advanceDialogueEvent = delegate { };
@@ -45,6 +45,11 @@ public class InputReader : ScriptableObject, GameInput.IGameplayActions, GameInp
     {
         if (_context.phase == InputActionPhase.Performed)
             interactEvent.Invoke();
+    }
+
+    public void OnOpenInventory(InputAction.CallbackContext _context)
+    {
+        openInventoryEvent.Invoke();
     }
 
     public void OnAdvanceDialogue(InputAction.CallbackContext _context)

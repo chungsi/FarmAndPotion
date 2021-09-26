@@ -12,6 +12,9 @@ public class Interactor : MonoBehaviour
 
     [Header("Player Inventory Related")]
     [SerializeField] private Inventory playerInventory;
+    [SerializeField] private FloatVariable itemIndexInMasterRuntimeSet;
+    [SerializeField] private ItemObjectRuntimeSet masterItemsRuntimeSet;
+    [SerializeField] private GameEvent triggerInventoryUIUpdate;
 
     private IInteractable currentInteractable = null;
     private Collider currentInteractableGO = null;
@@ -59,12 +62,18 @@ public class Interactor : MonoBehaviour
     {
         if (!(currentInteractable is ItemRpgObject)) { return; }
 
-        Item item = ((ItemRpgObject)currentInteractable).Item;
+        // Save interactable item index
+        ItemObject itemObject = (ItemRpgObject)currentInteractable;
+        itemIndexInMasterRuntimeSet.value = masterItemsRuntimeSet.GetIndex(itemObject);
 
-        if (playerInventory.AddItem(item))
+        if (!playerInventory.isFull())
         {
+            triggerInventoryUIUpdate.Raise();
             currentInteractableGO.gameObject.SetActive(false);
             ResetInteractableCollider();
+        } else {
+            // add something for cases when inventory is full. letting the player know.
+            Debug.Log($"can't pick up item {itemObject.Item.name} because inventory is full!");
         }
     }
 

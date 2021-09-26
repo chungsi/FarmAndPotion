@@ -1,109 +1,47 @@
-﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
-using UnityEngine.Events;
-using UnityEngine.EventSystems;
 
-public class ItemObject : BaseItemObject, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerDownHandler, IPointerEnterHandler
+public class ItemObject : MonoBehaviour
 {
-    // Use a UI element here instead of standard Sprite
-    [SerializeField] private Image artwork;
-
+    [Header("Item Specs")]
+    [SerializeField] protected Item item;
+    [SerializeField] private GameObject spriteGO;
+    
     [Space]
-
-    [SerializeField] private bool isDraggable = false;
-
-    [Space]
-
-    public UnityEvent DragBeginEvent;
-    public UnityEvent DraggingEvent;
-    public UnityEvent DragEndEvent;
-    public UnityEvent OnItemRightClick;
-    public UnityEvent OnItemLeftClick;
-    public UnityEvent OnItemHover;
     
-    private CanvasGroup canvasGroup;
-    private Transform startParent;
-    
+    [SerializeField] protected ItemObjectRuntimeSet itemObjectRuntimeSet;
+    [SerializeField] protected FloatVariable floatingItemSetIndex;
 
-    // TODO: Add some kind of nullity check
-    public ItemSlot ParentItemSlot => startParent.GetComponent<ItemSlot>();
-    
 
-    void Start()
+    public Item Item
     {
-        canvasGroup = GetComponent<CanvasGroup>();
+        get => item;
+        set
+        {
+            item = value;
+            spriteGO.GetComponent<SpriteRenderer>().sprite = item.Artwork;
+        }
+    }
+
+    
+    protected void OnEnable()
+    {
+        if (item != null)
+            spriteGO.GetComponent<SpriteRenderer>().sprite = item.Artwork;
+
+        itemObjectRuntimeSet.Add(this);
+    }
+
+    void OnDisable()
+    {
+        // Debug.Log("disabling this ItemObject " + name + " " + this.item.name);
+        itemObjectRuntimeSet.Remove(this);
     }
 
     public void Destroy()
     {
         Debug.Log(item.name + " is destroying itself");
-        Destroy(this.gameObject);
+        this.gameObject.SetActive(false);
+        // Destroy(this.gameObject);
     }
-
-    #region Interface Interaction Handlers
-
-        public void OnBeginDrag(PointerEventData eventData)
-        {
-            if (isDraggable)
-            {
-                // sets the floating index of the item in the set
-                floatingItemSetIndex.value = itemObjectRuntimeSet.GetIndex(this);
-                startParent = transform.parent;
-
-                // canvasGroup.alpha = .6f;
-                canvasGroup.blocksRaycasts = false;
-
-                DragBeginEvent.Invoke();
-            }
-        }
-
-        public void OnDrag(PointerEventData eventData) 
-        {
-            if (isDraggable)
-            {
-                // uses the image/sprite renderer separately to just move an image
-                artwork.transform.position = Input.mousePosition;
-
-                DraggingEvent.Invoke();
-            }
-        }
-
-        public void OnEndDrag(PointerEventData eventData) 
-        {
-            if (isDraggable)
-            {
-                // uses the image/sprite renderer separately to just move an image
-                artwork.transform.localPosition = new Vector3(0,0,0);
-                // canvasGroup.alpha = 1f;
-                canvasGroup.blocksRaycasts = true;
-
-                DragEndEvent.Invoke();
-            }
-        }
-
-        public void OnPointerDown(PointerEventData eventData)
-        {
-            // if right click
-            if (Input.GetMouseButtonDown(1))
-            {
-                floatingItemSetIndex.value = itemObjectRuntimeSet.GetIndex(this);
-                OnItemRightClick.Invoke();
-            }
-            // if left click
-            else if (Input.GetMouseButton(0))
-            {
-                floatingItemSetIndex.value = itemObjectRuntimeSet.GetIndex(this);
-                OnItemLeftClick.Invoke();
-            }
-        }
-
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            // floatingItemSetIndex.value = itemObjectRuntimeSet.GetIndex(this);
-            // OnItemHover.Invoke();
-        }
-
-    #endregion
 }
