@@ -6,12 +6,11 @@
       "source": "builtin",
       "dependencies": {}
     },
-    "com.unity.cinemachine": {
-      "version": "2.7.3",
+    "com.unity.2d.tilemap": {
+      "version": "1.0.0",
       "depth": 0,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://packages.unity.com"
+      "source": "builtin",
+      "dependencies": {}
     },
     "com.unity.collab-proxy": {
       "version": "1.2.16",
@@ -59,18 +58,6 @@
       },
       "url": "https://packages.unity.com"
     },
-    "com.unity.render-pipelines.high-definition": {
-      "version": "7.3.1",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.render-pipelines.core": "7.3.1",
-        "com.unity.shadergraph": "7.3.1",
-        "com.unity.visualeffectgraph": "7.3.1",
-        "com.unity.render-pipelines.high-definition-config": "7.3.1"
-      },
-      "url": "https://packages.unity.com"
-    },
     "com.unity.render-pipelines.high-definition-config": {
       "version": "file:../LocalPackages/com.unity.render-pipelines.high-definition-config",
       "depth": 0,
@@ -78,22 +65,6 @@
       "dependencies": {
         "com.unity.render-pipelines.core": "7.3.1"
       }
-    },
-    "com.unity.shadergraph": {
-      "version": "7.3.1",
-      "depth": 1,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.render-pipelines.core": "7.3.1"
-      },
-      "url": "https://packages.unity.com"
-    },
-    "com.unity.terrain-tools": {
-      "version": "3.0.2-preview.3",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://packages.unity.com"
     },
     "com.unity.test-framework": {
       "version": "1.1.16",
@@ -130,15 +101,6 @@
         "com.unity.modules.ui": "1.0.0",
         "com.unity.modules.imgui": "1.0.0"
       }
-    },
-    "com.unity.visualeffectgraph": {
-      "version": "7.3.1",
-      "depth": 1,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.shadergraph": "7.3.1"
-      },
-      "url": "https://packages.unity.com"
     },
     "dev.yarnspinner.unity": {
       "version": "1.2.7",
