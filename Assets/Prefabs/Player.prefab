@@ -324,3 +324,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inputReader: {fileID: 11400000, guid: 1861db582b2bd814db7ccee5582f7b52, type: 2}
   interactionHintSprite: {fileID: 3175799154383476165}
+  playerInventory: {fileID: 0}
+  itemIndexInMasterRuntimeSet: {fileID: 0}
+  masterItemsRuntimeSet: {fileID: 0}
+  triggerInventoryUIUpdate: {fileID: 0}
