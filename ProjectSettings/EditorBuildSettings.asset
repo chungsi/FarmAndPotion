@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/RPG.unity
     guid: 098e24e4cfe7ab345b09119998f3d4ea
+  - enabled: 1
+    path: Assets/Scenes/RPG_terrainTests.unity
+    guid: d8d468ff99cb7f7468910e02b99a4537
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: f1fecb426b0620446b7a024a48277bfa,
       type: 2}

@@ -45,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (_prevMovementInput.x != 0)
             _animator.SetFloat("Horizontal", _prevMovementInput.x);
-            
+
         _animator.SetFloat("Vertical", _prevMovementInput.y);
         _animator.SetFloat("Speed", _prevMovementInput.sqrMagnitude);
     }
