@@ -235,10 +235,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.33178177
-  m_Height: 1.7293608
+  m_Radius: 0.42858362
+  m_Height: 1.8087785
   m_Direction: 1
-  m_Center: {x: -0.05856219, y: -0.055610776, z: 0}
+  m_Center: {x: -0.045428157, y: -0.09531963, z: 0}
 --- !u!114 &5987952408881419265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -323,8 +323,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1215593869
-  m_SortingLayer: 3
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -3453616830839157071, guid: 78ac350ba5134974f8d6856269e3e27b,
     type: 3}
