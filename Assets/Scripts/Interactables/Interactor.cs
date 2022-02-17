@@ -19,7 +19,7 @@ public class Interactor : MonoBehaviour
     private IInteractable currentInteractable = null;
     private Collider currentInteractableGO = null;
 
-    private DialogueUI dialogueUI;
+    // private DialogueUI dialogueUI;
 
 
     private void OnEnable()
@@ -36,7 +36,7 @@ public class Interactor : MonoBehaviour
 
     void Start()
     {
-        dialogueUI = FindObjectOfType<Yarn.Unity.DialogueUI>();
+        // dialogueUI = FindObjectOfType<Yarn.Unity.DialogueUI>();
     }
 
 
@@ -51,10 +51,10 @@ public class Interactor : MonoBehaviour
 
     private void OnAdvanceDialogue()
     {
-        if (dialogueUI != null)
-        {
-            dialogueUI.MarkLineComplete();
-        }
+        // if (dialogueUI != null)
+        // {
+        //     dialogueUI.MarkLineComplete();
+        // }
     }
 
 

@@ -6,22 +6,22 @@ using Yarn.Unity;
 public class Speakable : MonoBehaviour, IInteractable
 {
     [SerializeField] private InputReader _inputReader = default;
-    
+
     public string characterName = "";
     public string talkToNode = "";
 
     [Header("Optional")]
-    public YarnProgram scriptToLoad;
+    // public YarnProgram scriptToLoad;
 
     private DialogueRunner dialogueRunner;
 
     void Start()
     {
-        if (scriptToLoad != null)
-        {
-            dialogueRunner = FindObjectOfType<Yarn.Unity.DialogueRunner>();
-            dialogueRunner.Add(scriptToLoad);
-        }
+        // if (scriptToLoad != null)
+        // {
+        //     dialogueRunner = FindObjectOfType<Yarn.Unity.DialogueRunner>();
+        //     dialogueRunner.Add(scriptToLoad);
+        // }
     }
 
     #region IInteractable
