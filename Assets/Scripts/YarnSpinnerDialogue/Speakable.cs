@@ -5,36 +5,51 @@ using Yarn.Unity;
 
 public class Speakable : MonoBehaviour, IInteractable
 {
-    [SerializeField] private InputReader _inputReader = default;
+	[SerializeField] private InputReader _inputReader = default;
+	[SerializeField] private string conversationStartNode;
 
-    public string characterName = "";
-    public string talkToNode = "";
+	private bool isCurrentConversation = false;
+	// public string characterName = "";
+	// public string talkToNode = "";
 
-    [Header("Optional")]
-    // public YarnProgram scriptToLoad;
+	[Header("Optional")]
 
-    private DialogueRunner dialogueRunner;
+	private DialogueRunner dialogueRunner;
 
-    void Start()
-    {
-        // if (scriptToLoad != null)
-        // {
-        //     dialogueRunner = FindObjectOfType<Yarn.Unity.DialogueRunner>();
-        //     dialogueRunner.Add(scriptToLoad);
-        // }
-    }
+	void Start()
+	{
+		dialogueRunner = FindObjectOfType<Yarn.Unity.DialogueRunner>();
+		// dialogueRunner.onDialogueComplete.AddListener(EndConversation);
+	}
 
-    #region IInteractable
+	private void StartConversation()
+	{
+		isCurrentConversation = true;
+		dialogueRunner.StartDialogue(conversationStartNode);
+	}
 
-    public void Interact(GameObject _other)
-    {
-        if (dialogueRunner.IsDialogueRunning == true)
-        {
-            return;
-        }
+	// To add functionality (if needed) when a conversation ends
+	private void EndConversation()
+	{
+		if (isCurrentConversation)
+		{
+			isCurrentConversation = false;
+		}
 
-        dialogueRunner.StartDialogue(talkToNode);
-    }
+	}
 
-    #endregion
+
+	#region IInteractable
+
+	public void Interact(GameObject _other)
+	{
+		if (dialogueRunner.IsDialogueRunning == true) { return; }
+
+		if (conversationStartNode != null)
+		{
+			StartConversation();
+		}
+	}
+
+	#endregion
 }
