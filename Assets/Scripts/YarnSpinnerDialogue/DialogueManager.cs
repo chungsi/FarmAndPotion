@@ -6,7 +6,7 @@ using Yarn.Unity;
 public class DialogueManager : MonoBehaviour
 {
     [SerializeField] private InputReader _inputReader = default;
-    private DialogueUI dialogueUI;
+    // private DialogueUI dialogueUI;
 
     // private void OnEnable()
     // {
